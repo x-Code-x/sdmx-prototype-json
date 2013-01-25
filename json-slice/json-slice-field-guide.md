@@ -75,12 +75,12 @@ Example:
 
 ### sdmx-proto-json
 
-*String*. A string that specifies the version of the SDMX-PROTO-JSON response. A list of valid versions will
+*String*. A string that specifies the version of the sdmx-proto-json response. A list of valid versions will
 be released later on. Example:
 
     "sdmx-proto-json": "2012-11-15"
 
-### Header
+### header
 
 *Object* *nullable*. *Header* contains basic information about the message. Example:
 
@@ -98,7 +98,7 @@ be released later on. Example:
         "id": "ECB_EXR_WEB",
         "ref": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
         "components": {
-            # components object #
+            # component object #
         },
         "packaging": {
             # packaging object #
@@ -137,7 +137,7 @@ then error is null. Example:
 ----
 
 
-## <a name="Header"></a>Header
+## <a name="Header"></a>header
 
 Header contains basic information about the message. Example:
 
@@ -183,8 +183,8 @@ of Date formatted according to the ISO-8601 standard. Example:
 *Object*. Sender is information about the party that is transmitting the message.
 Sender contains the following fields:
 
-* id - *string*. The id attribute holds the identification of the party.
-* name - *string* *nullable*. Name is a human-readable name of the party.
+* id - *String*. The id attribute holds the identification of the party.
+* name - *String* *nullable*. Name is a human-readable name of the party.
 
 Example:
 
@@ -199,8 +199,8 @@ Example:
 *Object* *nullable*. Receiver is information about the party that is receiving the message.
 Receiver contains the following fields:
 
-* id - *string*. The id attribute holds the identification of the party.
-* name - *string* *nullable*. Name is a human-readable name of the party.
+* id - *String*. The id attribute holds the identification of the party.
+* name - *String* *nullable*. Name is a human-readable name of the party.
 
 Example:
 
@@ -217,7 +217,7 @@ Example:
 
 ### embargoDate
 
-*String* *nullable*. EmbargoDate holds a ISO-8601 time period before which the data included in this message is not available. Example:
+*String* *nullable*. EmbargoDate holds an ISO-8601 time period before which the data included in this message is not available. Example:
 
     "embargoDate": "2012-05-04"
 
@@ -237,7 +237,7 @@ Example:
 
 *Object* *nullable*. Structure provides the structural metadata necessary to interpret the data contained in the message.
 It tells you which are the components (dimensions and attributes) used in the message and also describes to which
-level in the hierarchy (data set, series, observations), these components are attached.
+level in the hierarchy (data set, series, observations) these components are attached.
 
 Example:
 
@@ -260,7 +260,7 @@ Example:
 
 ### href
 
-*String* *nullable*. A link to a SDMX 2.1 web service resource where additional information regarding the structure is
+*String* *nullable*. A link to an SDMX 2.1 web service resource where additional information regarding the structure is
 available. Example:
 
     "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0"
@@ -362,7 +362,7 @@ Example:
 
 #### name
 
-*String*. Name provides for a human-readable name for the object.
+*String*. Name provides a human-readable name for the object.
 Example:
 
     "name": "Frequency"
@@ -493,7 +493,7 @@ DataSets object is an array of data set objects. Example:
         "dataSetAction": "Informational",
         "extracted": "2012-05-04T03:30:00",
         "series": [
-          # data object #
+          # series object #
         ]
       }
     ]
@@ -526,8 +526,8 @@ Example:
 from the sender's side. ```Default value is Informational```
 
 * Append - this is an incremental update for an existing data set or the provision of new data or documentation
-(attribute values) formerly absent. If any of the supplied data or metadata is already present, it will not replace
-that data.
+(attribute values) formerly absent. If any of the supplied data or metadata are already present, it will not replace
+these data.
 
 * Replace - data are to be replaced, and may also include additional data to be appended.
 
@@ -541,11 +541,11 @@ Example:
 
 ### provider
 
-*Object* *nullable*. Provider is information about the party that provides the data contained in the dataset.
+*Object* *nullable*. Provider is information about the party that provides the data contained in the data set.
 Provider contains the following fields:
 
-* id - *string*. The id attribute holds the identification of the party.
-* name - *string* *nullable*. Name is a human-readable name of the party.
+* id - *String*. The id attribute holds the identification of the party.
+* name - *String* *nullable*. Name is a human-readable name of the party.
 
 Example:
 
@@ -567,13 +567,13 @@ Example:
 
 ### validFrom
 
-*String* *nullable*. The validFromDate indicates the inclusive start time indicating the validity of the information in the data.
+*String* *nullable*. The validFrom indicates the inclusive start time indicating the validity of the information in the data.
 
     "validFrom": "2012-01-01T10:00:00Z"
 
 ### validTo
 
-*String* *nullable*. The validToDate indicates the inclusive end time indicating the validity of the information in the data.
+*String* *nullable*. The validTo indicates the inclusive end time indicating the validity of the information in the data.
 
     "validTo": "2013-01-01T10:00:00Z"
 
@@ -613,7 +613,7 @@ a data set represents a flat collection of observations. In case the observation
 
 *Array* *nullable*. A collection of series. Each series object contains the observation values and associated metadata (dimensions and attributes), when
 the observations contained in the data set are used into logical groups (time series or cross-sections). This element must
-not be used in case the data set represents a flat list of observations! Example:
+**not** be used in case the data set represents a flat list of observations. Example:
 
     {
       "dimensions": [ 0, 0, 0, 0, 0, 0 ],
