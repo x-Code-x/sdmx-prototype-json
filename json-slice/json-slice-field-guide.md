@@ -96,7 +96,7 @@ be released later on. Example:
 
     "structure": {
         "id": "ECB_EXR_WEB",
-        "ref": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
+        "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
         "components": {
             # component object #
         },
