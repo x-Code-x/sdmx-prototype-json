@@ -1,6 +1,6 @@
 # Draft Field Guide to SDMX-PROTO-JSON Objects
 
-**json-slice format**
+**json-slice format** **v0.2.0**
 
 Use this guide to better understand SDMX-PROTO-JSON objects.
 
@@ -97,9 +97,9 @@ be released later on. Example:
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "components": {
-            # component object #
-        },
+        "components": [
+            # component array #
+        ],
         "packaging": {
             # packaging object #
         }
@@ -115,7 +115,7 @@ Example:
 
     "dataSets": [
       {
-        "dataSetAction": "Informational",
+        "action": "Informational",
         "extracted": "2012-05-04T03:30:00",
         "series": [
           # data object #
@@ -244,9 +244,9 @@ Example:
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "components": {
-            # components object #
-        },
+        "components": [
+            # components array #
+        ],
         "packaging": {
             # packaging object #
         }
@@ -264,10 +264,10 @@ Example:
 available. Example:
 
     "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0"
-    
+
 ### ref
 
-*Object* *nullable*. Provides the 4 elements necessary to uniquely identify structural metadata that offers additional 
+*Object* *nullable*. Provides the 4 elements necessary to uniquely identify structural metadata that offers additional
 information about the data contained in the message. Example:
 
     "ref": {
@@ -276,8 +276,8 @@ information about the data contained in the message. Example:
         "id": "EXR",
         "version": 1.0
     }
-    
-The ref element may contain the following elements:    
+
+The ref element may contain the following elements:
 
 #### type
 
@@ -302,26 +302,30 @@ For additional information about these, please refer to the [SDMX documentation]
 
 *String* *nullable*. The version of the structural metadata. If not supplied, defaults to 1.0. Example:
 
-    "version": 1.0    
+    "version": 1.0
 
 ### components
 
-*Object*. A collection of [components](#Component) (dimensions and attributes) used in the message. Example:
+*Object*. An array of [components](#Component) (dimensions and attributes) used in the message. Example:
 
-    "components": {
-      "FREQ": {
+    "components": [
+      {
+        "id": "FREQ",
         # component object #
       },
-      "CURRENCY": {
+      {
+        "id": "CURRENCY",
         # component object #
       },
-      "OBS_STATUS": {
+      {
+        "id": "OBS_STATUS",
         # component object #
       },
-      "TIME_PERIOD": {
+      {
+        "id": "TIME_PERIOD"
         # component object #
       }
-    }
+    ]
 
 ### <a name="packaging"></a>packaging
 
@@ -341,15 +345,15 @@ For additional information about these, please refer to the [SDMX documentation]
 A component represents a dimension or an attribute used in the message. It contains basic information about the component
 (such as its name and id) as well as the list of values used in the message for this particular component. Example:
 
-    "FREQ": {
-        "id": "FREQ",
-        "name": "Frequency",
-        "values": [
-          {
-            # value object #
-          }
-        ]
-      }
+    {
+      "id": "FREQ",
+      "name": "Frequency",
+      "values": [
+        {
+          # value object #
+        }
+      ]
+    }
 
 Each of the components may contain the following fields
 
@@ -490,7 +494,7 @@ DataSets object is an array of data set objects. Example:
 
     "dataSets": [
       {
-        "dataSetAction": "Informational",
+        "action": "Informational",
         "extracted": "2012-05-04T03:30:00",
         "series": [
           # series object #
@@ -513,16 +517,16 @@ documented in the [packaging element](#packaging).
 Observations will be found directly under a data set object, in case the data set is a flat list of observations. In
 case the data set represents time series or cross sections, the observations will be found under the series elements.
 
-### dataSetID
+### id
 
-*String* *nullable*. DataSetID provides an identifier for the data set.
+*String* *nullable*. Id provides an identifier for the data set.
 Example:
 
-    "dataSetID": "ECB_EXR_2011-06-17"
+    "id": "ECB_EXR_2011-06-17"
 
-### dataSetAction
+### action
 
-*String* *nullable*. DataSetAction provides a list of actions, describing the intention of the data transmission
+*String* *nullable*. Action provides a list of actions, describing the intention of the data transmission
 from the sender's side. ```Default value is Informational```
 
 * Append - this is an incremental update for an existing data set or the provision of new data or documentation
@@ -537,7 +541,7 @@ these data.
 
 Example:
 
-    "dataSetAction": "Informational"
+    "action": "Informational"
 
 ### provider
 
@@ -691,8 +695,8 @@ Let's say that the following message needs to be processed:
         "structure": {
             "id": "ECB_EXR_WEB",
             "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-            "components": {
-                "FREQ": {
+            "components": [
+                {
                     "id": "FREQ",
                     "name": "Frequency",
                     "values": [
@@ -702,7 +706,7 @@ Let's say that the following message needs to be processed:
                         }
                     ]
                 },
-                "CURRENCY": {
+                {
                     "id": "CURRENCY",
                     "name": "Currency",
                     "values": [
@@ -715,7 +719,7 @@ Let's say that the following message needs to be processed:
                         }
                     ]
                 },
-                "CURRENCY_DENOM": {
+                {
                     "id": "CURRENCY_DENOM",
                     "name": "Currency denominator",
                     "values": [
@@ -725,7 +729,7 @@ Let's say that the following message needs to be processed:
                         }
                     ]
                 },
-                "EXR_TYPE": {
+                {
                     "id": "EXR_TYPE",
                     "name": "Exchange rate type",
                     "values": [
@@ -735,7 +739,7 @@ Let's say that the following message needs to be processed:
                         }
                     ]
                 },
-                "EXR_SUFFIX": {
+                {
                     "id": "EXR_SUFFIX",
                     "name": "Series variation - EXR context",
                     "values": [
@@ -745,7 +749,7 @@ Let's say that the following message needs to be processed:
                         }
                     ]
                 },
-                "TIME_PERIOD": {
+                {
                     "id": "TIME_PERIOD",
                     "name": "Time period or range",
                     "values": [
@@ -762,7 +766,7 @@ Let's say that the following message needs to be processed:
                         }
                     ]
                 },
-                "TITLE": {
+                {
                     "id": "TITLE",
                     "name": "Series title",
                     "values": [
@@ -773,7 +777,7 @@ Let's say that the following message needs to be processed:
                         }
                     ]
                 },
-                "OBS_STATUS": {
+                {
                     "id": "OBS_STATUS",
                     "name": "Observation status",
                     "values": [
@@ -783,7 +787,7 @@ Let's say that the following message needs to be processed:
                         }
                     ]
                 }
-            },
+            ],
             "packaging": {
                 "dataSetDimensions": ["FREQ", "CURRENCY_DENOM", "EXR_TYPE", "EXR_SUFFIX"],
                 "seriesDimensions": ["CURRENCY"],
@@ -796,7 +800,7 @@ Let's say that the following message needs to be processed:
         "dataSets": [
             {
                 "extracted": "2013-01-21T15:20:00.000Z",
-                "dataSetAction": "Informational",
+                "action": "Informational",
                 "dimensions": [0, 0, 0, 0],
                 "series": [
                     {
@@ -860,7 +864,7 @@ From the packaging information, we know that the identifier of the dimension for
 
 We can now find the CURRENCY component in the collection of components available below the structure field:
 
-    "CURRENCY": {
+    {
         "id": "CURRENCY",
         "name": "Currency",
         "values": [

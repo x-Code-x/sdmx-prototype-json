@@ -12,8 +12,8 @@
     "structure": {
         "id": "ECB_EXR_WEB",
         "ref": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "components": {
-            "FREQ": {
+        "components": [
+            {
                 "id": "FREQ",
                 "name": "Frequency",
                 "values": [
@@ -23,7 +23,7 @@
                     }
                 ]
             },
-            "CURRENCY": {
+            {
                 "id": "CURRENCY",
                 "name": "Currency",
                 "values": [
@@ -36,7 +36,7 @@
                     }
                 ]
             },
-            "CURRENCY_DENOM": {
+            {
                 "id": "CURRENCY_DENOM",
                 "name": "Currency denominator",
                 "values": [
@@ -46,7 +46,7 @@
                     }
                 ]
             },
-            "EXR_TYPE": {
+            {
                 "id": "EXR_TYPE",
                 "name": "Exchange rate type",
                 "values": [
@@ -56,7 +56,7 @@
                     }
                 ]
             },
-            "EXR_SUFFIX": {
+            {
                 "id": "EXR_SUFFIX",
                 "name": "Series variation - EXR context",
                 "values": [
@@ -66,7 +66,7 @@
                     }
                 ]
             },
-            "TIME_PERIOD": {
+            {
                 "id": "TIME_PERIOD",
                 "name": "Time period or range",
                 "values": [
@@ -83,7 +83,7 @@
                     }
                 ]
             },
-            "TITLE": {
+            {
                 "id": "TITLE",
                 "name": "Series title",
                 "values": [
@@ -94,7 +94,7 @@
                     }
                 ]
             },
-            "OBS_STATUS": {
+            {
                 "id": "OBS_STATUS",
                 "name": "Observation status",
                 "values": [
@@ -104,7 +104,7 @@
                     }
                 ]
             }
-        },
+        ],
         "packaging": {
             "dataSetDimensions": ["FREQ", "CURRENCY_DENOM", "EXR_TYPE", "EXR_SUFFIX"],
             "seriesDimensions": ["TIME_PERIOD"],
@@ -117,7 +117,7 @@
     "dataSets": [
         {
             "extracted": "2013-01-21T15:20:00.000Z",
-            "dataSetAction": "Informational",
+            "action": "Informational",
             "dimensions": [0, 0, 0, 0],
             "series": [
                 {
