@@ -8,7 +8,6 @@ Use this guide to better understand SDMX-PROTO-JSON objects.
 - [Message](#Message)
 - [Dimensions](#Dimensions)
 - [Data](#Data)
-- [Tutorial: Handling component values](#handling_values)
 
 New fields may be introduced in later versions of the field guide. Therefore
 consuming applications should tolerate the addition of new fields with ease.
