@@ -97,9 +97,6 @@ be released later on. Example:
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "components": [
-            # component array #
-        ],
         "packaging": {
             # packaging object #
         }
@@ -244,9 +241,6 @@ Example:
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "components": [
-            # components array #
-        ],
         "packaging": {
             # packaging object #
         }
@@ -304,40 +298,38 @@ For additional information about these, please refer to the [SDMX documentation]
 
     "version": 1.0
 
-### components
-
-*Object*. An array of [components](#Component) (dimensions and attributes) used in the message. Example:
-
-    "components": [
-      {
-        "id": "FREQ",
-        # component object #
-      },
-      {
-        "id": "CURRENCY",
-        # component object #
-      },
-      {
-        "id": "OBS_STATUS",
-        # component object #
-      },
-      {
-        "id": "TIME_PERIOD"
-        # component object #
-      }
-    ]
-
 ### <a name="packaging"></a>packaging
 
-*Object*. Describes to which level in the hierarchy (data set, series, observations), the components are attached. Example:
+*Object*. Describes the components used in the message as well as the levels in the hierarchy (data set, series, 
+observations) to which these components are attached. Example:
 
     "packaging": {
-        "dataSetDimensions": ["FREQ", "CURRENCY_DENOM", "EXR_TYPE", "EXR_SUFFIX"],
-        "seriesDimensions": ["CURRENCY"],
-        "observationDimensions": ["TIME_PERIOD"],
+        "dataSetDimensions": [
+            {
+                # Component object #
+            }, 
+        ],
+        "seriesDimensions": [
+            {
+                # Component object #
+            }
+        ],
+        "observationDimensions": [
+            {
+                # Component object #
+            }
+        ],
         "dataSetAttributes": [],
-        "seriesAttributes": ["TITLE"],
-        "observationAttributes": ["OBS_STATUS"]
+        "seriesAttributes": [
+            {
+                # Component object #
+            }
+        ],
+        "observationAttributes": [
+            {
+                # Component object #
+            }
+        ]
     }
 
 ### <a name="Component"></a>Component
@@ -348,6 +340,7 @@ A component represents a dimension or an attribute used in the message. It conta
     {
       "id": "FREQ",
       "name": "Frequency",
+      "keyPosition": 1,
       "values": [
         {
           # value object #
@@ -370,6 +363,13 @@ Example:
 Example:
 
     "name": "Frequency"
+    
+#### keyPosition
+
+*Number*. Indicates the position of the dimension in the key, starting at 1.
+Example:
+
+    "keyPosition": 1
 
 #### description
 
@@ -695,112 +695,121 @@ Let's say that the following message needs to be processed:
         "structure": {
             "id": "ECB_EXR_WEB",
             "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-            "components": [
-                {
-                    "id": "FREQ",
-                    "name": "Frequency",
-                    "values": [
-                        {
-                            "id": "D",
-                            "name": "Daily"
-                        }
-                    ]
-                },
-                {
-                    "id": "CURRENCY",
-                    "name": "Currency",
-                    "values": [
-                        {
-                            "id": "NZD",
-                            "name": "New Zealand dollar"
-                        }, {
-                            "id": "RUB",
-                            "name": "Russian rouble"
-                        }
-                    ]
-                },
-                {
-                    "id": "CURRENCY_DENOM",
-                    "name": "Currency denominator",
-                    "values": [
-                        {
-                            "id": "EUR",
-                            "name": "Euro"
-                        }
-                    ]
-                },
-                {
-                    "id": "EXR_TYPE",
-                    "name": "Exchange rate type",
-                    "values": [
-                        {
-                            "id": "SP00",
-                            "name": "Spot rate"
-                        }
-                    ]
-                },
-                {
-                    "id": "EXR_SUFFIX",
-                    "name": "Series variation - EXR context",
-                    "values": [
-                        {
-                            "id": "A",
-                            "name": "Average or standardised measure for given frequency"
-                        }
-                    ]
-                },
-                {
-                    "id": "TIME_PERIOD",
-                    "name": "Time period or range",
-                    "values": [
-                        {
-                            "id": "2013-01-18",
-                            "name": "2013-01-18",
-                            "start": "2013-01-18T00:00:00.000Z",
-                            "end": "2013-01-18T23:59:59.000Z"
-                        }, {
-                            "id": "2013-01-21",
-                            "name": "2013-01-21",
-                            "start": "2013-01-21T00:00:00.000Z",
-                            "end": "2013-01-21T23:59:59.000Z"
-                        }
-                    ]
-                },
-                {
-                    "id": "TITLE",
-                    "name": "Series title",
-                    "values": [
-                        {
-                            "name": "New zealand dollar (NZD)"
-                        }, {
-                            "name": "Russian rouble (RUB)"
-                        }
-                    ]
-                },
-                {
-                    "id": "OBS_STATUS",
-                    "name": "Observation status",
-                    "values": [
-                        {
-                            "id": "A",
-                            "name": "Normal value"
-                        }
-                    ]
-                }
-            ],
             "packaging": {
-                "dataSetDimensions": ["FREQ", "CURRENCY_DENOM", "EXR_TYPE", "EXR_SUFFIX"],
-                "seriesDimensions": ["CURRENCY"],
-                "observationDimensions": ["TIME_PERIOD"],
+                "dataSetDimensions": [
+                    {
+                        "id": "FREQ",
+                        "name": "Frequency",
+                        "keyPosition": 1,
+                        "values": [
+                            {
+                                "id": "D",
+                                "name": "Daily"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CURRENCY_DENOM",
+                        "name": "Currency denominator",
+                        "keyPosition": 3,
+                        "values": [
+                            {
+                                "id": "EUR",
+                                "name": "Euro"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "EXR_TYPE",
+                        "name": "Exchange rate type",
+                        "keyPosition": 4,
+                        "values": [
+                            {
+                                "id": "SP00",
+                                "name": "Spot rate"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "EXR_SUFFIX",
+                        "name": "Series variation - EXR context",
+                        "keyPosition": 5,
+                        "values": [
+                            {
+                                "id": "A",
+                                "name": "Average or standardised measure for given frequency"
+                            }
+                        ]
+                    }
+                ],
+                "seriesDimensions": [
+                    {
+                        "id": "CURRENCY",
+                        "name": "Currency",
+                        "keyPosition": 2,
+                        "values": [
+                            {
+                                "id": "NZD",
+                                "name": "New Zealand dollar"
+                            }, {
+                                "id": "RUB",
+                                "name": "Russian rouble"
+                            }
+                        ]
+                    }
+                ],
+                "observationDimensions": [
+                    {
+                        "id": "TIME_PERIOD",
+                        "name": "Time period or range",
+                        "keyPosition": 6,
+                        "values": [
+                            {
+                                "id": "2013-01-18",
+                                "name": "2013-01-18",
+                                "start": "2013-01-18T00:00:00.000Z",
+                                "end": "2013-01-18T23:59:59.000Z"
+                            }, {
+                                "id": "2013-01-21",
+                                "name": "2013-01-21",
+                                "start": "2013-01-21T00:00:00.000Z",
+                                "end": "2013-01-21T23:59:59.000Z"
+                            }
+                        ]
+                    }
+                ],
                 "dataSetAttributes": [],
-                "seriesAttributes": ["TITLE"],
-                "observationAttributes": ["OBS_STATUS"]
+                "seriesAttributes": [
+                    {
+                        "id": "TITLE",
+                        "name": "Series title",
+                        "values": [
+                            {
+                                "name": "New zealand dollar (NZD)"
+                            }, {
+                                "name": "Russian rouble (RUB)"
+                            }
+                        ]
+                    }
+                ],
+                "observationAttributes": [
+                    {
+                        "id": "OBS_STATUS",
+                        "name": "Observation status",
+                        "values": [
+                            {
+                                "id": "A",
+                                "name": "Normal value"
+                            }
+                        ]
+                    }
+                ]
             }
         },
         "dataSets": [
             {
                 "extracted": "2013-01-21T15:20:00.000Z",
-                "action": "Informational",
+                "dataSetAction": "Informational",
                 "dimensions": [0, 0, 0, 0],
                 "series": [
                     {
@@ -843,41 +852,30 @@ There is only one data set in the message, and it contains two series.
     }
 
 The packaging field tells us that, out of the 6 dimensions, 4 have the same value for the 2 series and are therefore
-attached to the data set level:
-
-    "packaging": {
-        "dataSetDimensions": ["FREQ", "CURRENCY_DENOM", "EXR_TYPE", "EXR_SUFFIX"],
-        "seriesDimensions": ["CURRENCY"],
-        "observationDimensions": ["TIME_PERIOD"],
-        "dataSetAttributes": [],
-        "seriesAttributes": ["TITLE"],
-        "observationAttributes": ["OBS_STATUS"]
-    }
+attached to the data set level.
 
 We see that, for the first series, we get the value 0:
 
     "dimensions": [0]
 
-From the packaging information, we know that the identifier of the dimension for this series is CURRENCY.
+From the packaging information, we know that CURRENCY is the series dimension.
 
-    "seriesDimensions": ["CURRENCY"]
-
-We can now find the CURRENCY component in the collection of components available below the structure field:
-
-    {
-        "id": "CURRENCY",
-        "name": "Currency",
-        "values": [
-            {
-                "id": "NZD",
-                "name": "New Zealand dollar"
-            },
-            {
-                "id": "RUB",
-                "name": "Russian rouble"
-            }
-        ]
-    }
+    "seriesDimensions": [
+        {
+            "id": "CURRENCY",
+            "name": "Currency",
+            "keyPosition": 2,
+            "values": [
+                {
+                    "id": "NZD",
+                    "name": "New Zealand dollar"
+                }, {
+                    "id": "RUB",
+                    "name": "Russian rouble"
+                }
+            ]
+        }
+    ]
 
 The value 0 identified previously is the index of the item in the collection of values for this component. In this case,
 the dimension value is therefore "New Zealand dollar".
