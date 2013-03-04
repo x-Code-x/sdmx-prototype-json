@@ -13,8 +13,8 @@
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
         "packaging": {
-            "dataSetDimensions": {
-                "FREQ": {
+            "dataSetDimensions": [
+                {
                     "id": "FREQ",
                     "name": "Frequency",
                     "keyPosition": 1,
@@ -25,7 +25,7 @@
                         }
                     ]
                 },
-                "CURRENCY_DENOM": {
+                {
                     "id": "CURRENCY_DENOM",
                     "name": "Currency denominator",
                     "keyPosition": 3,
@@ -36,7 +36,7 @@
                         }
                     ]
                 },
-                "EXR_TYPE": {
+                {
                     "id": "EXR_TYPE",
                     "name": "Exchange rate type",
                     "keyPosition": 4,
@@ -47,7 +47,7 @@
                         }
                     ]
                 },
-                "EXR_SUFFIX": {
+                {
                     "id": "EXR_SUFFIX",
                     "name": "Series variation - EXR context",
                     "keyPosition": 5,
@@ -58,9 +58,9 @@
                         }
                     ]
                 }
-            },
-            "seriesDimensions": {
-                "CURRENCY": {
+            ],
+            "seriesDimensions": [
+                {
                     "id": "CURRENCY",
                     "name": "Currency",
                     "keyPosition": 2,
@@ -74,9 +74,9 @@
                         }
                     ]
                 }
-            },
-            "observationDimensions": {
-                "TIME_PERIOD": {
+            ],
+            "observationDimensions": [
+                {
                     "id": "TIME_PERIOD",
                     "name": "Time period or range",
                     "keyPosition": 6,
@@ -94,10 +94,10 @@
                         }
                     ]
                 }
-            },
-            "dataSetAttributes": {},
-            "seriesAttributes": {
-                "TITLE": {
+            ],
+            "dataSetAttributes": [],
+            "seriesAttributes": [
+                {
                     "id": "TITLE",
                     "name": "Series title",
                     "values": [
@@ -108,9 +108,9 @@
                         }
                     ]
                 }
-            },
-            "observationAttributes": {
-                "OBS_STATUS": {
+            ],
+            "observationAttributes": [
+                {
                     "id": "OBS_STATUS",
                     "name": "Observation status",
                     "values": [
@@ -120,7 +120,7 @@
                         }
                     ]
                 }
-            }
+            ]
         }
     },
     "dataSets": [
