@@ -7,8 +7,9 @@ Use this guide to better understand SDMX-PROTO-JSON objects.
 - [Introduction](#Introduction)
 - [Message](#Message)
 - [Dimensions](#Dimensions)
-- [Attributes] (#Attributes)
+- [Attributes](#Attributes)
 - [Data](#Data)
+- [Attribute Values](#AttributeValues)
 
 New fields may be introduced in later versions of the field guide. Therefore
 consuming applications should tolerate the addition of new fields with ease.
@@ -396,23 +397,25 @@ description of the code. Example:
 no value is provided then this value applies. Example:
 
     "default": "A"
-	
-## <a name="AttributeValues"></a>Attribute Values
-	
-	"attribute-values": {
-	  "0:0:0:0:0:0:;1": 0,
-	  "0:0:0:0:0:0:14;0": 1,
-	  "0:0:0:0:0:1:;1": 0,
-	  "0:0:0:0:0:0:65;0": 2
-	}
 
 ## <a name="Data"></a>Data
 
-*Object* *nullable*. Object with properties with the values for each observation. The property names are colon-delimited indices of the values of the dimensions with the delimited number's index corresponding to the observation. The "0:1:0"=2 property represents an obesrvation where the first dimension's value is that with index 0, the second's has index 1 (and is therefore the second value for that dimension) and the third's has index 0, while the observation's value is 2.
+*Object* *nullable*. Object with properties with the dimension values for each observation. The property names are colon-delimited indices of the values of the dimensions with the delimited number's index corresponding to the observation. The "0:1:0"=2 property represents an obesrvation where the first dimension's value is that with index 0, the second's has index 1 (and is therefore the second value for that dimension) and the third's has index 0, while the observation's value is 2.
 
 Example:
 
 	"data":{
       "0:0:0:0:0":98.6,
       "0:0:0:0:1":97.16
+	}
+	
+## <a name="AttributeValues"></a>Attribute Values
+
+*Object* *nullable*. Object with properties with the dimension- and attribute values for each observation similarly to the [data](#Data) message property.
+	
+	"attribute-values": {
+	  "0:0:0:0:0:0:;1": 0,
+	  "0:0:0:0:0:0:14;0": 1,
+	  "0:0:0:0:0:1:;1": 0,
+	  "0:0:0:0:0:0:65;0": 2
 	}
