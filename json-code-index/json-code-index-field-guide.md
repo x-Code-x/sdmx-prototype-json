@@ -68,16 +68,16 @@ Example:
 		"dimensions":[
 		  # dimension objects #
 		],
-    		"attributes":[
-      		  # attribute objects #
-    		],
+    	"attributes":[
+      	  # attribute objects #
+    	],
 		"data":{
 		  # data objects #   
 		},
 		"attribute-values":{
-      		  # attribute value objects #
-    		},
-    		"errors": null
+      	  # attribute value objects #
+    	},
+    	"errors": null
 	}
 
 ### sdmx-proto-json
@@ -99,6 +99,12 @@ Example:
 *String* *nullable*. Brief summary of the message contents. Example:
 
     "name": "Short-term interest rates: Day-to-day money rates"
+
+### test
+
+*Boolean* *nullable*. Test indicates whether the message is for test purposes or not. False for normal messages. Example:
+
+    "test": false
 
 ### prepared
 
@@ -122,6 +128,19 @@ Example:
     "sender": {
       "id": "SDMX"
     }
+	
+### errors
+
+*Array* *nullable*. RESTful web services indicates errors using the HTTP status
+codes. In addition, whenever appropriate, the error can also be returned using
+the error fields. Error is an array of error messages. If there are no errors
+then error is null.
+
+Example:
+
+    "errors": [
+      "Invalid number of dimensions in parameter key"
+    ]
 
 ## <a name="Dimensions"></a>Dimensions
 
@@ -188,9 +207,9 @@ Example:
 
 #### codes
 
-Array of [values](#dimension_values) for the dimensions. Example:
+Array of [codes](#dimension_values) for the dimensions. Example:
 
-    "values": [
+    "codes": [
       {
         "id": "M",
         "name": "Monthly",
@@ -198,7 +217,7 @@ Array of [values](#dimension_values) for the dimensions. Example:
       }
     ]
 
-#### <a name="dimension_values"></a>Dimension value
+#### <a name="dimension_values"></a>Dimension code
 
 *Object* *nullable*. A particular value for a dimension in a message. Example:
 
@@ -206,7 +225,8 @@ Array of [values](#dimension_values) for the dimensions. Example:
       "start":"2011-11-01T00:00:00",
       "end":"2011-11-30T23:59:59",
       "id":"2011-11",
-      "name":"2011-11"
+      "name":"2011-11",
+	  "selected":true
     }
 
 ##### id
@@ -261,77 +281,130 @@ period. Example:
 
     "end": "2007-10-31T23:59:59.000Z"
 
+##### selected
+
+*Boolean* *nullable*. Dimension codes include the property “selected” indicating if a corresponding filter setting was made in the URL query. All structural objects have consistently the properties “id” and “name”. No placeholder for missing values is needed thus sparse datasets are represented efficiently. Example:
+
+	"selected":true
+	
 ## <a name="Attributes"></a>Attributes
 
-*Array* *nullable*. To avoid a high number of objects, if attributes at data value level are needed, then they should be implemented as additional attributes object (adding the possibility to include attributes also at higher levels e.g. time series level):
+*Array* *nullable*. Contains [attributes](Attribute) in an array. Example:
 
-"attributes": [
-{
-"id": "OBS_STATUS",
-"name": "Observation Status",
-"role": "status",
-"attachment": [
-true,
-true,
-true,
-true,
-true,
-true,
-true
-},
-"codes": [
-{
-"id": "A",
-"name": "Normal value",
-"default": true
-},
-{
-"id": "B",
-"name": "Break",
-"default": false
-},
-{
-"id": "F",
-"name": "Forecast",
-"default": false
-}
-]
-},
-{
-"id": "UNIT",
-"name": "Unit",
-"role": "unit",
-"attachment": [
-true,
-true,
-true,
-true,
-true,
-true,
-false
-},
-"codes": [
-{
-"id": "EUR",
-"name": "Euro",
-"default": false
-},
-{
-"id": "USD",
-"name": "US Dollar",
-"default": false
-}
-]
-}
-],
-"attribute-values": {
-"0:0:0:0:0:0:;1": 0,
-"0:0:0:0:0:0:14;0": 1,
-"0:0:0:0:0:1:;1": 0,
-"0:0:0:0:0:0:65;0": 2,
-…
-}
+    "attributes": [
+	  # attribute object #
+	]
+	
+### <a name="Attribute"></a>Attribute object
+	
+*Object* *nullable*. A particular value for an attribute in a message. Example:
 
+	{
+	  "id": "UNIT",
+	  "name": "Unit",
+	  "role": "unit",
+	  "attachment": [
+		true,
+		true,
+		true,
+		true,
+		true,
+		true,
+		false
+	  ],
+	  "codes": [
+	    # attribute codes #
+	  ]
+	}
+
+##### id
+
+*String*. Unique identifier for an attribute. Example:
+
+    "id": "UNIT"
+
+##### name
+
+*String*. Human-readable name for an attribute. Example:
+
+    "name": "Unit"
+
+#### role
+
+*String* *nullable*. Defines the component role(s). For normal components the value
+is null. Components can play various roles, such as, for example:
+
+- **time**. Time dimension is a special dimension which designates the period in
+time in which the data identified by the full series key applies.
+- **measure**. Measure dimension is a special type of dimension which defines
+multiple measures.
+
+Example:
+
+    "role": "time"
+
+#### attachment
+
+*Array* *nullable*. An array of booleans. Example:
+
+	"attachment": [
+	  true,
+	  true,
+	  false
+	]
+
+#### codes
+
+Array of [codes](#attribute_values) for the attributes. Example:
+
+    "codes": [
+	  # attribute code #
+    ]
+	
+#### <a name="attribute_values"></a>Attribute code
+
+*Object* *nullable*. A particular value for an attribute in a message. Example:
+
+	{
+	  "id": "EUR",
+	  "name": "Euro",
+	  "default": false
+	}
+
+##### id
+
+*String*. Unique identifier for a code. Example:
+
+    "id": "EUR"
+
+##### name
+
+*String*. Human-readable name for a code. Example:
+
+    "name": "Euro"
+
+##### description
+
+*String* *nullable*. Description provides a plain text, human-readable
+description of the code. Example:
+
+    "description": "Euro Currency"
+
+#### default
+
+*String* or *Number* *nullable*. Defines a default value for the attribute. If
+no value is provided then this value applies. Example:
+
+    "default": "A"
+	
+## <a name="AttributeValues"></a>Attribute Values
+	
+	"attribute-values": {
+	  "0:0:0:0:0:0:;1": 0,
+	  "0:0:0:0:0:0:14;0": 1,
+	  "0:0:0:0:0:1:;1": 0,
+	  "0:0:0:0:0:0:65;0": 2
+	}
 
 ## <a name="Data"></a>Data
 
