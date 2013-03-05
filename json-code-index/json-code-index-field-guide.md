@@ -7,6 +7,7 @@ Use this guide to better understand SDMX-PROTO-JSON objects.
 - [Introduction](#Introduction)
 - [Message](#Message)
 - [Dimensions](#Dimensions)
+- [Attributes] (#Attributes)
 - [Data](#Data)
 
 New fields may be introduced in later versions of the field guide. Therefore
@@ -64,12 +65,19 @@ Example:
 		  "name":"Metadata Technology"
 		},
 		"name":"BIS Effective exchange rates",
+		"dimensions":[
+		  # dimension objects #
+		],
+    		"attributes":[
+      		  # attribute objects #
+    		],
 		"data":{
 		  # data objects #   
 		},
-		"dimensions":[
-		  # dimension objects #
-		]
+		"attribute-values":{
+      		  # attribute value objects #
+    		},
+    		"errors": null
 	}
 
 ### sdmx-proto-json
@@ -252,6 +260,78 @@ This field is useful only when the value represents a period for a time dimensio
 period. Example:
 
     "end": "2007-10-31T23:59:59.000Z"
+
+## <a name="Attributes"></a>Attributes
+
+*Array* *nullable*. To avoid a high number of objects, if attributes at data value level are needed, then they should be implemented as additional attributes object (adding the possibility to include attributes also at higher levels e.g. time series level):
+
+"attributes": [
+{
+"id": "OBS_STATUS",
+"name": "Observation Status",
+"role": "status",
+"attachment": [
+true,
+true,
+true,
+true,
+true,
+true,
+true
+},
+"codes": [
+{
+"id": "A",
+"name": "Normal value",
+"default": true
+},
+{
+"id": "B",
+"name": "Break",
+"default": false
+},
+{
+"id": "F",
+"name": "Forecast",
+"default": false
+}
+]
+},
+{
+"id": "UNIT",
+"name": "Unit",
+"role": "unit",
+"attachment": [
+true,
+true,
+true,
+true,
+true,
+true,
+false
+},
+"codes": [
+{
+"id": "EUR",
+"name": "Euro",
+"default": false
+},
+{
+"id": "USD",
+"name": "US Dollar",
+"default": false
+}
+]
+}
+],
+"attribute-values": {
+"0:0:0:0:0:0:;1": 0,
+"0:0:0:0:0:0:14;0": 1,
+"0:0:0:0:0:1:;1": 0,
+"0:0:0:0:0:0:65;0": 2,
+…
+}
+
 
 ## <a name="Data"></a>Data
 
