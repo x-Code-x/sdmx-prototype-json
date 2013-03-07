@@ -344,9 +344,11 @@ Example:
 
     "role": "time"
 
-#### attachment
+#### <a name="attachment"></a>attachment
 
-*Array* *nullable*. An array of booleans. Example:
+*Array* *nullable*. An array of booleans representing the relationship between an attribute type and the dimensions. An attribute can be applied to multiple dimensions and this array stores the map of what dimensions the given attribute type applies to. If there is a true at a given index in this array then the attribute applies to the dimension with that index.
+
+Example:
 
 	"attachment": [
 	  true,
@@ -412,6 +414,12 @@ Example:
 ## <a name="AttributeValues"></a>Attribute Values
 
 *Object* *nullable*. Object with properties with the dimension- and attribute values for each observation similarly to the [data](#Data) message property.
+
+Each property name consists of two parts: the first part describes the dimensions the attribute is attache to, the part after the ';' character describes the attribute and the value is either a code index in the attribute type representing that attribute's value or the attribute value itself. So the line '"0:0:0;1":0' means that the attribute is attached to all dimensions (also see [attachment](#attachment) in [attribute types](#Attribute)), it is the second attribute type (index 1 after the semicolon) and has a code index of 0, representing the first value for that attribute type.
+
+If an attribute is not attached to a dimension that dimension's index is left empty such as in '":0:;3":5'. Here the attribute type is only attached to the second dimension, it is the fourth attribute type and has the attribute value with code index 5, that is the sixth value.
+
+Example:
 	
 	"attribute-values": {
 	  "0:0:0:0:0:0:;1": 0,
