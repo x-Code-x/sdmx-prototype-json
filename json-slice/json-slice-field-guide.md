@@ -182,12 +182,40 @@ Sender contains the following fields:
 
 * id - *String*. The id attribute holds the identification of the party.
 * name - *String* *nullable*. Name is a human-readable name of the party.
+* contact - *Array* *nullable*. A collection of contact details.
 
 Example:
 
     "sender": {
-      "id": "SDMX"
+      "id": "ECB",
+      "name": "European Central Bank"
+      "contact": [
+        # contact details #
+      ]
     }
+    
+#### contact
+
+*Array* *nullable*. A collection of contact details.
+
+Each object in the collection may contain the following field:
+* name - *String*. The contact's name.
+* department - *String* *nullable*. The organisational structure within which the contact person works.
+* role - *String* *nullable*. The responsibility of the contact person.
+* telephone - *String* *nullable*. The telephone number for the contact person. 
+* fax - *String* *nullable*. The fax number for the contact person.
+* x400 - *String* *nullable*. The X.400 address for the contact person.
+* uri - *String* *nullable*. URI holds an information URL for the contact person.
+* email - *String* *nullable*. The email address for the contact person.
+ 
+Example:
+
+    "contact": [
+        {
+            "name": "Statistics hotline",
+            "email": "statistics@xyz.org"
+        }
+    ]
 
 ### receiver
 
@@ -198,6 +226,7 @@ Receiver contains the following fields:
 
 * id - *String*. The id attribute holds the identification of the party.
 * name - *String* *nullable*. Name is a human-readable name of the party.
+* contact - *Array* *nullable*. A collection of contact details.
 
 Example:
 
