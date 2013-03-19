@@ -524,6 +524,13 @@ Example:
 
     "id": "ECB_EXR_2011-06-17"
 
+### name
+
+*String* *nullable*. A human-friendly name for the dataset.
+Example:
+
+    "name": "Bilateral exchange rates"
+
 ### action
 
 *String* *nullable*. Action provides a list of actions, describing the intention of the data transmission
