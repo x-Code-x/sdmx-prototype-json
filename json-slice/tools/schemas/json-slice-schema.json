@@ -94,119 +94,55 @@
                     "required": [ "type", "agencyID", "id" ],
                     "additionalProperties": false
                 },
-                "components": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "string"
-                            },
-                            "name": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": [ "null", "string" ]
-                            },
-                            "role": {
-                                "type": [ "null", "string" ]
-                            },
-                            "default": {
-                                "type": [ "null", "string" ]
-                            },
-                            "values": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                            "type": "string"
-                                        },
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "description": {
-                                            "type": "string"
-                                        },
-                                        "orderBy": {
-                                            "type": "integer"
-                                        },
-                                        "parent": {
-                                            "type": "integer"
-                                        },
-                                        "start": {
-                                            "type": "string",
-                                            "format": "date-time"
-                                        },
-                                        "end": {
-                                            "type": "string",
-                                            "format": "date-time"
-                                        },
-                                        "geometry": {
-                                            "type": "object"
-                                        }
-                                    },
-                                    "required": [ "name" ]
-                                },
-                                "minItems": 0,
-                                "uniqueItems": true
-                            }
-                        },
-                        "required": [ "id", "name", "values" ],
-                        "additionalProperties": false
-                    },
-                    "minItems": 1,
-                    "uniqueItems": true
-                },
                 "packaging": {
                     "type": "object",
                     "properties": {
                         "dataSetDimensions": {
                             "type": [ "null", "array" ],
                             "items": {
-                                "type": "string"
+                                "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         },
                         "seriesDimensions": {
                             "type": [ "null", "array" ],
                             "items": {
-                                "type": "string"
+                                "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         },
                         "observationDimensions": {
                             "type": [ "null", "array" ],
                             "items": {
-                                "type": "string"
+                                "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         },
                         "dataSetAttributes": {
                             "type": [ "null", "array" ],
                             "items": {
-                                "type": "string"
+                                "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         },
                         "seriesAttributes": {
                             "type": [ "null", "array" ],
                             "items": {
-                                "type": "string"
+                                "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         },
                         "observationAttributes": {
                             "type": [ "null", "array" ],
                             "items": {
-                                "type": "string"
+                                "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         }
                     }
                 }
             },
-            "required": [ "components", "packaging" ],
+            "required": [ "packaging" ],
             "additionalProperties": false
         },
         "dataSets": {
@@ -326,5 +262,69 @@
         }
     },
     "required": [ "sdmx-proto-json", "header" ],
-    "additionalProperties": false
+    "additionalProperties": false,
+    "definitions": {
+        "component": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": [ "null", "string" ]
+                },
+                "role": {
+                    "type": [ "null", "string" ]
+                },
+                "keyPosition": {
+                    "type": [ "null", "number" ]
+                },
+                "default": {
+                    "type": [ "null", "string" ]
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "orderBy": {
+                                "type": "integer"
+                            },
+                            "parent": {
+                                "type": "integer"
+                            },
+                            "start": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "end": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "geometry": {
+                                "type": "object"
+                            }
+                        },
+                        "required": [ "name" ]
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                }
+            },
+            "required": [ "id", "name", "values" ],
+            "additionalProperties": false
+        }
+    }
 }
