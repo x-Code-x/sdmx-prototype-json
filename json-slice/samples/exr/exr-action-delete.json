@@ -146,7 +146,7 @@
         },
         {
             "extracted": "2013-01-21T15:20:00.000Z",
-            "dataSetAction": "Delete",
+            "action": "Delete",
             "validTo": "2012-03-20T10:07:58.000+01:00",
             "dimensions": [0, 0, 0, 0],
             "series": [
