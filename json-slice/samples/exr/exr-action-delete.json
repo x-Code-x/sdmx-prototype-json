@@ -125,7 +125,7 @@
     "dataSets": [
         {
             "extracted": "2013-01-21T15:20:00.000Z",
-            "dataSetAction": "Replace",
+            "action": "Replace",
             "validFrom": "2012-03-20T15:00:16.000+01:00",
             "dimensions": [0, 0, 0, 0],
             "series": [
