@@ -7,6 +7,7 @@
 packaging.dataSet.dimensions.
 - Add "ref" field to dataSet? Already defined for structure.
 - Look into annotations. Are they needed in the format? and if yes how should they be implemented?
+- Add sample file with examples of all supported fields in the message.
 
 ## Waiting for further input
 
