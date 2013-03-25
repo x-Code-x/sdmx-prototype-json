@@ -124,7 +124,7 @@
     "dataSets": [
         {
             "extracted": "2013-01-21T15:20:00.000Z",
-            "dataSetAction": "Informational",
+            "action": "Informational",
             "dimensions": [0, 0, 0, 0],
             "observations": [
                 [0, 0, 1.5931, 0, 0],
