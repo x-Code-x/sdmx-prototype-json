@@ -548,17 +548,25 @@ case the data set represents time series or cross sections, the observations wil
 
 ### id
 
-*String* *nullable*. Id provides an identifier for the data set.
-Example:
+*String* *nullable*. Id provides an identifier for the data set. Example:
 
     "id": "ECB_EXR_2011-06-17"
 
 ### name
 
-*String* *nullable*. A human-friendly name for the dataset.
-Example:
+*String* *nullable*. A human-friendly name for the dataset. Example:
 
     "name": "Bilateral exchange rates"
+    
+### description
+
+*String* *nullable*. Description provides a plain text, human-readable
+description of the dataset. Example:
+
+    "description": "The nominal effective exchange rate (EER) index is a summary measure of the external value of 
+    a currency vis-á-vis the currencies of the most trading partners, while the real EER - obtained by deflating 
+    the nominal rate with appropriate price or cost indices - is the most commonly used indicator of international 
+    price and cost competitiveness. Daily spot exchange rates provided by the Front Office Division."
 
 ### action
 
