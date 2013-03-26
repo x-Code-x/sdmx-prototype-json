@@ -25,3 +25,5 @@ packaging.dataSet.dimensions.
 Sample file exr-action-delete contains and example of deletions. Append and Update are basically same as Informational.
 - Look into linking to related SDMX structures (like the current "href" field in structure). Structure contains field "ref"
 with information linking back to datastructure, provisionagreement or dataflow.
+- Added name to dataSet object.
+- Added contact details to sender object.
