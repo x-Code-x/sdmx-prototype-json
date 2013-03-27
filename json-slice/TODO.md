@@ -27,3 +27,4 @@ Sample file exr-action-delete contains and example of deletions. Append and Upda
 with information linking back to datastructure, provisionagreement or dataflow.
 - Added name to dataSet object.
 - Added contact details to sender object.
+- Added optional description to dataSet object.
