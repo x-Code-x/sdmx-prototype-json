@@ -12,8 +12,8 @@
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "packaging": {
-            "dataSetDimensions": [
+        "dimensions": {
+            "dataSet": [
                 {
                     "id": "FREQ",
                     "name": "Frequency",
@@ -24,8 +24,7 @@
                             "name": "Daily"
                         }
                     ]
-                },
-                {
+                }, {
                     "id": "CURRENCY_DENOM",
                     "name": "Currency denominator",
                     "keyPosition": 3,
@@ -35,8 +34,7 @@
                             "name": "Euro"
                         }
                     ]
-                },
-                {
+                }, {
                     "id": "EXR_TYPE",
                     "name": "Exchange rate type",
                     "keyPosition": 4,
@@ -46,8 +44,7 @@
                             "name": "Spot rate"
                         }
                     ]
-                },
-                {
+                }, {
                     "id": "EXR_SUFFIX",
                     "name": "Series variation - EXR context",
                     "keyPosition": 5,
@@ -59,7 +56,7 @@
                     ]
                 }
             ],
-            "seriesDimensions": [
+            "series": [
                 {
                     "id": "CURRENCY",
                     "name": "Currency",
@@ -75,7 +72,7 @@
                     ]
                 }
             ],
-            "observationDimensions": [
+            "observation": [
                 {
                     "id": "TIME_PERIOD",
                     "name": "Time period or range",
@@ -94,9 +91,11 @@
                         }
                     ]
                 }
-            ],
-            "dataSetAttributes": [],
-            "seriesAttributes": [
+            ]
+        },
+        "attributes": {
+            "dataSet": [],
+            "series": [
                 {
                     "id": "TITLE",
                     "name": "Series title",
@@ -109,7 +108,7 @@
                     ]
                 }
             ],
-            "observationAttributes": [
+            "observation": [
                 {
                     "id": "OBS_STATUS",
                     "name": "Observation status",
@@ -126,7 +125,7 @@
     "dataSets": [
         {
             "extracted": "2013-01-21T15:20:00.000Z",
-            "action": "Informational",
+            "dataSetAction": "Informational",
             "dimensions": [0, 0, 0, 0],
             "series": [
                 {
