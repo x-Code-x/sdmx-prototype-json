@@ -116,14 +116,14 @@
                     "required": [ "type", "agencyID", "id" ],
                     "additionalProperties": false
                 },
-		"dimensions: {
+		"dimensions": {
 	  	    "type": [ "null", "array" ],
 		    "items": {
 		        "$ref": "#/definitions/dimension"
 		    },
                     "uniqueItems": true
 		},
-		"attributes: {
+		"attributes": {
 		    "type": [ "null", "array" ],
 		    "items": {
 			"$ref": "#/definitions/attribute"
