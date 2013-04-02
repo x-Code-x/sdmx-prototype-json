@@ -839,7 +839,7 @@ Let's say that the following message needs to be processed:
                         ]
                     }
                 ]},
-            "attributes":     
+            "attributes": {     
                 "dataSet": [],
                 "series": [
                     {
