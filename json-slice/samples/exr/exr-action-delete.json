@@ -2,7 +2,7 @@
     "sdmx-proto-json": "2012-11-29",
     "header": {
         "id": "62b5f19d-f1c9-495d-8446-a3661ed24753",
-        "prepared": "2012-11-29T08:40:26",
+        "prepared": "2012-11-29T08:40:26Z",
         "sender": {
             "id": "ECB",
             "name": "European Central Bank"
@@ -123,7 +123,7 @@
     "dataSets": [
         {
             "extracted": "2013-01-21T15:20:00.000Z",
-            "dataSetAction": "Replace",
+            "action": "Replace",
             "validFrom": "2012-03-20T15:00:16.000+01:00",
             "dimensions": [0, 0, 0, 0],
             "series": [
