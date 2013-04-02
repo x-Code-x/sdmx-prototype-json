@@ -116,45 +116,50 @@
                     "required": [ "type", "agencyID", "id" ],
                     "additionalProperties": false
                 },
-                "packaging": {
+                "dimensions": {
                     "type": "object",
                     "properties": {
-                        "dataSetDimensions": {
+                        "dataSet": {
                             "type": [ "null", "array" ],
                             "items": {
                                 "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         },
-                        "seriesDimensions": {
+                        "series": {
                             "type": [ "null", "array" ],
                             "items": {
                                 "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         },
-                        "observationDimensions": {
+                        "observation": {
+                            "type": [ "null", "array" ],
+                            "items": {
+                                "$ref": "#/definitions/component"
+                            },
+                            "uniqueItems": true
+                        }
+                    }
+                },
+                "attributes": {
+                    "type": "object",
+                    "properties": {
+                        "dataSet": {
                             "type": [ "null", "array" ],
                             "items": {
                                 "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         },
-                        "dataSetAttributes": {
+                        "series": {
                             "type": [ "null", "array" ],
                             "items": {
                                 "$ref": "#/definitions/component"
                             },
                             "uniqueItems": true
                         },
-                        "seriesAttributes": {
-                            "type": [ "null", "array" ],
-                            "items": {
-                                "$ref": "#/definitions/component"
-                            },
-                            "uniqueItems": true
-                        },
-                        "observationAttributes": {
+                        "observation": {
                             "type": [ "null", "array" ],
                             "items": {
                                 "$ref": "#/definitions/component"
@@ -164,7 +169,7 @@
                     }
                 }
             },
-            "required": [ "packaging" ],
+            "required": [ "dimensions, attributes" ],
             "additionalProperties": false
         },
         "component": {
