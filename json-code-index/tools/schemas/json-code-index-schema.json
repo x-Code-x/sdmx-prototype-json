@@ -326,7 +326,7 @@
                 "attributes": {
                     "type": "object",
 		    "patternProperties": {
-			"^(?:[0-9]+|null)(?::[0-9]+|:null)*;(?:[0-9]+|null)$": {
+			"^(?:[0-9]+|null)(?::[0-9]+|:null)*;[0-9]+$": {
 			    "type": "number"
 			}
 		    },
