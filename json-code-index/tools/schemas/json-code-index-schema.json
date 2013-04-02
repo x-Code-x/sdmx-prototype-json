@@ -116,20 +116,20 @@
                     "required": [ "type", "agencyID", "id" ],
                     "additionalProperties": false
                 },
-  			"dimensions: {
-					"type": [ "null", "array" ],
-					"items": {
-						"$ref": "#/definitions/dimension"
-					},
+		"dimensions: {
+	  	    "type": [ "null", "array" ],
+		    "items": {
+		        "$ref": "#/definitions/dimension"
+		    },
                     "uniqueItems": true
-				},
-				"attributes: {
-					"type": [ "null", "array" ],
-					"items": {
-						"$ref": "#/definitions/attribute"
-					},
+		},
+		"attributes: {
+		    "type": [ "null", "array" ],
+		    "items": {
+			"$ref": "#/definitions/attribute"
+		    },
                     "uniqueItems": true
-				}
+		}
             },
             "required": [ "packaging" ],
             "additionalProperties": false
@@ -226,10 +226,10 @@
                                 "type": "string"
                             },
                             "attachment": {
-								"type": [ "null", "array" ],
-								"items": {
-									"type": "boolean"
-								}
+				"type": [ "null", "array" ],
+				"items": {
+				    "type": "boolean"
+				}
                             },
                             "description": {
                                 "type": [ "null", "string" ]
@@ -316,17 +316,21 @@
                 },
                 "data": {
                     "type": "object",
-					"patternProperties": {
-						"^(?:[0-9]+|null)(?::[0-9]+|:null)*$": {}
-					},
-					"additionalProperties": false
+		    "patternProperties": {
+			"^(?:[0-9]+|null)(?::[0-9]+|:null)*$": {
+			    "type": "number"
+			}
+		    },
+		    "additionalProperties": false
                 },
                 "attributes": {
                     "type": "object",
-					"patternProperties": {
-						"^(?:[0-9]+|null)(?::[0-9]+|:null)*;(?:[0-9]+|null)$": {}
-					},
-					"additionalProperties": false
+		    "patternProperties": {
+			"^(?:[0-9]+|null)(?::[0-9]+|:null)*;(?:[0-9]+|null)$": {
+			    "type": "number"
+			}
+		    },
+		    "additionalProperties": false
                 }
             },
             "additionalProperties": false
