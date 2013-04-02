@@ -12,8 +12,8 @@
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "packaging": {
-            "dataSetDimensions": [
+        "dimensions": {
+            "dataSet": [
                 {
                     "id": "FREQ",
                     "name": "Frequency",
@@ -24,8 +24,7 @@
                             "name": "Daily"
                         }
                     ]
-                },
-                {
+                }, {
                     "id": "CURRENCY_DENOM",
                     "name": "Currency denominator",
                     "keyPosition": 3,
@@ -35,8 +34,7 @@
                             "name": "Euro"
                         }
                     ]
-                },
-                {
+                }, {
                     "id": "EXR_TYPE",
                     "name": "Exchange rate type",
                     "keyPosition": 4,
@@ -46,8 +44,7 @@
                             "name": "Spot rate"
                         }
                     ]
-                },
-                {
+                }, {
                     "id": "EXR_SUFFIX",
                     "name": "Series variation - EXR context",
                     "keyPosition": 5,
@@ -59,8 +56,8 @@
                     ]
                 }
             ],
-            "seriesDimensions": [],
-            "observationDimensions": [
+            "series": [],
+            "observation": [
                 {
                     "id": "CURRENCY",
                     "name": "Currency",
@@ -74,8 +71,7 @@
                             "name": "Russian rouble"
                         }
                     ]
-                },
-                {
+                }, {
                     "id": "TIME_PERIOD",
                     "name": "Time period or range",
                     "keyPosition": 6,
@@ -93,10 +89,12 @@
                         }
                     ]
                 }
-            ],
-            "dataSetAttributes": [],
-            "seriesAttributes": [],
-            "observationAttributes": [
+            ]
+        },
+        "attributes": {
+            "dataSet": [],
+            "series": [],
+            "observation": [
                 {
                     "id": "TITLE",
                     "name": "Series title",
@@ -107,8 +105,7 @@
                             "name": "Russian rouble (RUB)"
                         }
                     ]
-                },
-                {
+                }, {
                     "id": "OBS_STATUS",
                     "name": "Observation status",
                     "values": [
@@ -124,7 +121,7 @@
     "dataSets": [
         {
             "extracted": "2013-01-21T15:20:00.000Z",
-            "action": "Informational",
+            "dataSetAction": "Informational",
             "dimensions": [0, 0, 0, 0],
             "observations": [
                 [0, 0, 1.5931, 0, 0],
