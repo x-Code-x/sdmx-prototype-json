@@ -97,8 +97,11 @@ be released later on. Example:
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "packaging": {
-            # packaging object #
+        "dimensions": {
+            # dimensions object #
+        },
+        "attributes": {
+            # attributes object #
         }
     }
 
@@ -270,8 +273,11 @@ Example:
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "packaging": {
-            # packaging object #
+        "dimensions": {
+            # dimensions object #
+        },
+        "attributes": {
+            # attributes object #
         }
     }
 
@@ -327,39 +333,51 @@ For additional information about these, please refer to the [SDMX documentation]
 
     "version": 1.0
 
-### <a name="packaging"></a>packaging
+### dimensions
 
-*Object*. Describes the components used in the message as well as the levels in the hierarchy (data set, series, 
-observations) to which these components are attached. Example:
+*Object*. Describes the dimensions used in the message as well as the levels in the hierarchy (data set, series, 
+observations) to which these dimensions are attached. Example:
 
-    "packaging": {
-        "dataSetDimensions": [
+    "dimensions": {
+        "dataSet": [
             {
                 # Component object #
             }, 
         ],
-        "seriesDimensions": [
+        "series": [
             {
                 # Component object #
             }
         ],
-        "observationDimensions": [
-            {
-                # Component object #
-            }
-        ],
-        "dataSetAttributes": [],
-        "seriesAttributes": [
-            {
-                # Component object #
-            }
-        ],
-        "observationAttributes": [
+        "observation": [
             {
                 # Component object #
             }
         ]
     }
+    
+### attributes
+
+*Object*. Describes the attributes used in the message as well as the levels in the hierarchy (data set, series, 
+observations) to which these attributes are attached. Example:
+
+    "attributes": {
+        "dataSet": [
+            {
+                # Component object #
+            }, 
+        ],
+        "series": [
+            {
+                # Component object #
+            }
+        ],
+        "observation": [
+            {
+                # Component object #
+            }
+        ]
+    }    
 
 ### <a name="Component"></a>Component
 
@@ -540,8 +558,7 @@ A data set may also organize observations in logical groups called series. These
 cross-sections. In this scenario, we have 3 levels in the data part of the message: the data set level, the
 series level and the observation level.
 
-Dimensions and attributes may be attached to any of these 3 levels. The way this is done in a particular message is
-documented in the [packaging element](#packaging).
+Dimensions and attributes may be attached to any of these 3 levels.
 
 Observations will be found directly under a data set object, in case the data set is a flat list of observations. In
 case the data set represents time series or cross sections, the observations will be found under the series elements.
@@ -739,8 +756,8 @@ Let's say that the following message needs to be processed:
         "structure": {
             "id": "ECB_EXR_WEB",
             "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-            "packaging": {
-                "dataSetDimensions": [
+            "dimensions": {
+                "dataSet": [
                     {
                         "id": "FREQ",
                         "name": "Frequency",
@@ -786,7 +803,7 @@ Let's say that the following message needs to be processed:
                         ]
                     }
                 ],
-                "seriesDimensions": [
+                "series": [
                     {
                         "id": "CURRENCY",
                         "name": "Currency",
@@ -802,7 +819,7 @@ Let's say that the following message needs to be processed:
                         ]
                     }
                 ],
-                "observationDimensions": [
+                "observation": [
                     {
                         "id": "TIME_PERIOD",
                         "name": "Time period or range",
@@ -821,9 +838,10 @@ Let's say that the following message needs to be processed:
                             }
                         ]
                     }
-                ],
-                "dataSetAttributes": [],
-                "seriesAttributes": [
+                ]},
+            "attributes":     
+                "dataSet": [],
+                "series": [
                     {
                         "id": "TITLE",
                         "name": "Series title",
@@ -836,7 +854,7 @@ Let's say that the following message needs to be processed:
                         ]
                     }
                 ],
-                "observationAttributes": [
+                "observation": [
                     {
                         "id": "OBS_STATUS",
                         "name": "Observation status",
@@ -895,14 +913,14 @@ There is only one data set in the message, and it contains two series.
         ]
     }
 
-The packaging field tells us that, out of the 6 dimensions, 4 have the same value for the 2 series and are therefore
+The structure.dimensions field tells us that, out of the 6 dimensions, 4 have the same value for the 2 series and are therefore
 attached to the data set level.
 
 We see that, for the first series, we get the value 0:
 
     "dimensions": [0]
 
-From the packaging information, we know that CURRENCY is the series dimension.
+From the structure information, we know that CURRENCY is the series dimension.
 
     "seriesDimensions": [
         {
