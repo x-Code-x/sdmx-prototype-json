@@ -123,7 +123,7 @@
     "dataSets": [
         {
             "extracted": "2013-01-21T15:20:00.000Z",
-            "dataSetAction": "Informational",
+            "action": "Informational",
             "dimensions": [0, 0, 0, 0],
             "series": [
                 {
