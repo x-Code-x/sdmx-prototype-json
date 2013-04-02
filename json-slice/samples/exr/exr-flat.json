@@ -7,7 +7,7 @@
             "id": "ECB",
             "name": "European Central Bank"
         },
-        "name": "Sample cross-sectional data message"
+        "name": "Sample flat data message"
     },
     "structure": {
         "id": "ECB_EXR_WEB",
@@ -56,8 +56,22 @@
                     ]
                 }
             ],
-            "series": [
+            "series": [],
+            "observation": [
                 {
+                    "id": "CURRENCY",
+                    "name": "Currency",
+                    "keyPosition": 2,
+                    "values": [
+                        {
+                            "id": "NZD",
+                            "name": "New Zealand dollar"
+                        }, {
+                            "id": "RUB",
+                            "name": "Russian rouble"
+                        }
+                    ]
+                }, {
                     "id": "TIME_PERIOD",
                     "name": "Time period or range",
                     "keyPosition": 6,
@@ -72,22 +86,6 @@
                             "name": "2013-01-21",
                             "start": "2013-01-21T00:00:00.000Z",
                             "end": "2013-01-21T23:59:59.000Z"
-                        }
-                    ]
-                }
-            ],
-            "observation": [
-                {
-                    "id": "CURRENCY",
-                    "name": "Currency",
-                    "keyPosition": 2,
-                    "values": [
-                        {
-                            "id": "NZD",
-                            "name": "New Zealand dollar"
-                        }, {
-                            "id": "RUB",
-                            "name": "Russian rouble"
                         }
                     ]
                 }
@@ -125,22 +123,11 @@
             "extracted": "2013-01-21T15:20:00.000Z",
             "action": "Informational",
             "dimensions": [0, 0, 0, 0],
-            "series": [
-                {
-                    "dimensions": [0],
-                    "attributes": [],
-                    "observations": [
-                        [0, 1.5931, 0, 0],
-                        [1, 40.3426, 0, 1]
-                    ]
-                }, {
-                    "dimensions": [1],
-                    "attributes": [],
-                    "observations": [
-                        [0, 1.5925, 0, 0],
-                        [1, 40.3000, 0, 1]
-                    ]
-                }
+            "observations": [
+                [0, 0, 1.5931, 0, 0],
+                [0, 1, 1.5925, 0, 0],
+                [1, 0, 40.3426, 0, 1],
+                [1, 1, 40.3000, 0, 1]
             ]
         }
     ]
