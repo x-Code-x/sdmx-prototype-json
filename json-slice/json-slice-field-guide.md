@@ -1,6 +1,6 @@
 # Draft Field Guide to SDMX-PROTO-JSON Objects
 
-**json-slice format** **v0.2.0**
+**json-slice format** **v0.3.0**
 
 Use this guide to better understand SDMX-PROTO-JSON objects.
 
@@ -58,7 +58,6 @@ level object and it contains the data as well as the metadata needed to interpre
 Example:
 
     {
-      "sdmx-proto-json": "2012-11-15",
       "header": {
         "name": "BIS Effective Exchange Rates",
         "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
@@ -72,13 +71,6 @@ Example:
       ],
       "errors": null
     }
-
-### sdmx-proto-json
-
-*String*. A string that specifies the version of the sdmx-proto-json response. A list of valid versions will
-be released later on. Example:
-
-    "sdmx-proto-json": "2012-11-15"
 
 ### header
 
@@ -743,7 +735,6 @@ Elements after the observation value are values for the observation level attrib
 Let's say that the following message needs to be processed:
 
     {
-        "sdmx-proto-json": "2012-11-29",
         "header": {
             "id": "62b5f19d-f1c9-495d-8446-a3661ed24753",
             "prepared": "2012-11-29T08:40:26",
