@@ -3,9 +3,6 @@
     "type": "object",
     "description": "Schema for json-slice, version 2013-03-24",
     "properties": {
-        "sdmx-proto-json": {
-            "type": "string"
-        },
         "header": {
             "$ref": "#/definitions/header"
         },
@@ -25,7 +22,7 @@
             }
         }
     },
-    "required": [ "sdmx-proto-json", "header" ],
+    "required": [ "header" ],
     "additionalProperties": false,
     "definitions": {
         "header": {
@@ -54,7 +51,7 @@
                             "type": "string"
                         }
                     },
-                    "required": [ "id", "name" ]
+                    "required": [ "id" ]
                 },
                 "receiver": {
                     "type": [ "null", "object" ],
@@ -66,7 +63,7 @@
                             "type": "string"
                         }
                     },
-                    "required": [ "id", "name" ]
+                    "required": [ "id" ]
                 },
                 "extracted": {
                     "type": [ "null", "string" ],
