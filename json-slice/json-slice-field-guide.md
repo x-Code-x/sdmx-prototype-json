@@ -2,7 +2,7 @@
 
 **json-slice format** **v0.3.0**
 
-Use this guide to better understand SDMX-PROTO-JSON objects.
+Use this guide to better understand the json-slice objects.
 
 - [Introduction](#Introduction)
 - [Message](#Message)
