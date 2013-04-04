@@ -1,4 +1,4 @@
-# Draft Field Guide to SDMX-PROTO-JSON Objects
+# Draft Field Guide to json-slice Objects
 
 **json-slice format** **v0.3.0**
 
@@ -493,23 +493,35 @@ parent. Example:
 
     "parent": "U2"
 
-##### start
+##### start and end fields
 
-*String* *nullable*. Start date for the period in a time dimension.
-This field is useful only when the value represents a period for a time dimension
-(dimension type is 'time'). Value is a date in ISO format for the beginning of the
-period. Example:
+*String* *nullable*. Start and end are instants of time that define an interval. 
+They mark the beginning and the end of the reporting period represented by the component value. 
+The length of the interval is the duration (i.e. duration = end - start). 
+These fields should be used only when the component value represents one of the values for the time dimension!
 
-    "start": "2007-02-01T00:00:00.000Z"
+Values are considered as inclusive for the start field and as exclusive for the end field 
+(so-called half-open interval). Values must follow the ISO 8601 syntax for combined dates and times, 
+including time zone. 
 
-##### end
+Example:
 
-*String* *nullable*. End date for period in a time dimension.
-This field is useful only when the value represents a period for a time dimension
-(dimension type is 'time'). Value is a date in ISO format for the end of the
-period. Example:
+    {
+        "id": "2010",
+        "name": "2010",
+        "start": "2010-01-01T00:00:00.000Z",
+        "end": "2011-01-01T00:00:00.000Z"
+    }
 
-    "end": "2007-10-31T23:59:59.000Z"
+Duration can easily be calculated. Taking the example above, and using the times in milliseconds since Jan 1st 1970:
+- start = 2010-01-01T00:00:00.000Z = 1262304060000
+- end = 2011-01-01T00:00:00.000Z = 1293840060000
+- duration = 1293840060000 - 1262304060000 = 31536000000 ms = 31536000 s = 525600 m = 8760 h = 365 days
+
+These fields are useful for visualisation tools, when selecting the appropriate point in time for the time axis. 
+Statistical data, can be collected, for example, at the beginning, the middle or the end of the period, or can 
+represent the average of observations through the period. Based on this information and using the start and end 
+fields, it is easy to get or calculate the desired point in time to be used for the time axis. 
 
 ##### geometry
 
