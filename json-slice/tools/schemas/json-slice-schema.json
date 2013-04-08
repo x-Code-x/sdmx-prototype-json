@@ -204,9 +204,6 @@
                             "description": {
                                 "type": [ "null", "string" ]
                             },
-                            "orderBy": {
-                                "type": [ "null", "integer" ]
-                            },
                             "parent": {
                                 "type": [ "null", "integer" ]
                             },
