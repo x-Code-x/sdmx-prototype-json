@@ -1,8 +1,6 @@
-# Draft Field Guide to json-slice Objects
+# A draft field guide to json-slice objects
 
 **json-slice format** **v0.3.0**
-
-Use this guide to better understand the json-slice objects.
 
 - [Introduction](#Introduction)
 - [Message](#Message)
@@ -10,15 +8,6 @@ Use this guide to better understand the json-slice objects.
 - [Structure](#Structure)
 - [DataSets](#DataSets)
 - [Tutorial: Handling component values](#handling_values)
-
-New fields may be introduced in later versions of the field guide. Therefore
-consuming applications should tolerate the addition of new fields with ease.
-
-The ordering of fields in objects is undefined. The fields may appear in any order
-and consuming applications should not rely on any specific ordering. It is safe to consider a nulled field and the absence of a field as the same thing.
-
-Not all fields appear in all contexts. For example response with error messages
-may not contain fields for data, dimensions and attributes.
 
 ----
 
@@ -46,15 +35,23 @@ particular date). Of course, these intermediate groupings are entirely optional 
 may simply decide to have a flat list of observations in your data set.
 
 The SDMX information model is much richer than this limited introduction,
-however the above should be sufficient to understand the JSON format proposed here. For
+however the above should be sufficient to understand the json-slice format. For
 additional information, please refer to the [SDMX documentation](http://sdmx.org/?page_id=10).
+
+Before we start, let's clarify a few more things about this guide:
+* New fields may be introduced in later versions. Therefore
+consuming applications should tolerate the addition of new fields with ease.
+* The ordering of fields in objects is undefined. The fields may appear in any order
+and consuming applications should not rely on any specific ordering. It is safe to consider a 
+nulled field and the absence of a field as the same thing.
+* Not all fields appear in all contexts. For example response with error messages
+may not contain fields for data, dimensions and attributes.
 
 ----
 
 ## <a name="Message"></a>Message
 
-Message is the response you get back from the SDMX RESTful API. Message is the top
-level object and it contains the data as well as the metadata needed to interpret those data.
+Message is the top level object and it contains the data as well as the metadata needed to interpret those data.
 Example:
 
     {
@@ -74,7 +71,8 @@ Example:
 
 ### header
 
-*Object* *nullable*. *Header* contains basic information about the message. Example:
+*Object* *nullable*. *Header* contains basic information about the message, such as when it was prepared and
+how has sent it. Example:
 
     "header": {
       "name": "BIS Effective Exchange Rates",
@@ -84,7 +82,8 @@ Example:
 
 ### structure
 
-*Object* *nullable*. *Structure* contains the information needed to interpret the data available in the message. Example:
+*Object* *nullable*. *Structure* contains the information needed to interpret the data available in the message, 
+such as the list of concepts used. Example:
 
     "structure": {
         "id": "ECB_EXR_WEB",
@@ -100,10 +99,7 @@ Example:
 ### dataSets
 
 *Array* *nullable*. *DataSets* field is an array of *[DataSet](#DataSet)* objects. That's where the data (i.e.: the observations)
-will be. In typical cases, the file will
-contain only one data set. However, in some cases, such as when retrieving, from an SDMX 2.1 web service, what has
-changed in the data source since in particular point in time, the web service might return more than one data set.
-Example:
+will be. Example:
 
     "dataSets": [
       {
@@ -114,13 +110,16 @@ Example:
         ]
       }
     ]
+    
+In typical cases, the file will contain only one data set. However, in some cases, such as when retrieving, 
+from an SDMX 2.1 web service, what has changed in the data source since in particular point in time, the web
+service might return more than one data set.    
 
 ### errors
 
 *Array* *nullable*. RESTful web services indicates errors using the HTTP status
 codes. In addition, whenever appropriate, the error can also be returned using
-the error fields. Error is an array of error messages. If there are no errors
-then error is null. Example:
+this error field. Error is an array of error messages. Example:
 
     "errors": [
       "Invalid number of dimensions in parameter key"
@@ -131,7 +130,8 @@ then error is null. Example:
 
 ## <a name="Header"></a>header
 
-Header contains basic information about the message. Example:
+Header contains basic information about the message, such as when it was prepared and
+how has sent it. Example:
 
     "header": {
       "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
@@ -157,26 +157,22 @@ Example:
 
 ### test
 
-*Boolean* *nullable*. Test indicates whether the message is for test purposes or not. False for normal messages. Example:
+*Boolean* *nullable*. Indicates whether the message is for test purposes or not. False for normal messages. Example:
 
     "test": false
 
 ### prepared
 
-*String*. Prepared is the date the message was prepared. String representation
-of Date formatted according to the ISO-8601 standard. Example:
+*String*. A timestamp indicating when the message was prepared and formatted according to the ISO-8601 standard. Example:
 
     "prepared": "2012-05-04T03:30:00Z"
 
 ### sender
 
-```Currently subset of the SMDX-ML functionality```
+*Object*. Information about the party that is transmitting the message. Sender contains the following fields:
 
-*Object*. Sender is information about the party that is transmitting the message.
-Sender contains the following fields:
-
-* id - *String*. The id attribute holds the identification of the party.
-* name - *String* *nullable*. Name is a human-readable name of the party.
+* id - *String*. A unique identifier of the party.
+* name - *String* *nullable*. A human-readable name of the party.
 * contact - *Array* *nullable*. A collection of contact details.
 
 Example:
@@ -191,7 +187,7 @@ Example:
     
 #### contact
 
-*Array* *nullable*. A collection of contact details.
+*Array* *nullable*. Information on how the party can be contacted.
 
 Each object in the collection may contain the following field:
 * name - *String*. The contact's name.
@@ -214,13 +210,11 @@ Example:
 
 ### receiver
 
-```Currently subset of the SMDX-ML functionality```
+*Object* *nullable*. Information about the party that is receiving the message. This can be useful is a scenario of
+bilateral data exchanges. Receiver contains the same fields as sender (see above):
 
-*Object* *nullable*. Receiver is information about the party that is receiving the message.
-Receiver contains the following fields:
-
-* id - *String*. The id attribute holds the identification of the party.
-* name - *String* *nullable*. Name is a human-readable name of the party.
+* id - *String*. A unique identifier of the receiver.
+* name - *String* *nullable*. A human-readable name of the party.
 * contact - *Array* *nullable*. A collection of contact details.
 
 Example:
@@ -231,20 +225,20 @@ Example:
 
 ### extracted
 
-*String* *nullable*. Extracted is a timestamp indicating when the data have been extracted from the data source.
+*String* *nullable*. A timestamp indicating when the data have been extracted from the data source, and formatted according to the ISO-8601 standard.
 Example:
 
-    "extracted": "2012-05-04T03:30:00"
+    "extracted": "2012-05-04T03:30:00Z"
 
 ### embargoDate
 
-*String* *nullable*. EmbargoDate holds an ISO-8601 time period before which the data included in this message is not available. Example:
+*String* *nullable*. EmbargoDate holds an ISO-8601 time period before which the data included in this message are not available. Example:
 
     "embargoDate": "2012-05-04"
 
 ### source
 
-*Array* *nullable*. Source provides human-readable information about the source of the data. Example:
+*Array* *nullable*. Human-readable information about the source of the data. Example:
 
     "source": [
       "European Central Bank and European Commission"
@@ -254,9 +248,7 @@ Example:
 
 ## <a name="Structure"></a>structure
 
-```Currently subset of the SMDX-ML functionality```
-
-*Object* *nullable*. Structure provides the structural metadata necessary to interpret the data contained in the message.
+*Object* *nullable*. Provides the structural metadata necessary to interpret the data contained in the message.
 It tells you which are the components (dimensions and attributes) used in the message and also describes to which
 level in the hierarchy (data set, series, observations) these components are attached.
 
@@ -398,21 +390,21 @@ Example:
 
 #### name
 
-*String*. Name provides a human-readable name for the object.
+*String*. Name provides a human-readable name for the component.
 Example:
 
     "name": "Frequency"
     
 #### keyPosition
 
-*Number*. Indicates the position of the dimension in the key, starting at 1.
-Example:
+*Number*. Indicates the position of the dimension in the key, starting at 1. This field should not be supplied
+for attributes.Example:
 
     "keyPosition": 1
 
 #### description
 
-*String* *nullable*. Provides a description for the object. Example:
+*String* *nullable*. Provides a description for the component. Example:
 
     "description": "The time interval at which observations occur over a given time period."
 
@@ -433,13 +425,13 @@ Example:
 #### default
 
 *String* or *Number* *nullable*. Defines a default value for the component (valid for attributes only!). If
-no value is provided then this value applies. Example:
+no value is provided in the data part of the message then this value applies. Example:
 
     "default": "A"
 
 #### values
 
-Array of [values](#component_values) for the components. Example:
+Array of [values](#component_values) for the component. Example:
 
     "values": [
       {
@@ -471,8 +463,8 @@ Array of [values](#component_values) for the components. Example:
 
 ##### description
 
-*String* *nullable*. Description provides a plain text, human-readable
-description of the value. Example:
+*String* *nullable*. Description provides a human-readable description of the value. The description is typically longer
+than the text provided for the name field. Example:
 
     "description": "Provisional value"
 
@@ -533,7 +525,7 @@ reference area etc.). The inner coordinates array is formatted as [geoJSON]
 
 ## <a name="DataSets"></a>DataSets
 
-DataSets object is an array of data set objects. Example:
+An array of data set objects. Example:
 
     "dataSets": [
       {
@@ -556,7 +548,7 @@ series level and the observation level.
 
 Dimensions and attributes may be attached to any of these 3 levels.
 
-Observations will be found directly under a data set object, in case the data set is a flat list of observations. In
+In case the data set is a flat list of observations, observations will be found directly under a data set object. In
 case the data set represents time series or cross sections, the observations will be found under the series elements.
 
 ### id
@@ -605,8 +597,8 @@ Example:
 *Object* *nullable*. Provider is information about the party that provides the data contained in the data set.
 Provider contains the following fields:
 
-* id - *String*. The id attribute holds the identification of the party.
-* name - *String* *nullable*. Name is a human-readable name of the party.
+* id - *String*. A unique identifier of the party.
+* name - *String* *nullable*. A human-readable name of the party.
 
 Example:
 
@@ -616,13 +608,13 @@ Example:
 
 ### reportingBegin
 
-*String* *nullable*. ReportingBegin provides the start of the time period covered by the message. Example:
+*String* *nullable*. The start of the time period covered by the message. Example:
 
     "reportingBegin": "2012-05-04"
 
 ### reportingEnd
 
-*String* *nullable*. ReportingEnd provides the end of the time period covered by the message. Example:
+*String* *nullable*. The end of the time period covered by the message. Example:
 
     "reportingEnd": "2012-06-01"
 
@@ -723,8 +715,8 @@ array of two of more values.
         [ 3, 107.3, 0 ]
     ]
 
-The first elements in an observation value array are the index values of the observation level dimensions. It's typically one
-for time series and cross-sections, but there can be more than one when the data set represents a flat list of
+The first elements in an observation value array are the index values of the observation level dimensions. It's one
+for time series and cross-sections, but there will be more than one when the data set represents a flat list of
 observations.
 
 Then comes the observation value. The data type for observation value is *Number*. Data type for a reported
