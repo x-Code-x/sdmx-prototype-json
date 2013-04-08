@@ -1,0 +1,339 @@
+{
+    "$schema" : "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "Schema for json-code-index, version 2013-04-02",
+    "properties": {
+        "sdmx-proto-json": {
+            "type": "string"
+        },
+        "header": {
+            "$ref": "#/definitions/header"
+        },
+        "structure": {
+            "$ref": "#/definitions/structure"
+        },
+        "dataSets": {
+            "type": [ "null", "array" ],
+            "items": {
+                "$ref": "#/definitions/dataSet"
+            }
+        },
+        "errors": {
+            "type": [ "null", "array" ],
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [ "sdmx-proto-json", "header" ],
+    "additionalProperties": false,
+    "definitions": {
+        "header": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": [ "null", "string" ]
+                },
+                "prepared": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "test": {
+                    "type": [ "null", "boolean" ]
+                },
+                "sender": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [ "id", "name" ]
+                },
+                "receiver": {
+                    "type": [ "null", "object" ],
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [ "id", "name" ]
+                },
+                "extracted": {
+                    "type": [ "null", "string" ],
+                    "format": "date-time"
+                },
+                "embargoDate": {
+                    "type": [ "null", "string" ]
+                },
+                "source": {
+                    "type": [ "null", "array" ],
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                }
+            },
+            "required": [ "id", "prepared", "sender" ],
+            "additionalProperties": false
+        },
+        "structure": {
+            "type": [ "null", "object" ],
+            "properties": {
+                "id": {
+                    "type": [ "null", "string" ]
+                },
+                "href": {
+                    "type": [ "null", "string" ],
+                    "format": "uri"
+                },
+                "ref": {
+                    "type": [ "null", "object" ],
+                    "properties": {
+                        "type": {
+                            "enum": [ "dataStructure", "dataflow", "provisionAgreement" ]
+                        },
+                        "agencyID": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "version": {
+                            "type": "string",
+                            "default": "1.0"
+                        }
+                    },
+                    "required": [ "type", "agencyID", "id" ],
+                    "additionalProperties": false
+                },
+		"dimensions": {
+	  	    "type": [ "null", "array" ],
+		    "items": {
+		        "$ref": "#/definitions/dimension"
+		    },
+                    "uniqueItems": true
+		},
+		"attributes": {
+		    "type": [ "null", "array" ],
+		    "items": {
+			"$ref": "#/definitions/attribute"
+		    },
+                    "uniqueItems": true
+		}
+            },
+            "required": [ "packaging" ],
+            "additionalProperties": false
+        },
+        "dimension": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": [ "null", "string" ]
+                },
+                "role": {
+                    "type": [ "null", "string" ]
+                },
+                "default": {
+                    "type": [ "null", "string" ]
+                },
+                "codes": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "selected": {
+                                "type": [ "null", "boolean" ]
+                            },
+                            "description": {
+                                "type": [ "null", "string" ]
+                            },
+                            "orderBy": {
+                                "type": [ "null", "integer" ]
+                            },
+                            "parent": {
+                                "type": [ "null", "integer" ]
+                            },
+                            "start": {
+                                "type": [ "null", "string" ],
+                                "format": "date-time"
+                            },
+                            "end": {
+                                "type": [ "null", "string" ],
+                                "format": "date-time"
+                            },
+                            "geocode": {
+                                "type": [ "null", "object" ]
+                            }
+                        },
+                        "required": [ "name" ]
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                }
+            },
+            "required": [ "id", "name", "codes" ],
+            "additionalProperties": false
+        },
+        "attribute": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": [ "null", "string" ]
+                },
+                "role": {
+                    "type": [ "null", "string" ]
+                },
+                "default": {
+                    "type": [ "null", "string" ]
+                },
+                "codes": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "attachment": {
+				"type": [ "null", "array" ],
+				"items": {
+				    "type": "boolean"
+				}
+                            },
+                            "description": {
+                                "type": [ "null", "string" ]
+                            },
+                            "orderBy": {
+                                "type": [ "null", "integer" ]
+                            },
+                            "parent": {
+                                "type": [ "null", "integer" ]
+                            },
+                            "start": {
+                                "type": [ "null", "string" ],
+                                "format": "date-time"
+                            },
+                            "end": {
+                                "type": [ "null", "string" ],
+                                "format": "date-time"
+                            },
+                            "geocode": {
+                                "type": [ "null", "object" ]
+                            }
+                        },
+                        "required": [ "name" ]
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                }
+            },
+            "required": [ "id", "name", "codes" ],
+            "additionalProperties": false
+        },
+        "dataSet": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": [ "null", "string" ]
+                },
+                "name": {
+                    "type": [ "null", "string" ]
+                },
+                "description": {
+                    "type": [ "null", "string" ]
+                },
+                "action": {
+                    "type": "string",
+                    "enum": [ "Informational", "Append", "Replace", "Delete" ]
+                },
+                "extracted": {
+                    "type": [ "null", "string" ],
+                    "format": "date-time"
+                },
+                "provider": {
+                    "type": [ "null", "object" ],
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [ "id", "name" ],
+                    "additionalProperties": false
+                },
+                "reportingBegin": {
+                    "type": [ "null", "string" ]
+                },
+                "reportingEnd": {
+                    "type": [ "null", "string" ]
+                },
+                "validFrom": {
+                    "type": [ "null", "string" ],
+                    "format": "date-time"
+                },
+                "validTo": {
+                    "type": [ "null", "string" ],
+                    "format": "date-time"
+                },
+                "publicationYear": {
+                    "type": [ "null", "string" ]
+                },
+                "publicationPeriod": {
+                    "type": [ "null", "string" ]
+                },
+                "data": {
+                    "type": "object",
+		    "patternProperties": {
+			"^(?:[0-9]+|null)(?::[0-9]+|:null)*$": {
+			    "type": "number"
+			}
+		    },
+		    "additionalProperties": false
+                },
+                "attributes": {
+                    "type": "object",
+		    "patternProperties": {
+			"^(?:[0-9]+|null)(?::[0-9]+|:null)*;[0-9]+$": {
+			    "type": "number"
+			}
+		    },
+		    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}
