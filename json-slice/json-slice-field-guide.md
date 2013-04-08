@@ -444,8 +444,7 @@ Array of [values](#component_values) for the components. Example:
     "values": [
       {
         "id": "M",
-        "name": "Monthly",
-        "orderBy": 0
+        "name": "Monthly"
       }
     ]
 
@@ -455,8 +454,7 @@ Array of [values](#component_values) for the components. Example:
 
     {
         "id": "M",
-        "name": "Monthly",
-        "orderBy": 0
+        "name": "Monthly"
     }
 
 ##### id
@@ -477,12 +475,6 @@ Array of [values](#component_values) for the components. Example:
 description of the value. Example:
 
     "description": "Provisional value"
-
-##### orderBy
-
-*Number* *nullable*. Default display order for the value. Example:
-
-    "orderBy": 64
 
 ##### parent
 
