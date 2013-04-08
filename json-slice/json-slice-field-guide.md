@@ -733,7 +733,7 @@ Let's say that the following message needs to be processed:
     {
         "header": {
             "id": "62b5f19d-f1c9-495d-8446-a3661ed24753",
-            "prepared": "2012-11-29T08:40:26",
+            "prepared": "2012-11-29T08:40:26Z",
             "sender": {
                 "id": "ECB",
                 "name": "European Central Bank"
@@ -858,7 +858,7 @@ Let's say that the following message needs to be processed:
         "dataSets": [
             {
                 "extracted": "2013-01-21T15:20:00.000Z",
-                "dataSetAction": "Informational",
+                "action": "Informational",
                 "dimensions": [0, 0, 0, 0],
                 "series": [
                     {
@@ -881,7 +881,7 @@ Let's say that the following message needs to be processed:
         ]
     }
 
-There is only one data set in the message, and it contains two series.
+There is one data set in the message, and it contains two series.
 
     {
         "dimensions": [0],
