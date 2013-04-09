@@ -16,7 +16,7 @@
                 {
                     "id": "FREQ",
                     "name": "Frequency",
-                    "values": [
+                    "codes": [
                         {
                             "id": "D",
                             "name": "Daily"
@@ -25,7 +25,7 @@
                 }, {
                     "id": "CURRENCY_DENOM",
                     "name": "Currency denominator",
-                    "values": [
+                    "codes": [
                         {
                             "id": "EUR",
                             "name": "Euro"
@@ -34,7 +34,7 @@
                 }, {
                     "id": "EXR_TYPE",
                     "name": "Exchange rate type",
-                    "values": [
+                    "codes": [
                         {
                             "id": "SP00",
                             "name": "Spot rate"
@@ -43,7 +43,7 @@
                 }, {
                     "id": "EXR_SUFFIX",
                     "name": "Series variation - EXR context",
-                    "values": [
+                    "codes": [
                         {
                             "id": "A",
                             "name": "Average or standardised measure for given frequency"
@@ -53,7 +53,7 @@
                 {
                     "id": "CURRENCY",
                     "name": "Currency",
-                    "values": [
+                    "codes": [
                         {
                             "id": "NZD",
                             "name": "New Zealand dollar"
@@ -66,7 +66,7 @@
                 {
                     "id": "TIME_PERIOD",
                     "name": "Time period or range",
-                    "values": [
+                    "codes": [
                         {
                             "id": "2013-01-18",
                             "name": "2013-01-18",
@@ -85,7 +85,7 @@
                 {
                     "id": "TITLE",
                     "name": "Series title",
-  				"attachment": [
+					"attachment": [
 							true,
 							true,
 							true,
@@ -93,7 +93,7 @@
 							true,
 							false,
 					],
-                    "values": [
+                    "codes": [
                         {
                             "name": "New zealand dollar (NZD)"
                         }, {
@@ -112,7 +112,7 @@
 							false,
 							false,
 					],
-                    "values": [
+                    "codes": [
                         {
                             "id": "A",
                             "name": "Normal value"
