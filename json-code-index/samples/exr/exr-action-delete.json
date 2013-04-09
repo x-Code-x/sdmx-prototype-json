@@ -49,7 +49,7 @@
 						"name": "Average or standardised measure for given frequency"
 					}
 				]
-			}
+			},
 			{
 				"id": "TIME_PERIOD",
 				"name": "Time period or range",
@@ -66,7 +66,7 @@
 						"end": "2013-01-21T23:59:59.000Z"
 					}
 				]
-			}
+			},
 			{
 				"id": "CURRENCY",
 				"name": "Currency",
@@ -137,7 +137,6 @@
             "extracted": "2013-01-21T15:20:00.000Z",
             "action": "Delete",
             "validTo": "2012-03-20T10:07:58.000+01:00",
-            "dimensions": [0, 0, 0, 0],
             "data": {
 				"0:0:0:0:0:0":null
             },
