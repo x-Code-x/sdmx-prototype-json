@@ -163,7 +163,7 @@ Example:
 
 ### prepared
 
-*String*. A timestamp indicating when the message was prepared and formatted according to the ISO-8601 standard. Example:
+*String*. A timestamp, formatted according to the ISO-8601 standard, indicating when the message was prepared. Example:
 
     "prepared": "2012-05-04T03:30:00Z"
 
@@ -225,7 +225,7 @@ Example:
 
 ### extracted
 
-*String* *nullable*. A timestamp indicating when the data have been extracted from the data source, and formatted according to the ISO-8601 standard.
+*String* *nullable*. A timestamp, formatted according to the ISO-8601 standard, indicating when the data have been extracted from the data source.
 Example:
 
     "extracted": "2012-05-04T03:30:00Z"
