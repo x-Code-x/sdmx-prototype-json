@@ -1,8 +1,6 @@
-# Draft Field Guide to SDMX-PROTO-JSON Objects
+# A draft field guide to json-slice objects
 
-**json-slice format** **v0.2.0**
-
-Use this guide to better understand SDMX-PROTO-JSON objects.
+**json-slice format** **v0.3.0**
 
 - [Introduction](#Introduction)
 - [Message](#Message)
@@ -10,15 +8,6 @@ Use this guide to better understand SDMX-PROTO-JSON objects.
 - [Structure](#Structure)
 - [DataSets](#DataSets)
 - [Tutorial: Handling component values](#handling_values)
-
-New fields may be introduced in later versions of the field guide. Therefore
-consuming applications should tolerate the addition of new fields with ease.
-
-The ordering of fields in objects is undefined. The fields may appear in any order
-and consuming applications should not rely on any specific ordering. It is safe to consider a nulled field and the absence of a field as the same thing.
-
-Not all fields appear in all contexts. For example response with error messages
-may not contain fields for data, dimensions and attributes.
 
 ----
 
@@ -46,19 +35,26 @@ particular date). Of course, these intermediate groupings are entirely optional 
 may simply decide to have a flat list of observations in your data set.
 
 The SDMX information model is much richer than this limited introduction,
-however the above should be sufficient to understand the JSON format proposed here. For
+however the above should be sufficient to understand the json-slice format. For
 additional information, please refer to the [SDMX documentation](http://sdmx.org/?page_id=10).
+
+Before we start, let's clarify a few more things about this guide:
+* New fields may be introduced in later versions. Therefore
+consuming applications should tolerate the addition of new fields with ease.
+* The ordering of fields in objects is undefined. The fields may appear in any order
+and consuming applications should not rely on any specific ordering. It is safe to consider a 
+nulled field and the absence of a field as the same thing.
+* Not all fields appear in all contexts. For example response with error messages
+may not contain fields for data, dimensions and attributes.
 
 ----
 
 ## <a name="Message"></a>Message
 
-Message is the response you get back from the SDMX RESTful API. Message is the top
-level object and it contains the data as well as the metadata needed to interpret those data.
+Message is the top level object and it contains the data as well as the metadata needed to interpret those data.
 Example:
 
     {
-      "sdmx-proto-json": "2012-11-15",
       "header": {
         "name": "BIS Effective Exchange Rates",
         "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
@@ -73,16 +69,10 @@ Example:
       "errors": null
     }
 
-### sdmx-proto-json
-
-*String*. A string that specifies the version of the sdmx-proto-json response. A list of valid versions will
-be released later on. Example:
-
-    "sdmx-proto-json": "2012-11-15"
-
 ### header
 
-*Object* *nullable*. *Header* contains basic information about the message. Example:
+*Object* *nullable*. *Header* contains basic information about the message, such as when it was prepared and
+how has sent it. Example:
 
     "header": {
       "name": "BIS Effective Exchange Rates",
@@ -92,23 +82,24 @@ be released later on. Example:
 
 ### structure
 
-*Object* *nullable*. *Structure* contains the information needed to interpret the data available in the message. Example:
+*Object* *nullable*. *Structure* contains the information needed to interpret the data available in the message, 
+such as the list of concepts used. Example:
 
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "packaging": {
-            # packaging object #
+        "dimensions": {
+            # dimensions object #
+        },
+        "attributes": {
+            # attributes object #
         }
     }
 
 ### dataSets
 
 *Array* *nullable*. *DataSets* field is an array of *[DataSet](#DataSet)* objects. That's where the data (i.e.: the observations)
-will be. In typical cases, the file will
-contain only one data set. However, in some cases, such as when retrieving, from an SDMX 2.1 web service, what has
-changed in the data source since in particular point in time, the web service might return more than one data set.
-Example:
+will be. Example:
 
     "dataSets": [
       {
@@ -119,13 +110,16 @@ Example:
         ]
       }
     ]
+    
+In typical cases, the file will contain only one data set. However, in some cases, such as when retrieving, 
+from an SDMX 2.1 web service, what has changed in the data source since in particular point in time, the web
+service might return more than one data set.    
 
 ### errors
 
 *Array* *nullable*. RESTful web services indicates errors using the HTTP status
 codes. In addition, whenever appropriate, the error can also be returned using
-the error fields. Error is an array of error messages. If there are no errors
-then error is null. Example:
+this error field. Error is an array of error messages. Example:
 
     "errors": [
       "Invalid number of dimensions in parameter key"
@@ -136,7 +130,8 @@ then error is null. Example:
 
 ## <a name="Header"></a>header
 
-Header contains basic information about the message. Example:
+Header contains basic information about the message, such as when it was prepared and
+how has sent it. Example:
 
     "header": {
       "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
@@ -162,26 +157,22 @@ Example:
 
 ### test
 
-*Boolean* *nullable*. Test indicates whether the message is for test purposes or not. False for normal messages. Example:
+*Boolean* *nullable*. Indicates whether the message is for test purposes or not. False for normal messages. Example:
 
     "test": false
 
 ### prepared
 
-*String*. Prepared is the date the message was prepared. String representation
-of Date formatted according to the ISO-8601 standard. Example:
+*String*. A timestamp, formatted according to the ISO-8601 standard, indicating when the message was prepared. Example:
 
     "prepared": "2012-05-04T03:30:00Z"
 
 ### sender
 
-```Currently subset of the SMDX-ML functionality```
+*Object*. Information about the party that is transmitting the message. Sender contains the following fields:
 
-*Object*. Sender is information about the party that is transmitting the message.
-Sender contains the following fields:
-
-* id - *String*. The id attribute holds the identification of the party.
-* name - *String* *nullable*. Name is a human-readable name of the party.
+* id - *String*. A unique identifier of the party.
+* name - *String* *nullable*. A human-readable name of the party.
 * contact - *Array* *nullable*. A collection of contact details.
 
 Example:
@@ -196,7 +187,7 @@ Example:
     
 #### contact
 
-*Array* *nullable*. A collection of contact details.
+*Array* *nullable*. Information on how the party can be contacted.
 
 Each object in the collection may contain the following field:
 * name - *String*. The contact's name.
@@ -219,13 +210,11 @@ Example:
 
 ### receiver
 
-```Currently subset of the SMDX-ML functionality```
+*Object* *nullable*. Information about the party that is receiving the message. This can be useful is a scenario of
+bilateral data exchanges. Receiver contains the same fields as sender (see above):
 
-*Object* *nullable*. Receiver is information about the party that is receiving the message.
-Receiver contains the following fields:
-
-* id - *String*. The id attribute holds the identification of the party.
-* name - *String* *nullable*. Name is a human-readable name of the party.
+* id - *String*. A unique identifier of the receiver.
+* name - *String* *nullable*. A human-readable name of the party.
 * contact - *Array* *nullable*. A collection of contact details.
 
 Example:
@@ -236,20 +225,20 @@ Example:
 
 ### extracted
 
-*String* *nullable*. Extracted is a timestamp indicating when the data have been extracted from the data source.
+*String* *nullable*. A timestamp, formatted according to the ISO-8601 standard, indicating when the data have been extracted from the data source.
 Example:
 
-    "extracted": "2012-05-04T03:30:00"
+    "extracted": "2012-05-04T03:30:00Z"
 
 ### embargoDate
 
-*String* *nullable*. EmbargoDate holds an ISO-8601 time period before which the data included in this message is not available. Example:
+*String* *nullable*. EmbargoDate holds an ISO-8601 time period before which the data included in this message are not available. Example:
 
     "embargoDate": "2012-05-04"
 
 ### source
 
-*Array* *nullable*. Source provides human-readable information about the source of the data. Example:
+*Array* *nullable*. Human-readable information about the source of the data. Example:
 
     "source": [
       "European Central Bank and European Commission"
@@ -259,9 +248,7 @@ Example:
 
 ## <a name="Structure"></a>structure
 
-```Currently subset of the SMDX-ML functionality```
-
-*Object* *nullable*. Structure provides the structural metadata necessary to interpret the data contained in the message.
+*Object* *nullable*. Provides the structural metadata necessary to interpret the data contained in the message.
 It tells you which are the components (dimensions and attributes) used in the message and also describes to which
 level in the hierarchy (data set, series, observations) these components are attached.
 
@@ -270,8 +257,11 @@ Example:
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "packaging": {
-            # packaging object #
+        "dimensions": {
+            # dimensions object #
+        },
+        "attributes": {
+            # attributes object #
         }
     }
 
@@ -327,39 +317,51 @@ For additional information about these, please refer to the [SDMX documentation]
 
     "version": 1.0
 
-### <a name="packaging"></a>packaging
+### dimensions
 
-*Object*. Describes the components used in the message as well as the levels in the hierarchy (data set, series, 
-observations) to which these components are attached. Example:
+*Object*. Describes the dimensions used in the message as well as the levels in the hierarchy (data set, series, 
+observations) to which these dimensions are attached. Example:
 
-    "packaging": {
-        "dataSetDimensions": [
+    "dimensions": {
+        "dataSet": [
             {
                 # Component object #
             }, 
         ],
-        "seriesDimensions": [
+        "series": [
             {
                 # Component object #
             }
         ],
-        "observationDimensions": [
-            {
-                # Component object #
-            }
-        ],
-        "dataSetAttributes": [],
-        "seriesAttributes": [
-            {
-                # Component object #
-            }
-        ],
-        "observationAttributes": [
+        "observation": [
             {
                 # Component object #
             }
         ]
     }
+    
+### attributes
+
+*Object*. Describes the attributes used in the message as well as the levels in the hierarchy (data set, series, 
+observations) to which these attributes are attached. Example:
+
+    "attributes": {
+        "dataSet": [
+            {
+                # Component object #
+            }, 
+        ],
+        "series": [
+            {
+                # Component object #
+            }
+        ],
+        "observation": [
+            {
+                # Component object #
+            }
+        ]
+    }    
 
 ### <a name="Component"></a>Component
 
@@ -388,21 +390,21 @@ Example:
 
 #### name
 
-*String*. Name provides a human-readable name for the object.
+*String*. Name provides a human-readable name for the component.
 Example:
 
     "name": "Frequency"
     
 #### keyPosition
 
-*Number*. Indicates the position of the dimension in the key, starting at 1.
-Example:
+*Number*. Indicates the position of the dimension in the key, starting at 1. This field should not be supplied
+for attributes.Example:
 
     "keyPosition": 1
 
 #### description
 
-*String* *nullable*. Provides a description for the object. Example:
+*String* *nullable*. Provides a description for the component. Example:
 
     "description": "The time interval at which observations occur over a given time period."
 
@@ -423,19 +425,18 @@ Example:
 #### default
 
 *String* or *Number* *nullable*. Defines a default value for the component (valid for attributes only!). If
-no value is provided then this value applies. Example:
+no value is provided in the data part of the message then this value applies. Example:
 
     "default": "A"
 
 #### values
 
-Array of [values](#component_values) for the components. Example:
+Array of [values](#component_values) for the component. Example:
 
     "values": [
       {
         "id": "M",
-        "name": "Monthly",
-        "orderBy": 0
+        "name": "Monthly"
       }
     ]
 
@@ -445,8 +446,7 @@ Array of [values](#component_values) for the components. Example:
 
     {
         "id": "M",
-        "name": "Monthly",
-        "orderBy": 0
+        "name": "Monthly"
     }
 
 ##### id
@@ -463,16 +463,10 @@ Array of [values](#component_values) for the components. Example:
 
 ##### description
 
-*String* *nullable*. Description provides a plain text, human-readable
-description of the value. Example:
+*String* *nullable*. Description provides a human-readable description of the value. The description is typically longer
+than the text provided for the name field. Example:
 
     "description": "Provisional value"
-
-##### orderBy
-
-*Number* *nullable*. Default display order for the value. Example:
-
-    "orderBy": 64
 
 ##### parent
 
@@ -483,23 +477,35 @@ parent. Example:
 
     "parent": "U2"
 
-##### start
+##### start and end fields
 
-*String* *nullable*. Start date for the period in a time dimension.
-This field is useful only when the value represents a period for a time dimension
-(dimension type is 'time'). Value is a date in ISO format for the beginning of the
-period. Example:
+*String* *nullable*. Start and end are instants of time that define an interval. 
+They mark the beginning and the end of the reporting period represented by the component value. 
+The length of the interval is the duration (i.e. duration = end - start). 
+These fields should be used only when the component value represents one of the values for the time dimension!
 
-    "start": "2007-02-01T00:00:00.000Z"
+Values are considered as inclusive for the start field and as exclusive for the end field 
+(so-called half-open interval). Values must follow the ISO 8601 syntax for combined dates and times, 
+including time zone. 
 
-##### end
+Example:
 
-*String* *nullable*. End date for period in a time dimension.
-This field is useful only when the value represents a period for a time dimension
-(dimension type is 'time'). Value is a date in ISO format for the end of the
-period. Example:
+    {
+        "id": "2010",
+        "name": "2010",
+        "start": "2010-01-01T00:00:00.000Z",
+        "end": "2011-01-01T00:00:00.000Z"
+    }
 
-    "end": "2007-10-31T23:59:59.000Z"
+Duration can easily be calculated. Taking the example above, and using the times in milliseconds since Jan 1st 1970:
+- start = 2010-01-01T00:00:00.000Z = 1262304060000
+- end = 2011-01-01T00:00:00.000Z = 1293840060000
+- duration = 1293840060000 - 1262304060000 = 31536000000 ms = 31536000 s = 525600 m = 8760 h = 365 days
+
+These fields are useful for visualisation tools, when selecting the appropriate point in time for the time axis. 
+Statistical data, can be collected, for example, at the beginning, the middle or the end of the period, or can 
+represent the average of observations through the period. Based on this information and using the start and end 
+fields, it is easy to get or calculate the desired point in time to be used for the time axis. 
 
 ##### geometry
 
@@ -519,7 +525,7 @@ reference area etc.). The inner coordinates array is formatted as [geoJSON]
 
 ## <a name="DataSets"></a>DataSets
 
-DataSets object is an array of data set objects. Example:
+An array of data set objects. Example:
 
     "dataSets": [
       {
@@ -540,25 +546,32 @@ A data set may also organize observations in logical groups called series. These
 cross-sections. In this scenario, we have 3 levels in the data part of the message: the data set level, the
 series level and the observation level.
 
-Dimensions and attributes may be attached to any of these 3 levels. The way this is done in a particular message is
-documented in the [packaging element](#packaging).
+Dimensions and attributes may be attached to any of these 3 levels.
 
-Observations will be found directly under a data set object, in case the data set is a flat list of observations. In
+In case the data set is a flat list of observations, observations will be found directly under a data set object. In
 case the data set represents time series or cross sections, the observations will be found under the series elements.
 
 ### id
 
-*String* *nullable*. Id provides an identifier for the data set.
-Example:
+*String* *nullable*. Id provides an identifier for the data set. Example:
 
     "id": "ECB_EXR_2011-06-17"
 
 ### name
 
-*String* *nullable*. A human-friendly name for the dataset.
-Example:
+*String* *nullable*. A human-friendly name for the dataset. Example:
 
     "name": "Bilateral exchange rates"
+    
+### description
+
+*String* *nullable*. Description provides a plain text, human-readable
+description of the dataset. Example:
+
+    "description": "The nominal effective exchange rate (EER) index is a summary measure of the external value of 
+    a currency vis-á-vis the currencies of the most trading partners, while the real EER - obtained by deflating 
+    the nominal rate with appropriate price or cost indices - is the most commonly used indicator of international 
+    price and cost competitiveness. Daily spot exchange rates provided by the Front Office Division."
 
 ### action
 
@@ -584,8 +597,8 @@ Example:
 *Object* *nullable*. Provider is information about the party that provides the data contained in the data set.
 Provider contains the following fields:
 
-* id - *String*. The id attribute holds the identification of the party.
-* name - *String* *nullable*. Name is a human-readable name of the party.
+* id - *String*. A unique identifier of the party.
+* name - *String* *nullable*. A human-readable name of the party.
 
 Example:
 
@@ -595,13 +608,13 @@ Example:
 
 ### reportingBegin
 
-*String* *nullable*. ReportingBegin provides the start of the time period covered by the message. Example:
+*String* *nullable*. The start of the time period covered by the message. Example:
 
     "reportingBegin": "2012-05-04"
 
 ### reportingEnd
 
-*String* *nullable*. ReportingEnd provides the end of the time period covered by the message. Example:
+*String* *nullable*. The end of the time period covered by the message. Example:
 
     "reportingEnd": "2012-06-01"
 
@@ -702,8 +715,8 @@ array of two of more values.
         [ 3, 107.3, 0 ]
     ]
 
-The first elements in an observation value array are the index values of the observation level dimensions. It's typically one
-for time series and cross-sections, but there can be more than one when the data set represents a flat list of
+The first elements in an observation value array are the index values of the observation level dimensions. It's one
+for time series and cross-sections, but there will be more than one when the data set represents a flat list of
 observations.
 
 Then comes the observation value. The data type for observation value is *Number*. Data type for a reported
@@ -718,10 +731,9 @@ Elements after the observation value are values for the observation level attrib
 Let's say that the following message needs to be processed:
 
     {
-        "sdmx-proto-json": "2012-11-29",
         "header": {
             "id": "62b5f19d-f1c9-495d-8446-a3661ed24753",
-            "prepared": "2012-11-29T08:40:26",
+            "prepared": "2012-11-29T08:40:26Z",
             "sender": {
                 "id": "ECB",
                 "name": "European Central Bank"
@@ -731,8 +743,8 @@ Let's say that the following message needs to be processed:
         "structure": {
             "id": "ECB_EXR_WEB",
             "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-            "packaging": {
-                "dataSetDimensions": [
+            "dimensions": {
+                "dataSet": [
                     {
                         "id": "FREQ",
                         "name": "Frequency",
@@ -778,7 +790,7 @@ Let's say that the following message needs to be processed:
                         ]
                     }
                 ],
-                "seriesDimensions": [
+                "series": [
                     {
                         "id": "CURRENCY",
                         "name": "Currency",
@@ -794,7 +806,7 @@ Let's say that the following message needs to be processed:
                         ]
                     }
                 ],
-                "observationDimensions": [
+                "observation": [
                     {
                         "id": "TIME_PERIOD",
                         "name": "Time period or range",
@@ -813,9 +825,10 @@ Let's say that the following message needs to be processed:
                             }
                         ]
                     }
-                ],
-                "dataSetAttributes": [],
-                "seriesAttributes": [
+                ]},
+            "attributes": {     
+                "dataSet": [],
+                "series": [
                     {
                         "id": "TITLE",
                         "name": "Series title",
@@ -828,7 +841,7 @@ Let's say that the following message needs to be processed:
                         ]
                     }
                 ],
-                "observationAttributes": [
+                "observation": [
                     {
                         "id": "OBS_STATUS",
                         "name": "Observation status",
@@ -845,7 +858,7 @@ Let's say that the following message needs to be processed:
         "dataSets": [
             {
                 "extracted": "2013-01-21T15:20:00.000Z",
-                "dataSetAction": "Informational",
+                "action": "Informational",
                 "dimensions": [0, 0, 0, 0],
                 "series": [
                     {
@@ -868,7 +881,7 @@ Let's say that the following message needs to be processed:
         ]
     }
 
-There is only one data set in the message, and it contains two series.
+There is one data set in the message, and it contains two series.
 
     {
         "dimensions": [0],
@@ -887,14 +900,14 @@ There is only one data set in the message, and it contains two series.
         ]
     }
 
-The packaging field tells us that, out of the 6 dimensions, 4 have the same value for the 2 series and are therefore
+The structure.dimensions field tells us that, out of the 6 dimensions, 4 have the same value for the 2 series and are therefore
 attached to the data set level.
 
 We see that, for the first series, we get the value 0:
 
     "dimensions": [0]
 
-From the packaging information, we know that CURRENCY is the series dimension.
+From the structure information, we know that CURRENCY is the series dimension.
 
     "seriesDimensions": [
         {

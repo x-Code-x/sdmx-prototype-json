@@ -12,13 +12,11 @@
     "structure": {
         "id": "ECB_EXR_WEB",
         "href": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-        "dimensions": {
-            "dataSet": [
+        "dimensions": [
                 {
                     "id": "FREQ",
                     "name": "Frequency",
-                    "keyPosition": 1,
-                    "values": [
+                    "codes": [
                         {
                             "id": "D",
                             "name": "Daily"
@@ -27,8 +25,7 @@
                 }, {
                     "id": "CURRENCY_DENOM",
                     "name": "Currency denominator",
-                    "keyPosition": 3,
-                    "values": [
+                    "codes": [
                         {
                             "id": "EUR",
                             "name": "Euro"
@@ -37,8 +34,7 @@
                 }, {
                     "id": "EXR_TYPE",
                     "name": "Exchange rate type",
-                    "keyPosition": 4,
-                    "values": [
+                    "codes": [
                         {
                             "id": "SP00",
                             "name": "Spot rate"
@@ -47,22 +43,17 @@
                 }, {
                     "id": "EXR_SUFFIX",
                     "name": "Series variation - EXR context",
-                    "keyPosition": 5,
-                    "values": [
+                    "codes": [
                         {
                             "id": "A",
                             "name": "Average or standardised measure for given frequency"
                         }
                     ]
-                }
-            ],
-            "series": [],
-            "observation": [
+                },
                 {
                     "id": "CURRENCY",
                     "name": "Currency",
-                    "keyPosition": 2,
-                    "values": [
+                    "codes": [
                         {
                             "id": "NZD",
                             "name": "New Zealand dollar"
@@ -74,8 +65,7 @@
                 }, {
                     "id": "TIME_PERIOD",
                     "name": "Time period or range",
-                    "keyPosition": 6,
-                    "values": [
+                    "codes": [
                         {
                             "id": "2013-01-18",
                             "name": "2013-01-18",
@@ -89,16 +79,20 @@
                         }
                     ]
                 }
-            ]
-        },
-        "attributes": {
-            "dataSet": [],
-            "series": [],
-            "observation": [
+            ],
+        "attributes": [
                 {
                     "id": "TITLE",
                     "name": "Series title",
-                    "values": [
+  				"attachment": [
+							true,
+							true,
+							true,
+							true,
+							false,
+							false,
+					],
+                    "codes": [
                         {
                             "name": "New zealand dollar (NZD)"
                         }, {
@@ -108,7 +102,15 @@
                 }, {
                     "id": "OBS_STATUS",
                     "name": "Observation status",
-                    "values": [
+					"attachment": [
+							true,
+							true,
+							true,
+							true,
+							false,
+							true,
+					],
+                    "codes": [
                         {
                             "id": "A",
                             "name": "Normal value"
@@ -116,19 +118,22 @@
                     ]
                 }
             ]
-        }
     },
     "dataSets": [
         {
             "extracted": "2013-01-21T15:20:00.000Z",
             "action": "Informational",
-            "dimensions": [0, 0, 0, 0],
-            "observations": [
-                [0, 0, 1.5931, 0, 0],
-                [0, 1, 1.5925, 0, 0],
-                [1, 0, 40.3426, 0, 1],
-                [1, 1, 40.3000, 0, 1]
-            ]
+            "data": {
+				"0:0:0:0:0:0": 1.5931,
+				"0:0:0:0:0:1": 40.3426,
+				"0:0:0:0:1:0": 1.5925,
+				"0:0:0:0:1:1": 40.3000
+			},
+			"attribute-values": {
+				"0:0:0:0::;0": 0,
+				"0:0:0:0::0;1": 0,
+				"0:0:0:0::1;1": 1
+			}
         }
     ]
 }

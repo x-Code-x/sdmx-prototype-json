@@ -2,12 +2,12 @@
 
 ## To do
 
-- Add a sample file with multiple data sets and different dataSetActions: replace, delete, update.
-- Look into annotations. Are they needed in the format? and if yes how should they be implemented?
-- Look into linking to related SDMX structures (like the current "href" field in structure).
+- Add "measure" or "measures" into packaging?
 - Look into grouping fields in packaging into dimensions and attributes, e.g. packaging.dimensions.dataSet or
 packaging.dataSet.dimensions.
-- Add "measure" or "measures" into packaging (only in observations) and include measure (e.g. OBS_VALUE) in components. 
+- Add "ref" field to dataSet? Already defined for structure.
+- Look into annotations. Are they needed in the format? and if yes how should they be implemented?
+- Add sample file with examples of all supported fields in the message.
 
 ## Waiting for further input
 
@@ -21,3 +21,10 @@ packaging.dataSet.dimensions.
 
 ## Done
 - Move components from the components array into the arrays in packaging and remove components array. Add field for the key position into dimension components.
+- Add a sample file with multiple data sets and different dataSetActions: Append, Delete, Update. 
+Sample file exr-action-delete contains and example of deletions. Append and Update are basically same as Informational.
+- Look into linking to related SDMX structures (like the current "href" field in structure). Structure contains field "ref"
+with information linking back to datastructure, provisionagreement or dataflow.
+- Added name to dataSet object.
+- Added contact details to sender object.
+- Added optional description to dataSet object.
