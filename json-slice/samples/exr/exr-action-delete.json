@@ -6,8 +6,7 @@
         "sender": {
             "id": "ECB",
             "name": "European Central Bank"
-        },
-        "name": "Sample message, containing what has changed in the database since a particular point in time."
+        }
     },
     "structure": {
         "id": "ECB_EXR_WEB",
