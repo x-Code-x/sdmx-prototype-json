@@ -56,7 +56,6 @@ Example:
 
     {
       "header": {
-        "name": "BIS Effective Exchange Rates",
         "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
         "prepared": "2012-05-04T03:30:00"
       },
@@ -75,7 +74,6 @@ Example:
 how has sent it. Example:
 
     "header": {
-      "name": "BIS Effective Exchange Rates",
       "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
       "prepared": "2012-05-04T03:30:00"
     }
@@ -136,7 +134,6 @@ how has sent it. Example:
     "header": {
       "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
       "prepared": "2013-01-03T12:54:12",
-      "name": "BIS Effective Exchange Rates",
       "sender: {
         "id": "SDMX"
       }
@@ -148,12 +145,6 @@ how has sent it. Example:
 Example:
 
     "id": "TEC00034"
-
-### name
-
-*String* *nullable*. Brief summary of the message contents. Example:
-
-    "name": "Short-term interest rates: Day-to-day money rates"
 
 ### test
 
@@ -507,20 +498,6 @@ Statistical data, can be collected, for example, at the beginning, the middle or
 represent the average of observations through the period. Based on this information and using the start and end 
 fields, it is easy to get or calculate the desired point in time to be used for the time axis. 
 
-##### geometry
-
-*Object* *nullable*. Represents the geographic location of this code (country,
-reference area etc.). The inner coordinates array is formatted as [geoJSON]
-(http://www.geojson.org) (longitude first, then latitude). Example:
-
-    "geometry": {
-      "type": "Point",
-      "coordinates": [
-        62.4302,
-        24.7271
-      ]
-    }
-
 ----
 
 ## <a name="DataSets"></a>DataSets
@@ -737,8 +714,7 @@ Let's say that the following message needs to be processed:
             "sender": {
                 "id": "ECB",
                 "name": "European Central Bank"
-            },
-            "name": "Sample time series data message"
+            }
         },
         "structure": {
             "id": "ECB_EXR_WEB",
