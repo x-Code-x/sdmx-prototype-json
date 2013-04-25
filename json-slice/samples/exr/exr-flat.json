@@ -6,8 +6,7 @@
         "sender": {
             "id": "ECB",
             "name": "European Central Bank"
-        },
-        "name": "Sample flat data message"
+        }
     },
     "structure": {
         "id": "ECB_EXR_WEB",
