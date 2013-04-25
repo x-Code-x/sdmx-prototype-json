@@ -31,9 +31,6 @@
                 "id": {
                     "type": "string"
                 },
-                "name": {
-                    "type": [ "null", "string" ]
-                },
                 "prepared": {
                     "type": "string",
                     "format": "date-time"
