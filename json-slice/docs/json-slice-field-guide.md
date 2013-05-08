@@ -42,7 +42,7 @@ Before we start, let's clarify a few more things about this guide:
 * New fields may be introduced in later versions. Therefore
 consuming applications should tolerate the addition of new fields with ease.
 * The ordering of fields in objects is undefined. The fields may appear in any order
-and consuming applications should not rely on any specific ordering. It is safe to consider a 
+and consuming applications should not rely on any specific ordering. It is safe to consider a
 nulled field and the absence of a field as the same thing.
 * Not all fields appear in all contexts. For example response with error messages
 may not contain fields for data, dimensions and attributes.
@@ -80,7 +80,7 @@ how has sent it. Example:
 
 ### structure
 
-*Object* *nullable*. *Structure* contains the information needed to interpret the data available in the message, 
+*Object* *nullable*. *Structure* contains the information needed to interpret the data available in the message,
 such as the list of concepts used. Example:
 
     "structure": {
@@ -108,10 +108,10 @@ will be. Example:
         ]
       }
     ]
-    
-In typical cases, the file will contain only one data set. However, in some cases, such as when retrieving, 
+
+In typical cases, the file will contain only one data set. However, in some cases, such as when retrieving,
 from an SDMX 2.1 web service, what has changed in the data source since in particular point in time, the web
-service might return more than one data set.    
+service might return more than one data set.
 
 ### errors
 
@@ -175,7 +175,7 @@ Example:
         # contact details #
       ]
     }
-    
+
 #### contact
 
 *Array* *nullable*. Information on how the party can be contacted.
@@ -184,12 +184,12 @@ Each object in the collection may contain the following field:
 * name - *String*. The contact's name.
 * department - *String* *nullable*. The organisational structure within which the contact person works.
 * role - *String* *nullable*. The responsibility of the contact person.
-* telephone - *String* *nullable*. The telephone number for the contact person. 
+* telephone - *String* *nullable*. The telephone number for the contact person.
 * fax - *String* *nullable*. The fax number for the contact person.
 * x400 - *String* *nullable*. The X.400 address for the contact person.
 * uri - *String* *nullable*. URI holds an information URL for the contact person.
 * email - *String* *nullable*. The email address for the contact person.
- 
+
 Example:
 
     "contact": [
@@ -310,14 +310,14 @@ For additional information about these, please refer to the [SDMX documentation]
 
 ### dimensions
 
-*Object*. Describes the dimensions used in the message as well as the levels in the hierarchy (data set, series, 
+*Object*. Describes the dimensions used in the message as well as the levels in the hierarchy (data set, series,
 observations) to which these dimensions are attached. Example:
 
     "dimensions": {
         "dataSet": [
             {
                 # Component object #
-            }, 
+            },
         ],
         "series": [
             {
@@ -330,17 +330,17 @@ observations) to which these dimensions are attached. Example:
             }
         ]
     }
-    
+
 ### attributes
 
-*Object*. Describes the attributes used in the message as well as the levels in the hierarchy (data set, series, 
+*Object*. Describes the attributes used in the message as well as the levels in the hierarchy (data set, series,
 observations) to which these attributes are attached. Example:
 
     "attributes": {
         "dataSet": [
             {
                 # Component object #
-            }, 
+            },
         ],
         "series": [
             {
@@ -352,7 +352,7 @@ observations) to which these attributes are attached. Example:
                 # Component object #
             }
         ]
-    }    
+    }
 
 ### <a name="Component"></a>Component
 
@@ -385,7 +385,7 @@ Example:
 Example:
 
     "name": "Frequency"
-    
+
 #### keyPosition
 
 *Number*. Indicates the position of the dimension in the key, starting at 1. This field should not be supplied
@@ -470,14 +470,14 @@ parent. Example:
 
 ##### start and end fields
 
-*String* *nullable*. Start and end are instants of time that define an interval. 
-They mark the beginning and the end of the reporting period represented by the component value. 
-The length of the interval is the duration (i.e. duration = end - start). 
+*String* *nullable*. Start and end are instants of time that define an interval.
+They mark the beginning and the end of the reporting period represented by the component value.
+The length of the interval is the duration (i.e. duration = end - start).
 These fields should be used only when the component value represents one of the values for the time dimension!
 
-Values are considered as inclusive for the start field and as exclusive for the end field 
-(so-called half-open interval). Values must follow the ISO 8601 syntax for combined dates and times, 
-including time zone. 
+Values are considered as inclusive for the start field and as exclusive for the end field
+(so-called half-open interval). Values must follow the ISO 8601 syntax for combined dates and times,
+including time zone.
 
 Example:
 
@@ -493,10 +493,10 @@ Duration can easily be calculated. Taking the example above, and using the times
 - end = 2011-01-01T00:00:00.000Z = 1293840060000
 - duration = 1293840060000 - 1262304060000 = 31536000000 ms = 31536000 s = 525600 m = 8760 h = 365 days
 
-These fields are useful for visualisation tools, when selecting the appropriate point in time for the time axis. 
-Statistical data, can be collected, for example, at the beginning, the middle or the end of the period, or can 
-represent the average of observations through the period. Based on this information and using the start and end 
-fields, it is easy to get or calculate the desired point in time to be used for the time axis. 
+These fields are useful for visualisation tools, when selecting the appropriate point in time for the time axis.
+Statistical data, can be collected, for example, at the beginning, the middle or the end of the period, or can
+represent the average of observations through the period. Based on this information and using the start and end
+fields, it is easy to get or calculate the desired point in time to be used for the time axis.
 
 ----
 
@@ -539,15 +539,15 @@ case the data set represents time series or cross sections, the observations wil
 *String* *nullable*. A human-friendly name for the dataset. Example:
 
     "name": "Bilateral exchange rates"
-    
+
 ### description
 
 *String* *nullable*. Description provides a plain text, human-readable
 description of the dataset. Example:
 
-    "description": "The nominal effective exchange rate (EER) index is a summary measure of the external value of 
-    a currency vis-á-vis the currencies of the most trading partners, while the real EER - obtained by deflating 
-    the nominal rate with appropriate price or cost indices - is the most commonly used indicator of international 
+    "description": "The nominal effective exchange rate (EER) index is a summary measure of the external value of
+    a currency vis-á-vis the currencies of the most trading partners, while the real EER - obtained by deflating
+    the nominal rate with appropriate price or cost indices - is the most commonly used indicator of international
     price and cost competitiveness. Daily spot exchange rates provided by the Front Office Division."
 
 ### action
@@ -802,7 +802,7 @@ Let's say that the following message needs to be processed:
                         ]
                     }
                 ]},
-            "attributes": {     
+            "attributes": {
                 "dataSet": [],
                 "series": [
                     {
