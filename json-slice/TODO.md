@@ -7,6 +7,7 @@
 - Add "measures" into packaging?
 - Add "ref" field to dataSet? Already defined for structure.
 - Add sample file with examples of all supported fields in the message?
+- Representation (coded, text, number, date etc.) of dimensions/attributes/measures? 
 
 ## Waiting for further input
 
