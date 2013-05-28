@@ -1,7 +1,7 @@
 {
     "$schema" : "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "description": "Schema for sdmx-json, v0.1.1 pre-draft",
+    "description": "Schema for sdmx-json, v0.1.2 draft",
     "properties": {
         "header": {
             "$ref": "#/definitions/header"
@@ -208,7 +208,8 @@
                     "enum": [ "time", "measure" ]
                 },
                 "keyPosition": {
-                    "type": [ "null", "number" ]
+                    "type": [ "null", "integer" ],
+                    "minimum": 0
                 },
                 "default": {
                     "type": [ "null", "string" ]
@@ -297,13 +298,15 @@
                 "annotations": {
                     "type": [ "null", "array" ],
                     "items": {
-                        "type": [ "null", "integer" ]
+                        "type": [ "integer" ],
+                        "minimum": 0
                     }
                 },
                 "attributes": {
                     "type": [ "null", "array" ],
                     "items": {
-                        "type": [ "null", "integer" ]
+                        "type": [ "null", "integer" ],
+                        "minimum": 0
                     }
                 },
                 "observations": {
@@ -327,13 +330,15 @@
                                 "annotations": {
                                     "type": [ "null", "array" ],
                                     "items": {
-                                        "type": [ "null", "integer" ]
+                                        "type": [ "integer" ],
+                                        "minimum": 0
                                     }
                                 },
                                 "attributes": {
                                     "type": [ "null", "array" ],
                                     "items": {
-                                        "type": [ "null", "integer" ]
+                                        "type": [ "null", "integer" ],
+                                        "minimum": 0
                                     }
                                 },
                                 "observations": {

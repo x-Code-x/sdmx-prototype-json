@@ -114,12 +114,28 @@ service might return more than one data set.
 ### errors
 
 *Array* *nullable*. RESTful web services indicates errors using the HTTP status
-codes. In addition, whenever appropriate, the error can also be returned using
+codes. In addition, whenever appropriate, the error messages can also be returned using
 this error field. Error is an array of error messages. Example:
 
     "errors": [
-      "Invalid number of dimensions in parameter key"
+      {
+        "code": 150,
+        "message": "Invalid number of dimensions in parameter key"
+      }
     ]
+
+#### code
+
+*number*. Provides a code number for the error message. Code numbers are defined
+in the SDMX 2.1 Web Services Guidelines. Example:
+
+    "code": 130
+
+#### message
+
+*string*. Provides the actual error message. Example:
+
+    "message": "Response too large due to client request"
 
 ----
 
@@ -185,14 +201,14 @@ Each object in the collection may contain the following field:
 * telephone - *String* *nullable*. The telephone number for the contact person.
 * fax - *String* *nullable*. The fax number for the contact person.
 * uri - *String* *nullable*. URI holds an information URL for the contact person.
-* email - *String* *nullable*. The email address for the contact person.
+* email - *Array* *nullable*. An array of email addresses for the contact person.
 
 Example:
 
     "contact": [
         {
             "name": "Statistics hotline",
-            "email": "statistics@xyz.org"
+            "email": [ "statistics@xyz.org" ]
         }
     ]
 
@@ -236,7 +252,7 @@ Example:
 
 ### uri
 
-*String* *nullable*. A link to an SDMX 2.1 web service resource where additional information regarding the structure is
+*String* *nullable*. A link to an SDMX 2.1 web service resource where additional information regarding the data flow is
 available. Example:
 
     "uri": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0"
@@ -424,6 +440,54 @@ fields, it is easy to get or calculate the desired point in time to be used for 
 
 
 ### Annotations
+
+*Array* *nullable*. Provides a list of annotation objects. Annotations can be attached
+to data sets, series and observations.
+
+    "annotations": [
+      {
+        "title": "Sample annotation",
+        "uri": "http://sample.org/annotations/74747"
+      }
+    ]
+
+Each annotation object contains the following optional information:
+
+#### title
+
+*string* *nullable*. Provides a title for the annotation. Example:
+
+    "title": "Sample annotation"
+
+#### type
+
+*string* *nullable*. Type is used to distinguish between annotations designed to
+support various uses. The types are not enumerated, as these can be specified by
+the user or creator of the annotations. The definitions and use of annotation types
+should be documented by their creator. Example:
+
+    "type": "reference"
+
+#### uri
+
+*string* *nullable*. URI - typically a URL - which points to an external resource
+which may contain or supplement the annotation. If a specific behavior is desired,
+an annotation type should be defined which specifies the use of this field more exactly.
+
+    "uri": "http://sample.org/annotations/74747"
+
+#### text
+
+*string* *nullable*. Contains the text of the annotation.
+
+    "text": "Sample annotation text"
+
+#### id
+
+*string* *nullable*. ID provides a non-standard identification of an annotation.
+It can be used to disambiguate annotations. Example:
+
+    "id": "74747"
 
 
 ----
@@ -737,7 +801,6 @@ Let's say that the following message needs to be processed:
         },
         "dataSets": [
             {
-                "extracted": "2013-01-21T15:20:00.000Z",
                 "action": "Informational",
                 "series": {
                     "0": {
