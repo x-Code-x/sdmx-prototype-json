@@ -18,7 +18,17 @@
         "errors": {
             "type": [ "null", "array" ],
             "items": {
-                "type": "string"
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "number"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [ "code", "message" ],
+                "additionalProperties": false
             }
         }
     },
@@ -82,7 +92,11 @@
                                 "format": "uri"
                             },
                             "email": {
-                                "type": [ null, "string" ]
+                                "type": [ null, "array" ],
+                                "items": {
+                                    "type": "string",
+                                    "format": "email"
+                                }
                             }
                         }
                     }

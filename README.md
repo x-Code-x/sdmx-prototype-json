@@ -1,8 +1,8 @@
 # Prototypes for the SDMX JSON format.
 
-## Pre-Draft
+## Draft
 
-- **json-pre-draft**. Latest pre-draft version. Combination of two prototypes below.
+- **draft-sdmx-json**. Latest draft version. Combination of two prototypes below.
 
 ## Prototypes
 
