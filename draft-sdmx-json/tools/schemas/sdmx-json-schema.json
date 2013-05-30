@@ -1,7 +1,7 @@
 {
     "$schema" : "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "description": "Schema for sdmx-json, v0.1.2 draft",
+    "description": "Schema for sdmx-json, v0.1.3 draft",
     "properties": {
         "header": {
             "$ref": "#/definitions/header"
@@ -53,6 +53,15 @@
                 },
                 "receiver": {
                     "$ref": "#/definitions/party"
+                },
+                "request": {
+                    "type": [ "null", "object" ],
+                    "properties": {
+                        "uri": {
+                            "type": "string",
+                            "format": "uri"
+                        }
+                    }
                 }
             },
             "required": [ "id", "prepared", "sender" ],
@@ -73,26 +82,26 @@
                         "type": "object",
                         "properties": {
                             "name": {
-                                "type": [ null, "string" ]
+                                "type": [ "null", "string" ]
                             },
                             "department": {
-                                "type": [ null, "string" ]
+                                "type": [ "null", "string" ]
                             },
                             "role": {
-                                "type": [ null, "string" ]
+                                "type": [ "null", "string" ]
                             },
                             "telephone": {
-                                "type": [ null, "string" ]
+                                "type": [ "null", "string" ]
                             },
                             "fax": {
-                                "type": [ null, "string" ]
+                                "type": [ "null", "string" ]
                             },
                             "uri": {
-                                "type": [ null, "string" ],
+                                "type": [ "null", "string" ],
                                 "format": "uri"
                             },
                             "email": {
-                                "type": [ null, "array" ],
+                                "type": [ "null", "array" ],
                                 "items": {
                                     "type": "string",
                                     "format": "email"
@@ -110,6 +119,12 @@
                 "uri": {
                     "type": [ "null", "string" ],
                     "format": "uri"
+                },
+                "name": {
+                    "type": [ "null", "string" ]
+                },
+                "description": {
+                    "type": [ "null", "string" ]
                 },
                 "dimensions": {
                     "type": "object",
@@ -164,25 +179,25 @@
                     }
                 },
                 "annotations": {
-                    "type": [ null, "array" ],
+                    "type": [ "null", "array" ],
                     "items": {
                         "type": "object",
                         "properties": {
                             "title": {
-                                "type": [ null, "string" ]
+                                "type": [ "null", "string" ]
                             },
                             "type": {
-                                "type": [ null, "string" ]
+                                "type": [ "null", "string" ]
                             },
                             "uri": {
-                                "type": [ null, "string" ],
+                                "type": [ "null", "string" ],
                                 "format": "uri"
                             },
                             "text": {
-                                "type": [ null, "string" ]
+                                "type": [ "null", "string" ]
                             },
                             "id": {
-                                "type": [ null, "string" ]
+                                "type": [ "null", "string" ]
                             }
                         }
                     }
@@ -205,7 +220,7 @@
                 },
                 "role": {
                     "type": [ "null", "string" ],
-                    "enum": [ "time", "measure" ]
+                    "enum": [ null, "time", "measure" ]
                 },
                 "keyPosition": {
                     "type": [ "null", "integer" ],
