@@ -56,22 +56,23 @@ Example:
 
     {
       "header": {
-        "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
-        "prepared": "2012-05-04T03:30:00"
+          # header fields #
       },
       "structure": {
-        # structure objects #
+          # structure objects #
       },
       "dataSets": [
-        # data set objects #
+          # data set objects #
       ],
-      "errors": null
+      "errors": [
+          # Error messages #
+      ]
     }
 
 ### header
 
-*Object* *nullable*. *Header* contains basic information about the message, such as when it was prepared and
-how has sent it. Example:
+*Object* *nullable*. *[Header](#Header)* contains basic technical information about
+the message, such as when it was prepared and how has sent it. Example:
 
     "header": {
       "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
@@ -80,8 +81,8 @@ how has sent it. Example:
 
 ### structure
 
-*Object* *nullable*. *Structure* contains the information needed to interpret the data available in the message,
-such as the list of concepts used. Example:
+*Object* *nullable*. *[Structure](#Structure)* contains the information needed to
+interpret the data available in the message, such as the list of concepts used. Example:
 
     "structure": {
         "uri": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
@@ -91,6 +92,9 @@ such as the list of concepts used. Example:
         "attributes": {
             # attributes object #
         }
+        "annotations": [
+            # annotation objects #
+        ]
     }
 
 ### dataSets
@@ -101,8 +105,8 @@ will be. Example:
     "dataSets": [
       {
         "action": "Informational",
-        "series": {
-          # data object #
+        "observations": {
+            # observation objects #
         }
       }
     ]
@@ -120,7 +124,7 @@ this error field. Error is an array of error messages. Example:
     "errors": [
       {
         "code": 150,
-        "message": "Invalid number of dimensions in parameter key"
+        "message": "Invalid number of dimensions in the key parameter"
       }
     ]
 
@@ -133,7 +137,7 @@ in the SDMX 2.1 Web Services Guidelines. Example:
 
 #### message
 
-*string*. Provides the actual error message. Example:
+*string*. Provides the error message. Example:
 
     "message": "Response too large due to client request"
 
@@ -143,7 +147,7 @@ in the SDMX 2.1 Web Services Guidelines. Example:
 ## <a name="Header"></a>header
 
 Header contains basic information about the message, such as when it was prepared and
-how has sent it. Example:
+who has sent it. Example:
 
     "header": {
       "id": "b1804c51-1ee3-45a9-bb75-795cd4e06489",
@@ -177,7 +181,7 @@ Example:
 *Object*. Information about the party that is transmitting the message. Sender contains the following fields:
 
 * id - *String*. A unique identifier of the party.
-* name - *String* *nullable*. A human-readable name of the party.
+* name - *String* *nullable*. A human-readable name of the sender.
 * contact - *Array* *nullable*. A collection of contact details.
 
 Example:
@@ -196,11 +200,11 @@ Example:
 
 Each object in the collection may contain the following field:
 * name - *String*. The contact's name.
-* department - *String* *nullable*. The organisational structure within which the contact person works.
-* role - *String* *nullable*. The responsibility of the contact person.
-* telephone - *String* *nullable*. The telephone number for the contact person.
-* fax - *String* *nullable*. The fax number for the contact person.
-* uri - *String* *nullable*. URI holds an information URL for the contact person.
+* department - *String* *nullable*. The organisational structure for the contact.
+* role - *String* *nullable*. The responsibility of the contact.
+* telephone - *Array* *nullable*. An array of telephone numbers for the contact.
+* fax - *Array* *nullable*. An array of fax numbers for the contact person.
+* uri - *Array* *nullable*. An array of uris. Each uri holds an information URL for the contact.
 * email - *Array* *nullable*. An array of email addresses for the contact person.
 
 Example:
@@ -214,12 +218,8 @@ Example:
 
 ### receiver
 
-*Object* *nullable*. Information about the party that is receiving the message. This can be useful is a scenario of
-bilateral data exchanges. Receiver contains the same fields as sender (see above):
-
-* id - *String*. A unique identifier of the receiver.
-* name - *String* *nullable*. A human-readable name of the party.
-* contact - *Array* *nullable*. A collection of contact details.
+*Object* *nullable*. Information about the party that is receiving the message. This can be
+useful if the WS requires authentication. Receiver contains the same fields as sender (see above):
 
 Example:
 
@@ -257,6 +257,18 @@ available. Example:
 
     "uri": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0"
 
+### name
+
+*String* *nullable*. Data flow name. Example:
+
+    "name": "Sample dataflow"
+
+### description
+
+*String* *nullable*. Descriptio of the data flow. Example:
+
+    "description": "Data flow description."
+
 ### dimensions
 
 *Object*. Describes the dimensions used in the message as well as the levels in the hierarchy (data set, series,
@@ -264,19 +276,13 @@ observations) to which these dimensions are attached. Example:
 
     "dimensions": {
         "dataSet": [
-            {
-                # Component object #
-            },
+            # Component objects #
         ],
         "series": [
-            {
-                # Component object #
-            }
+            # Component objects #
         ],
         "observation": [
-            {
-                # Component object #
-            }
+            # Component object #
         ]
     }
 
@@ -287,19 +293,13 @@ observations) to which these attributes are attached. Example:
 
     "attributes": {
         "dataSet": [
-            {
-                # Component object #
-            },
+            # Component objects #
         ],
         "series": [
-            {
-                # Component object #
-            }
+            # Component objects #
         ],
         "observation": [
-            {
-                # Component object #
-            }
+            # Component objects #
         ]
     }
 
@@ -335,18 +335,18 @@ Example:
 
     "name": "Frequency"
 
-#### keyPosition
-
-*Number*. Indicates the position of the dimension in the key, starting at 0. This field should not be supplied
-for attributes.Example:
-
-    "keyPosition": 0
-
 #### description
 
 *String* *nullable*. Provides a description for the component. Example:
 
     "description": "The time interval at which observations occur over a given time period."
+
+#### keyPosition
+
+*Number* *nullable*. Indicates the position of the dimension in the key, starting at 0.
+This field should not be supplied for attributes. Example:
+
+    "keyPosition": 0
 
 #### role
 
@@ -357,6 +357,7 @@ is null. Components can play various roles, such as, for example:
 time in which the data identified by the full series key applies.
 - **measure**. Measure dimension is a special type of dimension which defines
 multiple measures.
+- TODO: Add more roles
 
 Example:
 
@@ -371,7 +372,7 @@ no value is provided in the data part of the message then this value applies. Ex
 
 #### values
 
-Array of [values](#component_values) for the component. Example:
+*Array*. Array of [values](#component_values) for the component. Example:
 
     "values": [
       {
@@ -406,7 +407,7 @@ Array of [values](#component_values) for the component. Example:
 *String* *nullable*. Description provides a human-readable description of the value. The description is typically longer
 than the text provided for the name field. Example:
 
-    "description": "Provisional value"
+    "description": "Description for missing value."
 
 ##### start and end fields
 
@@ -519,28 +520,6 @@ Dimensions and attributes may be attached to any of these 3 levels.
 In case the data set is a flat list of observations, observations will be found directly under a data set object. In
 case the data set represents time series or cross sections, the observations will be found under the series elements.
 
-### id
-
-*String* *nullable*. Id provides an identifier for the data set. Example:
-
-    "id": "ECB_EXR_2011-06-17"
-
-### name
-
-*String* *nullable*. A human-friendly name for the dataset. Example:
-
-    "name": "Bilateral exchange rates"
-
-### description
-
-*String* *nullable*. Description provides a plain text, human-readable
-description of the dataset. Example:
-
-    "description": "The nominal effective exchange rate (EER) index is a summary measure of the external value of
-    a currency vis-á-vis the currencies of the most trading partners, while the real EER - obtained by deflating
-    the nominal rate with appropriate price or cost indices - is the most commonly used indicator of international
-    price and cost competitiveness. Daily spot exchange rates provided by the Front Office Division."
-
 ### action
 
 *String* *nullable*. Action provides a list of actions, describing the intention of the data transmission
@@ -559,20 +538,6 @@ these data.
 Example:
 
     "action": "Informational"
-
-### provider
-
-*Object* *nullable*. Provider is information about the party that provides the data contained in the data set.
-Provider contains the following fields:
-
-* id - *String*. A unique identifier of the party.
-* name - *String* *nullable*. A human-readable name of the party.
-
-Example:
-
-    "provider": {
-      "id": "EUROSTAT"
-    }
 
 ### reportingBegin
 
@@ -612,17 +577,31 @@ published on a quarterly basis).
 
     "publicationPeriod": "2005-Q1"
 
+### annotations
+
+*Array* *nullable*. An optional array of annotation indices for the dataset. Indices refer
+back to the array of annotations in the structure field. Example:
+
+  "annotations": [ 3, 42 ]
+
 ### attributes
 
 *Array* *nullable*. Collection of [attributes values](#attributes) attached to the data set level. This is typically the case when a
 particular attribute always has the same value for the data available in the data message. In order to avoid repetition,
-that value can simply be attached at the data set level.
+that value can simply be attached at the data set level. Example:
+
+  "attributes": [ 0, null, 0 ]
 
 ### observations
 
 *Object* *nullable*. Collection of [observations](#observations) directly attached to a data set. This is the case when
 a data set represents a flat collection of observations. In case the observations are organised into logical groups
-(time series or cross-sections), use the [series element](#series) instead.
+(time series or cross-sections), use the [series element](#series) instead. Example:
+
+  "observations": {
+    "0:1:0": [ 105.6, 0, 1],
+    "0:1:1": [ 105,9 ]
+  }
 
 ### <a name="series"></a> series
 
@@ -631,6 +610,7 @@ the observations contained in the data set are used into logical groups (time se
 **not** be used in case the data set represents a flat list of observations. Example:
 
     {
+      "annotations": [],
       "attributes": [ 0, 1 ],
       "observations": {
         "0": [ 105.6, null, null ],
@@ -639,6 +619,13 @@ the observations contained in the data set are used into logical groups (time se
         "3": [ 107.3, 0 ]
       }
     }
+
+#### annotations
+
+*Array* *nullable*. An optional array of annotation indices for the series. Indices refer
+back to the array of annotations in the structure field. Example:
+
+  "annotations": [ 3, 42 ]
 
 #### <a name="attributes"></a>attributes
 
