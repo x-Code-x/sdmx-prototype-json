@@ -1,7 +1,7 @@
 {
     "$schema" : "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "description": "Schema for sdmx-json, v0.1.3 draft",
+    "description": "Schema for sdmx-json, v0.1.4 draft",
     "properties": {
         "header": {
             "$ref": "#/definitions/header"
