@@ -421,11 +421,11 @@ Clients should always check the status code in the server response. The common r
 
 ### Bad Request (400)
 
-There was a syntactic or semantic error in request parameters. Client should not repeat the request. Example with erroneous query paramater:
+There was a syntactic or semantic error in request parameters. Client should not repeat the request. Example with erroneous query parameter:
 
 ```Batchfile
 curl -i -X GET \
-  'http://test.sdmxregistry.org/ws/rest/codelist/ECB_FINAL/CL_FREQ/1.0?error=error'
+  'http://test.sdmxregistry.org/ws/rest/codelist/ECB_FINAL/CL_FREQ/1.0?referencess=all'
 ```
 
 ### Unauthorized (401)
