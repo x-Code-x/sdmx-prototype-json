@@ -24,8 +24,8 @@ The SDMX RESTful API allows applications to access resources on a Web Service.
 This tutorial uses the following two Web Services but the same API should work
 with any other compliant Web Service.
 
-- SDMX Global Registry Web Service: http://test.sdmxregistry.org/ws/rest ECB
-- Statistical Data Warehouse Web Service: http://a-sdw-ecb-wsrest.ecb.de/service
+- SDMX Global Registry Web Service: http://test.sdmxregistry.org/ws/rest
+- ECB Statistical Data Warehouse Web Service (URL to come later) 
 
 In order to use other SDMX Web Services you need to know the URL of the service
 (or web service entry point). SDMX RESTful API supports both HTTP and HTTPS
@@ -56,7 +56,7 @@ list. Here is the same request to the ECB SDW:
 
 ```Batchfile
 curl -X GET \
-  'http://a-sdw-ecb-wsrest.ecb.de/service/codelist/ECB/CL_CURRENCY/latest'
+  'http://sdw-ws-entry-point/codelist/ECB/CL_CURRENCY/latest'
 ```
 
 The server returns the response in one of the supported formats. For full list
@@ -80,7 +80,7 @@ Following example requests the daily USD/EUR exchange rates from the ECB SDW:
 
 ```Batchfile
 curl -X GET \
-  'http://a-sdw-ecb-wsrest.ecb.de/service/data/EXR/D.USD.EUR.SP00.A'
+  'http://sdw-ws-entry-point/data/EXR/D.USD.EUR.SP00.A'
 ```
 
 The resource type for data requests is simply *data*. Data resouces are
@@ -227,52 +227,41 @@ of the matching series, starting from the first observation
 (*lastNObservations*).
 
 
-#### Using the *includeHistory* query parameter: Retrieving how a time series evolved over time
-
-Using the *includeHistory* parameter, you can instruct the web service to return
-previous versions of the matching data. This is useful to see how the data have
-evolved over time, i.e. when new data have been released or when data have been
-revised or deleted. Possible options are:
-
-- *false*: Only the version currently in production will be returned. This is the default.
-- *true*: The version currently in production, as well as all previous versions, will be returned.
-
-
 ### Data Request Examples
 
 To retrieve more exchange rates from the EXR dataflow, using wildcarding for the second dimension:
 
 ```Batchfile
 curl -X GET \
-  'http://a-sdw-ecb-wsrest.ecb.de/service/data/EXR/M..EUR.SP00.A'
+  'http://sdw-ws-entry-point/data/EXR/M..EUR.SP00.A'
 ```
 
 Retrieve exchange rate for USD, GBP and JPY with the OR operator (+) in the key parameter:
 
 ```Batchfile
 curl -X GET \
-  'http://a-sdw-ecb-wsrest.ecb.de/service/data/EXR/M.USD+GBP+JPY.EUR.SP00.A'
+  'http://sdw-ws-entry-point/data/EXR/M.USD+GBP+JPY.EUR.SP00.A'
 ```
 
 Restrict the time range in the request with the `startPeriod` and `endPeriod` parameters:
 
 ```Batchfile
 curl -X GET \
-  'http://a-sdw-ecb-wsrest.ecb.de/service/data/EXR/D.USD.EUR.SP00.A?startPeriod=2009-05-01&endPeriod=2009-05-31'
+  'http://sdw-ws-entry-point/data/EXR/D.USD.EUR.SP00.A?startPeriod=2009-05-01&endPeriod=2009-05-31'
 ```
 
 To retrieve the updates and revisions for the data matching the supplied series key:
 
 ```Batchfile
 curl -X GET \
-  'http://a-sdw-ecb-wsrest.ecb.de/service/data/EXR/M.USD.EUR.SP00.A?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00'
+  'http://sdw-ws-entry-point/data/EXR/M.USD.EUR.SP00.A?updatedAfter=2009-05-15T14%3A15%3A00%2B01%3A00'
 ```
 
 To retrieve all the data for the EXR dataflow:
 
 ```Batchfile
 curl -X GET \
-  'http://a-sdw-ecb-wsrest.ecb.de/service/data/EXR'
+  'http://sdw-ws-entry-point/data/EXR'
 ```
 
 ## <a name="metadata"></a> Request for Structural Metadata
@@ -323,7 +312,7 @@ to retrieve this, the following should be used:
 
 ```Batchfile
 curl -X GET \
-  'http://a-sdw-ecb-wsrest.ecb.de/service/codelist/ECB/CL_FREQ/1.0'
+  'http://sdw-ws-entry-point/codelist/ECB/CL_FREQ/1.0'
 ```
 
 ### Query parameters
