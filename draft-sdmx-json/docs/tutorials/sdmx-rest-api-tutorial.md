@@ -9,26 +9,20 @@ and metadata in a SDMX 2.1 compliant Web Service. All the data and metadata
 stored in the Web Service can be retrieved using the syntax described in this
 tutorial.
 
-This tutorial uses two live Web Services in all the examples below. This makes
-it possible to try out all the examples below and experiment with the API
-syntax. All SDMX 2.1 compliant Web Services use the same syntax so the basic
-syntax will work with any Web Service.
-
 All the examples use [curl][2] command line tool. See the curl web site for more
 details.
 
 
 ## Basic Concepts
 
-The SDMX RESTful API allows applications to access resources on a Web Service.
-This tutorial uses the following two Web Services but the same API should work
-with any other compliant Web Service.
+In order to use other SDMX Web Services you need to know the URL of the service
+(or web service entry point). This tutorial uses the following two Web Services
+as an example, but the same API should work with any other compliant Web Service:
 
 - SDMX Global Registry Web Service: http://test.sdmxregistry.org/ws/rest
 - ECB Statistical Data Warehouse Web Service (URL to come later) 
 
-In order to use other SDMX Web Services you need to know the URL of the service
-(or web service entry point). SDMX RESTful API supports both HTTP and HTTPS
+The SDMX RESTful API supports both HTTP and HTTPS
 protocols but all the examples in this tutorial use plain HTTP.
 
 SDMX RESTful API supports three categories of resources:
