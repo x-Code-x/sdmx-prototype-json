@@ -4,9 +4,8 @@
 
 ## Introduction
 
-The [SDMX 2.1 RESTful API][1] offers access to the statistical data
-and metadata in a SDMX 2.1 compliant Web Service. This tutorial describes how 
-to do that.
+This tutorial describes how to get access to the statistical data
+and metadata in a SDMX 2.1 compliant Web Service via the [SDMX 2.1 RESTful API][1].
 
 All the examples use [curl][2] command line tool. See the curl web site for more
 details.
@@ -14,12 +13,11 @@ details.
 
 ## Basic Concepts
 
-In order to use the SDMX Restful API you need to know the URL of the SDMX web service
-(or web service entry point). This tutorial uses the following two Web Services
-as an example (but the same API should work with any other compliant Web Service):
+In order to use the SDMX Restful API you need to know the URL of the SDMX web service.
+This tutorial uses the following two Web Services as an example:
 
 - SDMX Global Registry Web Service: http://test.sdmxregistry.org/ws/rest
-- ECB Statistical Data Warehouse Web Service (URL to come later)
+- ECB Statistical Data Warehouse (SDW) Web Service (URL to come later)
 
 Via the SDMX RESTful API you can retrieve:
 
@@ -29,7 +27,6 @@ Via the SDMX RESTful API you can retrieve:
 
 An example of structural metadata is a code list that contains codes for a statistical
 concept (e.g. currency codes).
-
 The following example requests a code list of currency codes from the SDMX Global Registry:
 
 ```Batchfile
@@ -37,8 +34,7 @@ curl -X GET \
   'http://test.sdmxregistry.org/ws/rest/codelist/ECB_FINAL/CL_CURRENCY/latest'
 ```
 
-The URI begins the URI of the Web Service. In this case it is
-`http://test.sdmxregistry.org/ws/rest`. The part that comes after that is
+The part that comes after the `http://test.sdmxregistry.org/ws/rest` is
 standard and it would work with any Web Service that contains the same code
 list. Here is the same request to the ECB SDW:
 
@@ -47,8 +43,9 @@ curl -X GET \
   'http://sdw-ws-entry-point/codelist/ECB/CL_CURRENCY/latest'
 ```
 
-The server returns the response in one of the supported formats. For a full list
-of formats see the [Web Service Guidelines][1]. Other important information in
+The server returns the response in one of the supported formats, such as SDMX-ML or SDMX-JSON.
+For a full list of formats see the [Web Service Guidelines][1].
+Other important information in
 the response are the HTTP status code and the response and entity headers. The SDMX
 RESTful API uses standard HTTP status codes. The status code for normal
 responses is 200. Status codes in the 4xx class indicate that the client has
