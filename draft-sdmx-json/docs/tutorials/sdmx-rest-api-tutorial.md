@@ -251,7 +251,7 @@ curl -X GET \
   'http://sdw-ws-entry-point/data/EXR'
 ```
 
-## <a name="metadata"></a> Request for Structural Metadata
+## <a name="metadata"></a> Requesting Structural Metadata
 
 Structural metadata defines the structures for the data in the Web Service. The
 SDMX RESTful API support 21 different types of structural metadata resources.
@@ -380,7 +380,7 @@ curl -X GET \
 ```
 
 
-## XML Schema Requests
+## Requesting XML Schema Requests
 
 XML schemas can be used to validate SDMX-ML Structure Specific Data messages.
 SDMX Web Services can provide these schemas for clients. Following example
