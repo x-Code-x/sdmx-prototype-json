@@ -1,4 +1,4 @@
-# SDMX 2.1 RESTful Web Service Tutorial
+# SDMX 2.1 RESTful API Tutorial
 
 **DRAFT VERSION**
 
