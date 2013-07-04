@@ -4,8 +4,7 @@
 
 ## Introduction
 
-This tutorial describes how to get access to the statistical data
-and metadata in a SDMX 2.1 compliant Web Service via the [SDMX 2.1 RESTful API][1].
+This tutorial describes how to get access to a SDMX 2.1 compliant Web Service via the [SDMX 2.1 RESTful API][1].
 
 All the examples use [curl][2] command line tool. See the curl web site for more
 details.
