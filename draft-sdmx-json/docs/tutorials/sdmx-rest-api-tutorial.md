@@ -1,18 +1,10 @@
-# SDMX 2.1 RESTful Web Service Tutorial
+# SDMX 2.1 RESTful API Tutorial
 
 **DRAFT VERSION**
 
 ## Introduction
 
-The [SDMX 2.1 RESTful API][1] offers programmatic access to the statistical data
-and metadata in a SDMX 2.1 compliant Web Service. All the data and metadata
-stored in the Web Service can be retrieved using the syntax described in this
-tutorial.
-
-This tutorial uses two live Web Services in all the examples below. This makes
-it possible to try out all the examples below and experiment with the API
-syntax. All SDMX 2.1 compliant Web Services use the same syntax so the basic
-syntax will work with any Web Service.
+This tutorial describes how to get access to a SDMX 2.1 compliant Web Service via the [SDMX 2.1 RESTful API][1].
 
 All the examples use [curl][2] command line tool. See the curl web site for more
 details.
@@ -20,37 +12,28 @@ details.
 
 ## Basic Concepts
 
-The SDMX RESTful API allows applications to access resources on a Web Service.
-This tutorial uses the following two Web Services but the same API should work
-with any other compliant Web Service.
+In order to use the SDMX Restful API you need to know the URL of the SDMX web service.
+This tutorial uses the following two Web Services as an example:
 
 - SDMX Global Registry Web Service: http://test.sdmxregistry.org/ws/rest
-- ECB Statistical Data Warehouse Web Service (URL to come later) 
+- ECB Statistical Data Warehouse (SDW) Web Service (URL to come later)
 
-In order to use other SDMX Web Services you need to know the URL of the service
-(or web service entry point). SDMX RESTful API supports both HTTP and HTTPS
-protocols but all the examples in this tutorial use plain HTTP.
+Via the SDMX RESTful API you can retrieve:
 
-SDMX RESTful API supports three categories of resources:
-
-- Data and Metadata
+- Data
 - Structural Metadata
 - XML Schemas
 
-There is only one resource type for data, metadata and schemas. However
-structural metadata support 21 different resource types. An example of
-structural metadata is a code list that contains codes for a statistical concept
-(e.g. currency codes).
-
-Following example requests a code list of currency codes from the SDMX Global Registry:
+An example of structural metadata is a code list that contains codes for a statistical
+concept (e.g. currency codes).
+The following example requests a code list of currency codes from the SDMX Global Registry:
 
 ```Batchfile
 curl -X GET \
   'http://test.sdmxregistry.org/ws/rest/codelist/ECB_FINAL/CL_CURRENCY/latest'
 ```
 
-The URI begins the URI of the Web Service. In this case it is
-`http://test.sdmxregistry.org/ws/rest`. The part that comes after that is
+The part that comes after the `http://test.sdmxregistry.org/ws/rest` is
 standard and it would work with any Web Service that contains the same code
 list. Here is the same request to the ECB SDW:
 
@@ -59,15 +42,19 @@ curl -X GET \
   'http://sdw-ws-entry-point/codelist/ECB/CL_CURRENCY/latest'
 ```
 
-The server returns the response in one of the supported formats. For full list
-of formats see the [Web Service Guidelines][1]. Other important information in
-the response are the HTTP status code and the response and entity headers. SDMX
+The server returns the response in one of the supported formats, such as SDMX-ML or SDMX-JSON.
+For a full list of formats see the [Web Service Guidelines][1].
+Other important information in
+the response are the HTTP status code and the response and entity headers. The SDMX
 RESTful API uses standard HTTP status codes. The status code for normal
 responses is 200. Status codes in the 4xx class indicate that the client has
 caused the error. Status codes in the 5xx class indicate an error on the server.
 HTTP entity headers contain optional information about the response: language,
 encoding, type, etc. See below for more information about error handling and
 HTTP headers.
+
+The SDMX RESTful API supports both HTTP and HTTPS
+protocols but all the examples in this tutorial use plain HTTP.
 
 
 ## Requesting Data
@@ -264,7 +251,7 @@ curl -X GET \
   'http://sdw-ws-entry-point/data/EXR'
 ```
 
-## <a name="metadata"></a> Request for Structural Metadata
+## <a name="metadata"></a> Requesting Structural Metadata
 
 Structural metadata defines the structures for the data in the Web Service. The
 SDMX RESTful API support 21 different types of structural metadata resources.
@@ -393,7 +380,7 @@ curl -X GET \
 ```
 
 
-## XML Schema Requests
+## Requesting XML Schema Requests
 
 XML schemas can be used to validate SDMX-ML Structure Specific Data messages.
 SDMX Web Services can provide these schemas for clients. Following example
