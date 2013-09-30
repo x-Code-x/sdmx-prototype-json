@@ -120,7 +120,6 @@
           "id": "TIME_PERIOD",
           "name": "Time period or range",
           "description": "Description for the dimension",
-          "keyPosition": 6,
           "role": "time",
           "values": [
             {
