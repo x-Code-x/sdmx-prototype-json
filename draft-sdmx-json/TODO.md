@@ -1,5 +1,6 @@
 # TODO
 
+- Better description for the keyPosition field
 - Check samples
 - Add missing samples
 - Check schema in tools
