@@ -1,5 +1,6 @@
 # TODO
 
+- Change Action "Informational" to "Information"?
 - Change description of the end field to be inclusive (same as in technical notes). Update all relevant samples.
 - Better description for the keyPosition field
 - Check samples
