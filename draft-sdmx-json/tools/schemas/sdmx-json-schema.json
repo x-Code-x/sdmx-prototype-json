@@ -275,7 +275,7 @@
             "properties": {
                 "action": {
                     "type": "string",
-                    "enum": [ "Informational", "Append", "Replace", "Delete" ]
+                    "enum": [ "Information", "Append", "Replace", "Delete" ]
                 },
                 "reportingBegin": {
                     "type": [ "null", "string" ]

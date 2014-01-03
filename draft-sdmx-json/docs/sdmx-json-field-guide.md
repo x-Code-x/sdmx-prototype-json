@@ -1,17 +1,6 @@
-# A field guide to sdmx-json objects
 
-**pre-draft version**
+# <a name="Introduction"></a>Introduction
 
-- [Introduction](#Introduction)
-- [Message](#Message)
-- [Header](#Header)
-- [Structure](#Structure)
-- [DataSets](#DataSets)
-- [Tutorial: Handling component values](#handling_values)
-
-----
-
-## <a name="Introduction"></a>Introduction
 Let's first start with a brief introduction of the SDMX information model.
 
 In order to make sense of some statistical data, we need to know the concepts
@@ -39,17 +28,20 @@ however the above should be sufficient to understand the sdmx-json format. For
 additional information, please refer to the [SDMX documentation](http://sdmx.org/?page_id=10).
 
 Before we start, let's clarify a few more things about this guide:
-* New fields may be introduced in later versions. Therefore
+
+-  New fields may be introduced in later versions. Therefore
 consuming applications should tolerate the addition of new fields with ease.
-* The ordering of fields in objects is undefined. The fields may appear in any order
+- The ordering of fields in objects is undefined. The fields may appear in any order
 and consuming applications should not rely on any specific ordering. It is safe to consider a
 nulled field and the absence of a field as the same thing.
-* Not all fields appear in all contexts. For example response with error messages
+- Not all fields appear in all contexts. For example response with error messages
 may not contain fields for data, dimensions and attributes.
 
-----
 
-## <a name="Message"></a>Message
+
+# Field Guide to SDMX-JSON Objects
+
+##  <a name="Message"></a>Message
 
 Message is the top level object and it contains the data as well as the metadata needed to interpret those data.
 Example:
@@ -104,7 +96,7 @@ will be. Example:
 
     "dataSets": [
       {
-        "action": "Informational",
+        "action": "Information",
         "observations": {
             # observation objects #
         }
@@ -141,7 +133,7 @@ in the SDMX 2.1 Web Services Guidelines. Example:
 
     "message": "Response too large due to client request"
 
-----
+
 
 
 ## <a name="Header"></a>header
@@ -227,7 +219,7 @@ Example:
       "id": "SDMX"
     }
 
-----
+
 
 ## <a name="Structure"></a>structure
 
@@ -344,7 +336,8 @@ Example:
 #### keyPosition
 
 *Number* *nullable*. Indicates the position of the dimension in the key, starting at 0.
-This field should not be supplied for attributes. Example:
+This field should not be supplied for attributes. This field could be used to build
+the "key" parameter string (i.e. D.USD.EUR.SP00.A) for data queries. Example:
 
     "keyPosition": 0
 
@@ -357,7 +350,6 @@ is null. Components can play various roles, such as, for example:
 time in which the data identified by the full series key applies.
 - **measure**. Measure dimension is a special type of dimension which defines
 multiple measures.
-- TODO: Add more roles
 
 Example:
 
@@ -411,28 +403,25 @@ than the text provided for the name field. Example:
 
 ##### start and end fields
 
-*String* *nullable*. Start and end are instants of time that define an interval.
-They mark the beginning and the end of the reporting period represented by the component value.
-The length of the interval is the duration (i.e. duration = end - start).
-These fields should be used only when the component value represents one of the values for the time dimension!
+*String* *nullable*. Start and end are instants of time that define the actual
+Gregorian calendar period covered by the values for the time dimension. The algorithm
+for computing start and end fields for any supported reporting period is defined
+in the SDMX Technical Notes.
 
-Values are considered as inclusive for the start field and as exclusive for the end field
-(so-called half-open interval). Values must follow the ISO 8601 syntax for combined dates and times,
-including time zone.
+These fields should be used only when the component value represents one of the
+values for the time dimension.
+
+Values are considered as inclusive both for the start field and the end field.
+Values must follow the ISO 8601 syntax for combined dates and times, including time zone.
 
 Example:
 
     {
         "id": "2010",
         "name": "2010",
-        "start": "2010-01-01T00:00:00.000Z",
-        "end": "2011-01-01T00:00:00.000Z"
+        "start": "2010-01-01T00:00Z",
+        "end": "2010-12-31T23:59:59Z"
     }
-
-Duration can easily be calculated. Taking the example above, and using the times in milliseconds since Jan 1st 1970:
-- start = 2010-01-01T00:00:00.000Z = 1262304060000
-- end = 2011-01-01T00:00:00.000Z = 1293840060000
-- duration = 1293840060000 - 1262304060000 = 31536000000 ms = 31536000 s = 525600 m = 8760 h = 365 days
 
 These fields are useful for visualisation tools, when selecting the appropriate point in time for the time axis.
 Statistical data, can be collected, for example, at the beginning, the middle or the end of the period, or can
@@ -491,15 +480,15 @@ It can be used to disambiguate annotations. Example:
     "id": "74747"
 
 
-----
 
-## <a name="DataSets"></a>DataSets
+
+## <a name="DataSets"></a>dataSets
 
 An array of data set objects. Example:
 
     "dataSets": [
       {
-        "action": "Informational",
+        "action": "Information",
         "series": {
           # series object #
         }
@@ -523,7 +512,7 @@ case the data set represents time series or cross sections, the observations wil
 ### action
 
 *String* *nullable*. Action provides a list of actions, describing the intention of the data transmission
-from the sender's side. ```Default value is Informational```
+from the sender's side. ```Default value is Information```
 
 * Append - this is an incremental update for an existing data set or the provision of new data or documentation
 (attribute values) formerly absent. If any of the supplied data or metadata are already present, it will not replace
@@ -533,11 +522,11 @@ these data.
 
 * Delete - data are to be deleted.
 
-* Informational - data are being exchanged for informational purposes only, and not meant to update a system.
+* Information- data are being exchanged for informational purposes only, and not meant to update a system.
 
 Example:
 
-    "action": "Informational"
+    "action": "Information"
 
 ### reportingBegin
 
@@ -657,174 +646,178 @@ for observation value is *Number*. Data type for a reported missing observation 
 
 Elements after the observation value are values for the observation level attributes.
 
-----
 
-## <a name="handling_values"></a>Handling component values
+
+# <a name="handling_values"></a>Handling component values
 
 Let's say that the following message needs to be processed:
 
-    {
-        "header": {
-            "id": "62b5f19d-f1c9-495d-8446-a3661ed24753",
-            "prepared": "2012-11-29T08:40:26Z",
-            "sender": {
-                "id": "ECB",
-                "name": "European Central Bank"
-            }
-        },
-        "structure": {
-            "id": "ECB_EXR_WEB",
-            "uri": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
-            "dimensions": {
-                "dataSet": [
-                    {
-                        "id": "FREQ",
-                        "name": "Frequency",
-                        "keyPosition": 0,
-                        "values": [
-                            {
-                                "id": "D",
-                                "name": "Daily"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "CURRENCY_DENOM",
-                        "name": "Currency denominator",
-                        "keyPosition": 2,
-                        "values": [
-                            {
-                                "id": "EUR",
-                                "name": "Euro"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "EXR_TYPE",
-                        "name": "Exchange rate type",
-                        "keyPosition": 3,
-                        "values": [
-                            {
-                                "id": "SP00",
-                                "name": "Spot rate"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "EXR_SUFFIX",
-                        "name": "Series variation - EXR context",
-                        "keyPosition": 4,
-                        "values": [
-                            {
-                                "id": "A",
-                                "name": "Average or standardised measure for given frequency"
-                            }
-                        ]
-                    }
-                ],
-                "series": [
-                    {
-                        "id": "CURRENCY",
-                        "name": "Currency",
-                        "keyPosition": 1,
-                        "values": [
-                            {
-                                "id": "NZD",
-                                "name": "New Zealand dollar"
-                            }, {
-                                "id": "RUB",
-                                "name": "Russian rouble"
-                            }
-                        ]
-                    }
-                ],
-                "observation": [
-                    {
-                        "id": "TIME_PERIOD",
-                        "name": "Time period or range",
-                        "values": [
-                            {
-                                "id": "2013-01-18",
-                                "name": "2013-01-18",
-                                "start": "2013-01-18T00:00:00.000Z",
-                                "end": "2013-01-18T23:59:59.000Z"
-                            }, {
-                                "id": "2013-01-21",
-                                "name": "2013-01-21",
-                                "start": "2013-01-21T00:00:00.000Z",
-                                "end": "2013-01-21T23:59:59.000Z"
-                            }
-                        ]
-                    }
-                ]},
-            "attributes": {
-                "dataSet": [],
-                "series": [
-                    {
-                        "id": "TITLE",
-                        "name": "Series title",
-                        "values": [
-                            {
-                                "name": "New zealand dollar (NZD)"
-                            }, {
-                                "name": "Russian rouble (RUB)"
-                            }
-                        ]
-                    }
-                ],
-                "observation": [
-                    {
-                        "id": "OBS_STATUS",
-                        "name": "Observation status",
-                        "values": [
-                            {
-                                "id": "A",
-                                "name": "Normal value"
-                            }
-                        ]
-                    }
-                ]
-            }
-        },
-        "dataSets": [
-            {
-                "action": "Informational",
-                "series": {
-                    "0": {
-                        "attributes": [0],
-                        "observations": {
-                            "0": [1.5931, 0],
-                            "1": [1.5925, 0]
+```json
+{
+    "header": {
+        "id": "62b5f19d-f1c9-495d-8446-a3661ed24753",
+        "prepared": "2012-11-29T08:40:26Z",
+        "sender": {
+            "id": "ECB",
+            "name": "European Central Bank"
+        }
+    },
+    "structure": {
+        "id": "ECB_EXR_WEB",
+        "uri": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
+        "dimensions": {
+            "dataSet": [
+                {
+                    "id": "FREQ",
+                    "name": "Frequency",
+                    "keyPosition": 0,
+                    "values": [
+                        {
+                            "id": "D",
+                            "name": "Daily"
                         }
-                    },
-                    "1": {
-                        "attributes": [1],
-                        "observations": {
-                            "0": [40.3426, 0],
-                            "1": [40.3000, 0]
+                    ]
+                },
+                {
+                    "id": "CURRENCY_DENOM",
+                    "name": "Currency denominator",
+                    "keyPosition": 2,
+                    "values": [
+                        {
+                            "id": "EUR",
+                            "name": "Euro"
                         }
+                    ]
+                },
+                {
+                    "id": "EXR_TYPE",
+                    "name": "Exchange rate type",
+                    "keyPosition": 3,
+                    "values": [
+                        {
+                            "id": "SP00",
+                            "name": "Spot rate"
+                        }
+                    ]
+                },
+                {
+                    "id": "EXR_SUFFIX",
+                    "name": "Series variation - EXR context",
+                    "keyPosition": 4,
+                    "values": [
+                        {
+                            "id": "A",
+                            "name": "Average or standardised measure for given frequency"
+                        }
+                    ]
+                }
+            ],
+            "series": [
+                {
+                    "id": "CURRENCY",
+                    "name": "Currency",
+                    "keyPosition": 1,
+                    "values": [
+                        {
+                            "id": "NZD",
+                            "name": "New Zealand dollar"
+                        }, {
+                            "id": "RUB",
+                            "name": "Russian rouble"
+                        }
+                    ]
+                }
+            ],
+            "observation": [
+                {
+                    "id": "TIME_PERIOD",
+                    "name": "Time period or range",
+                    "values": [
+                        {
+                            "id": "2013-01-18",
+                            "name": "2013-01-18",
+                            "start": "2013-01-18T00:00:00Z",
+                            "end": "2013-01-18T23:59:59Z"
+                        }, {
+                            "id": "2013-01-21",
+                            "name": "2013-01-21",
+                            "start": "2013-01-21T00:00:00Z",
+                            "end": "2013-01-21T23:59:59Z"
+                        }
+                    ]
+                }
+            ]},
+        "attributes": {
+            "dataSet": [],
+            "series": [
+                {
+                    "id": "TITLE",
+                    "name": "Series title",
+                    "values": [
+                        {
+                            "name": "New zealand dollar (NZD)"
+                        }, {
+                            "name": "Russian rouble (RUB)"
+                        }
+                    ]
+                }
+            ],
+            "observation": [
+                {
+                    "id": "OBS_STATUS",
+                    "name": "Observation status",
+                    "values": [
+                        {
+                            "id": "A",
+                            "name": "Normal value"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "dataSets": [
+        {
+            "action": "Information",
+            "series": {
+                "0": {
+                    "attributes": [0],
+                    "observations": {
+                        "0": [1.5931, 0],
+                        "1": [1.5925, 0]
+                    }
+                },
+                "1": {
+                    "attributes": [1],
+                    "observations": {
+                        "0": [40.3426, 0],
+                        "1": [40.3000, 0]
                     }
                 }
             }
-        ]
-    }
+        }
+    ]
+}
+```
 
 There is one data set in the message, and it contains two series.
 
-    "0": {
-        "attributes": [0],
-        "observations": {
-            "0": [1.5931, 0],
-            "1": [1.5925, 0]
-        }
-    },
-    "1": {
-        "attributes": [1],
-        "observations": {
-            "0": [40.3426, 0],
-            "1": [40.3000, 0]
-        }
+```json
+"0": {
+    "attributes": [0],
+    "observations": {
+        "0": [1.5931, 0],
+        "1": [1.5925, 0]
     }
+},
+"1": {
+    "attributes": [1],
+    "observations": {
+        "0": [40.3426, 0],
+        "1": [40.3000, 0]
+    }
+}
+```
 
 The structure.dimensions field tells us that, out of the 6 dimensions, 4 have the same value for the 2 series and are therefore
 attached to the data set level.
@@ -835,22 +828,24 @@ We see that, for the first series, we get the value 0:
 
 From the structure information, we know that CURRENCY is the series dimension.
 
-    "series": [
-        {
-            "id": "CURRENCY",
-            "name": "Currency",
-            "keyPosition": 1,
-            "values": [
-                {
-                    "id": "NZD",
-                    "name": "New Zealand dollar"
-                }, {
-                    "id": "RUB",
-                    "name": "Russian rouble"
-                }
-            ]
-        }
-    ]
+```json
+"series": [
+    {
+        "id": "CURRENCY",
+        "name": "Currency",
+        "keyPosition": 1,
+        "values": [
+            {
+                "id": "NZD",
+                "name": "New Zealand dollar"
+            }, {
+                "id": "RUB",
+                "name": "Russian rouble"
+            }
+        ]
+    }
+]
+```
 
 The value 0 identified previously is the index of the item in the collection of values for this component. In this case,
 the dimension value is therefore "New Zealand dollar".

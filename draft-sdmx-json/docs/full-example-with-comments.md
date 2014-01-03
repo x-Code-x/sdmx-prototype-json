@@ -1,8 +1,18 @@
+# Full Example with Comments
+
+```json
 {
   "header": {
-    "id": "62b5f19d-f1c9-495d-8446-a3661ed24753",  # dynamically generated GUI
-    "prepared": "2012-11-29T08:40:26Z",            # extraction time from db (=now in SQL query), include timezone!
-    "test": false,                                 # optional with default false
+
+    # dynamically generated GUI
+    "id": "62b5f19d-f1c9-495d-8446-a3661ed24753",
+
+    # extraction time from db (=now in SQL query), include timezone!
+    "prepared": "2012-11-29T08:40:26Z",
+
+    # optional with default false
+    "test": false,
+
     "sender": {
       "id": "ECB",
       "name": "European Central Bank",
@@ -18,7 +28,9 @@
         }
       ]
     },
-    "receiver": {                                   # optional, info from user record if authenticated
+
+    # receiver is optional, info from user record if authenticated
+    "receiver": {
       "id": "SDMX",
       "name": "SDMX",
       "contact": [
@@ -33,9 +45,11 @@
           }
       ]
     },
+
     "request": {
       # include complete URL as used by the client
-      "uri": "http://www.myorg.org/ws/data/ECB_ICP1/M.PT+FI.N.000000+071100.4.INX?startPeriod=2009-01&dimensionAtObservation=AllDimensions"
+      "uri": "http://www.myorg.org/ws/data/ECB_ICP1/M.PT+FI.N.000000+071100.4.INX?
+      startPeriod=2009-01&dimensionAtObservation=AllDimensions"
     }
   },
   "errors": [
@@ -45,17 +59,27 @@
     }
   ],
   "structure": {
-    "uri": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",    # resolvable uri to dataflow
+    # resolvable uri to dataflow
+    "uri": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0",
+
     "name": "dataflow name",
     "description": "dataflow description",
     "dimensions": {
-      "dataSet": [                                                # only if grouping of dimensions with single values
+
+      # dataSet is used only if grouping of dimensions with single values
+      "dataSet": [
         {
           "id": "FREQ",
           "name": "Frequency",
           "description": "Description for the dimension",
-          "keyPosition": 0,                                       # 0-based position of dimension in key in user request url
-          "role": "frequency",                                    # restricted list of dimension and attribute roles (time, frequency, geo, unit, scalefactor, referenceperiod, ...)
+
+          # 0-based position of dimension in key in user request url
+          "keyPosition": 0,
+
+          # restricted list of dimension and attribute roles (time, frequency,
+          # geo, unit, scalefactor, referenceperiod, ...)
+          "role": "frequency",
+
           "values": [
             {
               "id": "D",
@@ -97,7 +121,9 @@
           ]
         }
       ],
-      "series": [                                       # only if dimensionAtObservation <> allDimensions
+
+      # only if dimensionAtObservation <> allDimensions
+      "series": [
         {
           "id": "CURRENCY",
           "name": "Currency",
@@ -115,7 +141,9 @@
           ]
         }
       ],
-      "observation": [                                # only for dimensions used at observation level
+
+      # only for dimensions used at observation level
+      "observation": [
         {
           "id": "TIME_PERIOD",
           "name": "Time period or range",
@@ -125,41 +153,41 @@
             {
               "id": "2013-01-18",
               "name": "2013-01-18",
-              "start": "2013-01-18T00:00:00.000Z",
-              "end": "2013-01-18T23:59:59.000Z"
+              "start": "2013-01-18T00:00:00Z",
+              "end": "2013-01-18T23:59:59Z"
             },
             {
               "id": "2013-01-21",
               "name": "2013-01-21",
-              "start": "2013-01-21T00:00:00.000Z",
-              "end": "2013-01-21T23:59:59.000Z"
+              "start": "2013-01-21T00:00:00Z",
+              "end": "2013-01-21T23:59:59Z"
             }
           ]
         }
       ]
     },
     "attributes": {
-      "dataSet": [],                                    # only for attributes returned at dataset level
-      "series": [                                       # only for attributes returned at series level
+
+      # only for attributes returned at dataset level
+      "dataSet": [],
+
+      # only for attributes returned at series level
+      "series": [
         {
           "id": "ID",
           "name": "Attribute name",
           "description": "Description for the attribute",
           "role": null,
           "default": null,
-          "attachment": [                               # inclusion of attachment level and its format still to be decided
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              false
-            ],
+
+          # inclusion of attachment level and its format to be decided
+          # e.g. "attachment": [ true, true, true, true, true, true, false ],
+
           "values": [
             {
+              # id property is optional to allow for uncoded attributes
               "id": null,
-              "name": "New Zealand dollar (NZD)"        # id property is optional to allow for uncoded attributes
+              "name": "New Zealand dollar (NZD)"
             },
             {
               "id": null,
@@ -174,9 +202,15 @@
           "name": "Observation status",
           "description": "Description for the attribute",
           "role": null,
-          "default": "A",                               # optional
+
+          # optional
+          "default": "A",
+
           "values": [
-            null,                                       # a null attribute can be used to shorten the message by using O index later in message
+            # a null attribute can be used to shorten the message by
+            # using O index later in message
+            null,
+
             {
               "id": "A",
               "name": "Normal value",
@@ -189,24 +223,27 @@
     "annotations": [
       {
         "title": "AnnotationTitle provides a title for the annotation.",
-        "type": "AnnotationType is used to distinguish between annotations designed to support various uses.",
+        "type": "AnnotationType is used to distinguish between annotations
+        designed to support various uses.",
         "uri": "http://www.myorg.org/ws/uri/for/this/annotation",
-        "text": "AnnotationText holds a language-specific string containing the text of the annotation.",
-        "id": "The id attribute provides a non-standard identification of an annotation. It can be used to disambiguate annotations."
+        "text": "AnnotationText holds a language-specific string containing
+        the text of the annotation.",
+        "id": "The id attribute provides a non-standard identification of an
+        annotation. It can be used to disambiguate annotations."
       }
     ]
   },
   "dataSets": [
     {
-      "action": "Informational",
-      "reportingBegin": "2012-05-04",            # optional first time period in returned message
-      "reportingEnd": "2012-06-01",              # optional last time period in returned message
-      "validFrom": "2012-01-01T10:00:00Z",       # optional only for version history
-      "validTo": "2013-01-01T10:00:00Z",         # optional only for version history
-      "publicationYear": "2005",                 # optional only for publication release calendars
-      "publicationPeriod": "2005-Q1",            # optional only for publication release calendars
-      "annotations": [0],                        # optional as per annotations
-      "attributes": [0],                         # optional as per attributes at dataset level
+      "action": "Information",
+      "reportingBegin": "2012-05-04",      # optional first time period in returned message
+      "reportingEnd": "2012-06-01",        # optional last time period in returned message
+      "validFrom": "2012-01-01T10:00:00Z", # optional only for version history
+      "validTo": "2013-01-01T10:00:00Z",   # optional only for version history
+      "publicationYear": "2005",           # optional only for publication release calendars
+      "publicationPeriod": "2005-Q1",      # optional only for publication release calendars
+      "annotations": [0],                  # optional as per annotations
+      "attributes": [0],                   # optional as per attributes at dataset level
 
       # 1st alternative (only if series level (dimensionAtObservation <> allDimensions))
 
@@ -230,7 +267,7 @@
       }
     },
     {
-      "action": "Informational",
+      "action": "Information",
 
       # 2nd alternative (only if no series level (dimensionAtObservation == allDimensions))
 
@@ -245,7 +282,7 @@
     # In case that the server does not group dimensions with single values at dataset level
 
     {
-      "action": "Informational",
+      "action": "Information",
 
       # 1st alternative (only if series level (dimensionAtObservation <> allDimensions))
 
@@ -267,7 +304,7 @@
       }
     },
     {
-      "action": "Informational",
+      "action": "Information",
 
       # 2nd alternative (only if no series level (dimensionAtObservation == allDimensions))
 
@@ -282,7 +319,7 @@
     # In case the client is using the detail parameter and the server supports it
 
     {
-      "action": "Informational",
+      "action": "Information",
 
       # Detail parameter: serieskeysonly. No observation values, attributes or annotations.
 
@@ -294,7 +331,7 @@
       ]
     },
     {
-      "action": "Informational",
+      "action": "Information",
 
       # Detail parameter: dataonly. No attributes or annotations.
 
@@ -306,7 +343,7 @@
       ]
     },
     {
-      "action": "Informational",
+      "action": "Information",
 
       # Detail parameter: nodata. No observation values just attributes and annotations.
 
@@ -319,3 +356,4 @@
     }
   ]
 }
+```

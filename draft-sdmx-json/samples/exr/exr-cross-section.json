@@ -118,7 +118,7 @@
     },
     "dataSets": [
         {
-            "action": "Informational",
+            "action": "Information",
             "series": {
                 "0": {
                     "attributes": [],
