@@ -1,5 +1,5 @@
 
-# <a name="Introduction"></a>Introduction
+# Introduction
 
 Let's first start with a brief introduction of the SDMX information model.
 
@@ -27,6 +27,9 @@ The SDMX information model is much richer than this limited introduction,
 however the above should be sufficient to understand the sdmx-json format. For
 additional information, please refer to the [SDMX documentation](http://sdmx.org/?page_id=10).
 
+Samples, tools and other SDMX-JSON resources are available in the public Github
+repository <https://github.com/sdmx-twg/sdmx-prototype-json/tree/master/draft-sdmx-json>.
+
 Before we start, let's clarify a few more things about this guide:
 
 -  New fields may be introduced in later versions. Therefore
@@ -41,7 +44,7 @@ may not contain fields for data, dimensions and attributes.
 
 # Field Guide to SDMX-JSON Objects
 
-##  <a name="Message"></a>Message
+## Message
 
 Message is the top level object and it contains the data as well as the metadata needed to interpret those data.
 Example:
@@ -136,7 +139,7 @@ in the SDMX 2.1 Web Services Guidelines. Example:
 
 
 
-## <a name="Header"></a>header
+## header
 
 Header contains basic information about the message, such as when it was prepared and
 who has sent it. Example:
@@ -164,7 +167,8 @@ Example:
 
 ### prepared
 
-*String*. A timestamp, formatted according to the ISO-8601 standard, indicating when the message was prepared. Example:
+*String*. A timestamp indicating when the message was prepared. Values must
+follow the ISO 8601 syntax for combined dates and times, including time zone. Example:
 
     "prepared": "2012-05-04T03:30:00Z"
 
@@ -221,7 +225,7 @@ Example:
 
 
 
-## <a name="Structure"></a>structure
+## structure
 
 *Object* *nullable*. Provides the structural metadata necessary to interpret the data contained in the message.
 It tells you which are the components (dimensions and attributes) used in the message and also describes to which
@@ -295,7 +299,7 @@ observations) to which these attributes are attached. Example:
         ]
     }
 
-### <a name="Component"></a>Component
+### Component
 
 A component represents a dimension or an attribute used in the message. It contains basic information about the component
 (such as its name and id) as well as the list of values used in the message for this particular component. Example:
@@ -373,7 +377,7 @@ no value is provided in the data part of the message then this value applies. Ex
       }
     ]
 
-#### <a name="component_values"></a>Component value
+#### Component value
 
 *Object* *nullable*. A particular value for a component in a message. Example:
 
@@ -403,7 +407,7 @@ than the text provided for the name field. Example:
 
 ##### start and end fields
 
-*String* *nullable*. Start and end are instants of time that define the actual
+*String* *nullable*. Start and end are instances of time that define the actual
 Gregorian calendar period covered by the values for the time dimension. The algorithm
 for computing start and end fields for any supported reporting period is defined
 in the SDMX Technical Notes.
@@ -482,7 +486,7 @@ It can be used to disambiguate annotations. Example:
 
 
 
-## <a name="DataSets"></a>dataSets
+## dataSets
 
 An array of data set objects. Example:
 
@@ -571,7 +575,7 @@ published on a quarterly basis).
 *Array* *nullable*. An optional array of annotation indices for the dataset. Indices refer
 back to the array of annotations in the structure field. Example:
 
-  "annotations": [ 3, 42 ]
+    "annotations": [ 3, 42 ]
 
 ### attributes
 
@@ -579,7 +583,7 @@ back to the array of annotations in the structure field. Example:
 particular attribute always has the same value for the data available in the data message. In order to avoid repetition,
 that value can simply be attached at the data set level. Example:
 
-  "attributes": [ 0, null, 0 ]
+    "attributes": [ 0, null, 0 ]
 
 ### observations
 
@@ -587,12 +591,12 @@ that value can simply be attached at the data set level. Example:
 a data set represents a flat collection of observations. In case the observations are organised into logical groups
 (time series or cross-sections), use the [series element](#series) instead. Example:
 
-  "observations": {
-    "0:1:0": [ 105.6, 0, 1],
-    "0:1:1": [ 105,9 ]
-  }
+    "observations": {
+      "0:1:0": [ 105.6, 0, 1],
+      "0:1:1": [ 105,9 ]
+    }
 
-### <a name="series"></a> series
+### series
 
 *Object* *nullable*. A collection of series. Each series object contains the observation values and associated attributes, when
 the observations contained in the data set are used into logical groups (time series or cross-sections). This element must
@@ -614,9 +618,9 @@ the observations contained in the data set are used into logical groups (time se
 *Array* *nullable*. An optional array of annotation indices for the series. Indices refer
 back to the array of annotations in the structure field. Example:
 
-  "annotations": [ 3, 42 ]
+    "annotations": [ 3, 42 ]
 
-#### <a name="attributes"></a>attributes
+#### attributes
 
 *Array* *nullable*. Collection of attributes values. Each value is an index to the
 *values* array in the respective *Attribute* object. Example:
@@ -625,17 +629,17 @@ back to the array of annotations in the structure field. Example:
 
 For information on how to handle the attribute values, see the section dedicated to [handling component values](#handling_values).
 
-#### <a name="observations"></a>observations
+#### observations
 
 *Object* *nullable*. An object of observation values. Each observation value is an
 array of one of more values.
 
-      "observations": {
-        "0": [ 105.6, null, null ],
-        "1": [ 105.9 ],
-        "2": [ 106.9 ],
-        "3": [ 107.3, 0 ]
-      }
+    "observations": {
+      "0": [ 105.6, null, null ],
+      "1": [ 105.9 ],
+      "2": [ 106.9 ],
+      "3": [ 107.3, 0 ]
+    }
 
 The keys in the observation object are the index values of the observation level dimensions. It's one
 for time series and cross-sections, but there will be more than one when the data set represents a flat list of
@@ -648,7 +652,7 @@ Elements after the observation value are values for the observation level attrib
 
 
 
-# <a name="handling_values"></a>Handling component values
+# Handling component values
 
 Let's say that the following message needs to be processed:
 
@@ -851,3 +855,10 @@ The value 0 identified previously is the index of the item in the collection of 
 the dimension value is therefore "New Zealand dollar".
 
 The same logic applies when mapping attributes.
+
+
+# Security Considerations
+
+This document defines a response format for SDMX RESTful Web Services in JSON format
+and it raises no new security considerations. SDXM Web Services Guidelines
+includes the security considerations associated with its usage.
