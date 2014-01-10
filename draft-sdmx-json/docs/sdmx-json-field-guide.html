@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="SDMX Working Draft, 3 January 2014">
+  <title>SDMX-JSON: SYNTAX AND DOCUMENTATION</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <style type="text/css">
+    body {
+      font-family: Georgia;
+      font-size: 17px;
+      line-height: 26px;
+  
+      width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+  
+    h1 {
+      font-size: 28px;
+      line-height: 43px;
+    }
+  
+    h2 {
+      font-size: 28px;
+      line-height: 43px;
+    }
+  
+    h3, h4, h5, h6 {
+      font-size: 22px;
+      line-height: 33px;
+    }
+  </style>
+</head>
+<body>
+<p><strong>Status of this Document</strong></p>
+<p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document.</em></p>
+<p>This is a Last Call Public Working Draft of SDMX-JSON format (SDMX-JSON) 1.0. It is made available for review by the SDMX user community and the public.</p>
+<p>The Last Call review period for this document extends until XX XX 2014. Please send your comments to the SDMX Techical Working Group (SDMX-TWG) xxxx@xxx.xx. Each email message should contain only one comment.</p>
+<p>Publication as a Working Draft does not imply endorsement by the SDMX Sponsors. This is a draft document and may be updated, replaced or obsoleted by other documents at any time.</p>
+<p>This document has been produced by the SDMX-TWG. The authors of this document are the members of the SDMX-TWG. Different parts of this specification have different editors.</p>
+<hr />
+<header>
+<h1 class="title">SDMX-JSON: SYNTAX AND DOCUMENTATION</h1>
+<h2 class="author">SDMX Working Draft, 3 January 2014</h2>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="#field-guide-to-sdmx-json-objects"><span class="toc-section-number">2</span> Field Guide to SDMX-JSON Objects</a><ul>
+<li><a href="#message"><span class="toc-section-number">2.1</span> Message</a><ul>
+<li><a href="#header"><span class="toc-section-number">2.1.1</span> header</a></li>
+<li><a href="#structure"><span class="toc-section-number">2.1.2</span> structure</a></li>
+<li><a href="#datasets"><span class="toc-section-number">2.1.3</span> dataSets</a></li>
+<li><a href="#errors"><span class="toc-section-number">2.1.4</span> errors</a><ul>
+<li><a href="#code"><span class="toc-section-number">2.1.4.1</span> code</a></li>
+<li><a href="#message-1"><span class="toc-section-number">2.1.4.2</span> message</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#header-1"><span class="toc-section-number">2.2</span> header</a><ul>
+<li><a href="#id"><span class="toc-section-number">2.2.1</span> id</a></li>
+<li><a href="#test"><span class="toc-section-number">2.2.2</span> test</a></li>
+<li><a href="#prepared"><span class="toc-section-number">2.2.3</span> prepared</a></li>
+<li><a href="#sender"><span class="toc-section-number">2.2.4</span> sender</a><ul>
+<li><a href="#contact"><span class="toc-section-number">2.2.4.1</span> contact</a></li>
+</ul></li>
+<li><a href="#receiver"><span class="toc-section-number">2.2.5</span> receiver</a></li>
+</ul></li>
+<li><a href="#structure-1"><span class="toc-section-number">2.3</span> structure</a><ul>
+<li><a href="#uri"><span class="toc-section-number">2.3.1</span> uri</a></li>
+<li><a href="#name"><span class="toc-section-number">2.3.2</span> name</a></li>
+<li><a href="#description"><span class="toc-section-number">2.3.3</span> description</a></li>
+<li><a href="#dimensions"><span class="toc-section-number">2.3.4</span> dimensions</a></li>
+<li><a href="#attributes"><span class="toc-section-number">2.3.5</span> attributes</a></li>
+<li><a href="#component"><span class="toc-section-number">2.3.6</span> Component</a><ul>
+<li><a href="#id-1"><span class="toc-section-number">2.3.6.1</span> id</a></li>
+<li><a href="#name-1"><span class="toc-section-number">2.3.6.2</span> name</a></li>
+<li><a href="#description-1"><span class="toc-section-number">2.3.6.3</span> description</a></li>
+<li><a href="#keyposition"><span class="toc-section-number">2.3.6.4</span> keyPosition</a></li>
+<li><a href="#role"><span class="toc-section-number">2.3.6.5</span> role</a></li>
+<li><a href="#default"><span class="toc-section-number">2.3.6.6</span> default</a></li>
+<li><a href="#values"><span class="toc-section-number">2.3.6.7</span> values</a></li>
+<li><a href="#component-value"><span class="toc-section-number">2.3.6.8</span> Component value</a></li>
+</ul></li>
+<li><a href="#annotations"><span class="toc-section-number">2.3.7</span> Annotations</a><ul>
+<li><a href="#title"><span class="toc-section-number">2.3.7.1</span> title</a></li>
+<li><a href="#type"><span class="toc-section-number">2.3.7.2</span> type</a></li>
+<li><a href="#uri-1"><span class="toc-section-number">2.3.7.3</span> uri</a></li>
+<li><a href="#text"><span class="toc-section-number">2.3.7.4</span> text</a></li>
+<li><a href="#id-3"><span class="toc-section-number">2.3.7.5</span> id</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#datasets-1"><span class="toc-section-number">2.4</span> dataSets</a><ul>
+<li><a href="#action"><span class="toc-section-number">2.4.1</span> action</a></li>
+<li><a href="#reportingbegin"><span class="toc-section-number">2.4.2</span> reportingBegin</a></li>
+<li><a href="#reportingend"><span class="toc-section-number">2.4.3</span> reportingEnd</a></li>
+<li><a href="#validfrom"><span class="toc-section-number">2.4.4</span> validFrom</a></li>
+<li><a href="#validto"><span class="toc-section-number">2.4.5</span> validTo</a></li>
+<li><a href="#publicationyear"><span class="toc-section-number">2.4.6</span> publicationYear</a></li>
+<li><a href="#publicationperiod"><span class="toc-section-number">2.4.7</span> publicationPeriod</a></li>
+<li><a href="#annotations-1"><span class="toc-section-number">2.4.8</span> annotations</a></li>
+<li><a href="#attributes-1"><span class="toc-section-number">2.4.9</span> attributes</a></li>
+<li><a href="#observations"><span class="toc-section-number">2.4.10</span> observations</a></li>
+<li><a href="#series"><span class="toc-section-number">2.4.11</span> series</a><ul>
+<li><a href="#annotations-2"><span class="toc-section-number">2.4.11.1</span> annotations</a></li>
+<li><a href="#attributes-2"><span class="toc-section-number">2.4.11.2</span> attributes</a></li>
+<li><a href="#observations-1"><span class="toc-section-number">2.4.11.3</span> observations</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#handling-component-values"><span class="toc-section-number">3</span> Handling component values</a></li>
+<li><a href="#security-considerations"><span class="toc-section-number">4</span> Security Considerations</a></li>
+<li><a href="#full-example-with-comments"><span class="toc-section-number">5</span> Full Example with Comments</a></li>
+<li><a href="#references"><span class="toc-section-number">6</span> References</a><ul>
+<li><a href="#normative-references"><span class="toc-section-number">6.1</span> Normative References</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction"><a href="#introduction"><span class="header-section-number">1</span> Introduction</a></h1>
+<p>Let's first start with a brief introduction of the SDMX information model.</p>
+<p>In order to make sense of some statistical data, we need to know the concepts associated with them. For example, on its own the figure 1.2953 is pretty meaningless, but if we know that this is an exchange rate for the US dollar against the euro on 23 November 2006, it starts making more sense.</p>
+<p>There are two types of concepts: dimensions and attributes. Dimensions, when combined, allow to uniquely identify statistical data. Attributes on the other hand do not help identifying statistical data, but they add useful information (like the unit of measure or the number of decimals). Dimensions and attributes are known as &quot;components&quot;.</p>
+<p>The measurement of some phenomenon (e.g. the figure 1.2953 mentioned above) is known as an &quot;observation&quot; in SDMX. Observations are grouped together into a &quot;data set&quot;. However, there can also be an intermediate grouping. For example, all exchange rates for the US dollar against the euro can be measured on a daily basis and these measures can then be grouped together, in a so-called &quot;time series&quot;. Similarly, you can group a collection of observations made at the same point in time, in a &quot;cross-section&quot; (for example, the values of the US dollar, the Japanese yen and the Swiss franc against the euro at a particular date). Of course, these intermediate groupings are entirely optional and you may simply decide to have a flat list of observations in your data set.</p>
+<p>The SDMX information model is much richer than this limited introduction, however the above should be sufficient to understand the sdmx-json format. For additional information, please refer to the <a href="http://sdmx.org/?page_id=10">SDMX documentation</a>.</p>
+<p>Samples, tools and other SDMX-JSON resources are available in the public Github repository <a href="https://github.com/sdmx-twg/sdmx-prototype-json/tree/master/draft-sdmx-json">https://github.com/sdmx-twg/sdmx-prototype-json/tree/master/draft-sdmx-json</a>.</p>
+<p>Before we start, let's clarify a few more things about this guide:</p>
+<ul>
+<li>New fields may be introduced in later versions. Therefore consuming applications should tolerate the addition of new fields with ease.</li>
+<li>The ordering of fields in objects is undefined. The fields may appear in any order and consuming applications should not rely on any specific ordering. It is safe to consider a nulled field and the absence of a field as the same thing.</li>
+<li>Not all fields appear in all contexts. For example response with error messages may not contain fields for data, dimensions and attributes.</li>
+</ul>
+<h1 id="field-guide-to-sdmx-json-objects"><a href="#field-guide-to-sdmx-json-objects"><span class="header-section-number">2</span> Field Guide to SDMX-JSON Objects</a></h1>
+<h2 id="message"><a href="#message"><span class="header-section-number">2.1</span> Message</a></h2>
+<p>Message is the top level object and it contains the data as well as the metadata needed to interpret those data. Example:</p>
+<pre><code>{
+  &quot;header&quot;: {
+      # header fields #
+  },
+  &quot;structure&quot;: {
+      # structure objects #
+  },
+  &quot;dataSets&quot;: [
+      # data set objects #
+  ],
+  &quot;errors&quot;: [
+      # Error messages #
+  ]
+}</code></pre>
+<h3 id="header"><a href="#header"><span class="header-section-number">2.1.1</span> header</a></h3>
+<p><em>Object</em> <em>nullable</em>. <em><a href="#Header">Header</a></em> contains basic technical information about the message, such as when it was prepared and how has sent it. Example:</p>
+<pre><code>&quot;header&quot;: {
+  &quot;id&quot;: &quot;b1804c51-1ee3-45a9-bb75-795cd4e06489&quot;,
+  &quot;prepared&quot;: &quot;2012-05-04T03:30:00&quot;
+}</code></pre>
+<h3 id="structure"><a href="#structure"><span class="header-section-number">2.1.2</span> structure</a></h3>
+<p><em>Object</em> <em>nullable</em>. <em><a href="#Structure">Structure</a></em> contains the information needed to interpret the data available in the message, such as the list of concepts used. Example:</p>
+<pre><code>&quot;structure&quot;: {
+    &quot;uri&quot;: &quot;http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0&quot;,
+    &quot;dimensions&quot;: {
+        # dimensions object #
+    },
+    &quot;attributes&quot;: {
+        # attributes object #
+    }
+    &quot;annotations&quot;: [
+        # annotation objects #
+    ]
+}</code></pre>
+<h3 id="datasets"><a href="#datasets"><span class="header-section-number">2.1.3</span> dataSets</a></h3>
+<p><em>Array</em> <em>nullable</em>. <em>DataSets</em> field is an array of <em><a href="#DataSet">DataSet</a></em> objects. That's where the data (i.e.: the observations) will be. Example:</p>
+<pre><code>&quot;dataSets&quot;: [
+  {
+    &quot;action&quot;: &quot;Information&quot;,
+    &quot;observations&quot;: {
+        # observation objects #
+    }
+  }
+]</code></pre>
+<p>In typical cases, the file will contain only one data set. However, in some cases, such as when retrieving, from an SDMX 2.1 web service, what has changed in the data source since in particular point in time, the web service might return more than one data set.</p>
+<h3 id="errors"><a href="#errors"><span class="header-section-number">2.1.4</span> errors</a></h3>
+<p><em>Array</em> <em>nullable</em>. RESTful web services indicates errors using the HTTP status codes. In addition, whenever appropriate, the error messages can also be returned using this error field. Error is an array of error messages. Example:</p>
+<pre><code>&quot;errors&quot;: [
+  {
+    &quot;code&quot;: 150,
+    &quot;message&quot;: &quot;Invalid number of dimensions in the key parameter&quot;
+  }
+]</code></pre>
+<h4 id="code"><a href="#code"><span class="header-section-number">2.1.4.1</span> code</a></h4>
+<p><em>number</em>. Provides a code number for the error message. Code numbers are defined in the SDMX 2.1 Web Services Guidelines. Example:</p>
+<pre><code>&quot;code&quot;: 130</code></pre>
+<h4 id="message-1"><a href="#message-1"><span class="header-section-number">2.1.4.2</span> message</a></h4>
+<p><em>string</em>. Provides the error message. Example:</p>
+<pre><code>&quot;message&quot;: &quot;Response too large due to client request&quot;</code></pre>
+<h2 id="header-1"><a href="#header-1"><span class="header-section-number">2.2</span> header</a></h2>
+<p>Header contains basic information about the message, such as when it was prepared and who has sent it. Example:</p>
+<pre><code>&quot;header&quot;: {
+  &quot;id&quot;: &quot;b1804c51-1ee3-45a9-bb75-795cd4e06489&quot;,
+  &quot;prepared&quot;: &quot;2013-01-03T12:54:12&quot;,
+  &quot;sender: {
+    &quot;id&quot;: &quot;SDMX&quot;
+  }
+}</code></pre>
+<h3 id="id"><a href="#id"><span class="header-section-number">2.2.1</span> id</a></h3>
+<p><em>String</em>. Unique string that identifies the message for further references. Example:</p>
+<pre><code>&quot;id&quot;: &quot;TEC00034&quot;</code></pre>
+<h3 id="test"><a href="#test"><span class="header-section-number">2.2.2</span> test</a></h3>
+<p><em>Boolean</em> <em>nullable</em>. Indicates whether the message is for test purposes or not. False for normal messages. Example:</p>
+<pre><code>&quot;test&quot;: false</code></pre>
+<h3 id="prepared"><a href="#prepared"><span class="header-section-number">2.2.3</span> prepared</a></h3>
+<p><em>String</em>. A timestamp indicating when the message was prepared. Values must follow the ISO 8601 syntax for combined dates and times, including time zone. Example:</p>
+<pre><code>&quot;prepared&quot;: &quot;2012-05-04T03:30:00Z&quot;</code></pre>
+<h3 id="sender"><a href="#sender"><span class="header-section-number">2.2.4</span> sender</a></h3>
+<p><em>Object</em>. Information about the party that is transmitting the message. Sender contains the following fields:</p>
+<ul>
+<li>id - <em>String</em>. A unique identifier of the party.</li>
+<li>name - <em>String</em> <em>nullable</em>. A human-readable name of the sender.</li>
+<li>contact - <em>Array</em> <em>nullable</em>. A collection of contact details.</li>
+</ul>
+<p>Example:</p>
+<pre><code>&quot;sender&quot;: {
+  &quot;id&quot;: &quot;ECB&quot;,
+  &quot;name&quot;: &quot;European Central Bank&quot;
+  &quot;contact&quot;: [
+    # contact details #
+  ]
+}</code></pre>
+<h4 id="contact"><a href="#contact"><span class="header-section-number">2.2.4.1</span> contact</a></h4>
+<p><em>Array</em> <em>nullable</em>. Information on how the party can be contacted.</p>
+<p>Each object in the collection may contain the following field: * name - <em>String</em>. The contact's name. * department - <em>String</em> <em>nullable</em>. The organisational structure for the contact. * role - <em>String</em> <em>nullable</em>. The responsibility of the contact. * telephone - <em>Array</em> <em>nullable</em>. An array of telephone numbers for the contact. * fax - <em>Array</em> <em>nullable</em>. An array of fax numbers for the contact person. * uri - <em>Array</em> <em>nullable</em>. An array of uris. Each uri holds an information URL for the contact. * email - <em>Array</em> <em>nullable</em>. An array of email addresses for the contact person.</p>
+<p>Example:</p>
+<pre><code>&quot;contact&quot;: [
+    {
+        &quot;name&quot;: &quot;Statistics hotline&quot;,
+        &quot;email&quot;: [ &quot;statistics@xyz.org&quot; ]
+    }
+]</code></pre>
+<h3 id="receiver"><a href="#receiver"><span class="header-section-number">2.2.5</span> receiver</a></h3>
+<p><em>Object</em> <em>nullable</em>. Information about the party that is receiving the message. This can be useful if the WS requires authentication. Receiver contains the same fields as sender (see above):</p>
+<p>Example:</p>
+<pre><code>&quot;receiver&quot;: {
+  &quot;id&quot;: &quot;SDMX&quot;
+}</code></pre>
+<h2 id="structure-1"><a href="#structure-1"><span class="header-section-number">2.3</span> structure</a></h2>
+<p><em>Object</em> <em>nullable</em>. Provides the structural metadata necessary to interpret the data contained in the message. It tells you which are the components (dimensions and attributes) used in the message and also describes to which level in the hierarchy (data set, series, observations) these components are attached.</p>
+<p>Example:</p>
+<pre><code>&quot;structure&quot;: {
+    &quot;uri&quot;: &quot;http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0&quot;,
+    &quot;dimensions&quot;: {
+        # dimensions object #
+    },
+    &quot;attributes&quot;: {
+        # attributes object #
+    },
+    &quot;annotations&quot;: {
+        # annotations object #
+    }
+}</code></pre>
+<h3 id="uri"><a href="#uri"><span class="header-section-number">2.3.1</span> uri</a></h3>
+<p><em>String</em> <em>nullable</em>. A link to an SDMX 2.1 web service resource where additional information regarding the data flow is available. Example:</p>
+<pre><code>&quot;uri&quot;: &quot;http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0&quot;</code></pre>
+<h3 id="name"><a href="#name"><span class="header-section-number">2.3.2</span> name</a></h3>
+<p><em>String</em> <em>nullable</em>. Data flow name. Example:</p>
+<pre><code>&quot;name&quot;: &quot;Sample dataflow&quot;</code></pre>
+<h3 id="description"><a href="#description"><span class="header-section-number">2.3.3</span> description</a></h3>
+<p><em>String</em> <em>nullable</em>. Descriptio of the data flow. Example:</p>
+<pre><code>&quot;description&quot;: &quot;Data flow description.&quot;</code></pre>
+<h3 id="dimensions"><a href="#dimensions"><span class="header-section-number">2.3.4</span> dimensions</a></h3>
+<p><em>Object</em>. Describes the dimensions used in the message as well as the levels in the hierarchy (data set, series, observations) to which these dimensions are attached. Example:</p>
+<pre><code>&quot;dimensions&quot;: {
+    &quot;dataSet&quot;: [
+        # Component objects #
+    ],
+    &quot;series&quot;: [
+        # Component objects #
+    ],
+    &quot;observation&quot;: [
+        # Component object #
+    ]
+}</code></pre>
+<h3 id="attributes"><a href="#attributes"><span class="header-section-number">2.3.5</span> attributes</a></h3>
+<p><em>Object</em>. Describes the attributes used in the message as well as the levels in the hierarchy (data set, series, observations) to which these attributes are attached. Example:</p>
+<pre><code>&quot;attributes&quot;: {
+    &quot;dataSet&quot;: [
+        # Component objects #
+    ],
+    &quot;series&quot;: [
+        # Component objects #
+    ],
+    &quot;observation&quot;: [
+        # Component objects #
+    ]
+}</code></pre>
+<h3 id="component"><a href="#component"><span class="header-section-number">2.3.6</span> Component</a></h3>
+<p>A component represents a dimension or an attribute used in the message. It contains basic information about the component (such as its name and id) as well as the list of values used in the message for this particular component. Example:</p>
+<pre><code>{
+  &quot;id&quot;: &quot;FREQ&quot;,
+  &quot;name&quot;: &quot;Frequency&quot;,
+  &quot;keyPosition&quot;: 0,
+  &quot;values&quot;: [
+    {
+      # value object #
+    }
+  ]
+}</code></pre>
+<p>Each of the components may contain the following fields</p>
+<h4 id="id-1"><a href="#id-1"><span class="header-section-number">2.3.6.1</span> id</a></h4>
+<p><em>String</em>. Identifier for the component. Example:</p>
+<pre><code>&quot;id&quot;: &quot;FREQ&quot;</code></pre>
+<h4 id="name-1"><a href="#name-1"><span class="header-section-number">2.3.6.2</span> name</a></h4>
+<p><em>String</em>. Name provides a human-readable name for the component. Example:</p>
+<pre><code>&quot;name&quot;: &quot;Frequency&quot;</code></pre>
+<h4 id="description-1"><a href="#description-1"><span class="header-section-number">2.3.6.3</span> description</a></h4>
+<p><em>String</em> <em>nullable</em>. Provides a description for the component. Example:</p>
+<pre><code>&quot;description&quot;: &quot;The time interval at which observations occur over a given time period.&quot;</code></pre>
+<h4 id="keyposition"><a href="#keyposition"><span class="header-section-number">2.3.6.4</span> keyPosition</a></h4>
+<p><em>Number</em> <em>nullable</em>. Indicates the position of the dimension in the key, starting at 0. This field should not be supplied for attributes. This field could be used to build the &quot;key&quot; parameter string (i.e. D.USD.EUR.SP00.A) for data queries. Example:</p>
+<pre><code>&quot;keyPosition&quot;: 0</code></pre>
+<h4 id="role"><a href="#role"><span class="header-section-number">2.3.6.5</span> role</a></h4>
+<p><em>String</em> <em>nullable</em>. Defines the component role(s). For normal components the value is null. Components can play various roles, such as, for example:</p>
+<ul>
+<li><strong>time</strong>. Time dimension is a special dimension which designates the period in time in which the data identified by the full series key applies.</li>
+<li><strong>measure</strong>. Measure dimension is a special type of dimension which defines multiple measures.</li>
+</ul>
+<p>Example:</p>
+<pre><code>&quot;role&quot;: &quot;time&quot;</code></pre>
+<h4 id="default"><a href="#default"><span class="header-section-number">2.3.6.6</span> default</a></h4>
+<p><em>String</em> or <em>Number</em> <em>nullable</em>. Defines a default value for the component (valid for attributes only!). If no value is provided in the data part of the message then this value applies. Example:</p>
+<pre><code>&quot;default&quot;: &quot;A&quot;</code></pre>
+<h4 id="values"><a href="#values"><span class="header-section-number">2.3.6.7</span> values</a></h4>
+<p><em>Array</em>. Array of <a href="#component_values">values</a> for the component. Example:</p>
+<pre><code>&quot;values&quot;: [
+  {
+    &quot;id&quot;: &quot;M&quot;,
+    &quot;name&quot;: &quot;Monthly&quot;
+  }
+]</code></pre>
+<h4 id="component-value"><a href="#component-value"><span class="header-section-number">2.3.6.8</span> Component value</a></h4>
+<p><em>Object</em> <em>nullable</em>. A particular value for a component in a message. Example:</p>
+<pre><code>{
+    &quot;id&quot;: &quot;M&quot;,
+    &quot;name&quot;: &quot;Monthly&quot;
+}</code></pre>
+<h5 id="id-2"><a href="#id-2"><span class="header-section-number">2.3.6.8.1</span> id</a></h5>
+<p><em>String</em>. Unique identifier for a value. Example:</p>
+<pre><code>&quot;id&quot;: &quot;A&quot;</code></pre>
+<h5 id="name-2"><a href="#name-2"><span class="header-section-number">2.3.6.8.2</span> name</a></h5>
+<p><em>String</em>. Human-readable name for a value. Example:</p>
+<pre><code>&quot;name&quot;: &quot;Missing value; data cannot exist&quot;</code></pre>
+<h5 id="description-2"><a href="#description-2"><span class="header-section-number">2.3.6.8.3</span> description</a></h5>
+<p><em>String</em> <em>nullable</em>. Description provides a human-readable description of the value. The description is typically longer than the text provided for the name field. Example:</p>
+<pre><code>&quot;description&quot;: &quot;Description for missing value.&quot;</code></pre>
+<h5 id="start-and-end-fields"><a href="#start-and-end-fields"><span class="header-section-number">2.3.6.8.4</span> start and end fields</a></h5>
+<p><em>String</em> <em>nullable</em>. Start and end are instances of time that define the actual Gregorian calendar period covered by the values for the time dimension. The algorithm for computing start and end fields for any supported reporting period is defined in the SDMX Technical Notes.</p>
+<p>These fields should be used only when the component value represents one of the values for the time dimension.</p>
+<p>Values are considered as inclusive both for the start field and the end field. Values must follow the ISO 8601 syntax for combined dates and times, including time zone.</p>
+<p>Example:</p>
+<pre><code>{
+    &quot;id&quot;: &quot;2010&quot;,
+    &quot;name&quot;: &quot;2010&quot;,
+    &quot;start&quot;: &quot;2010-01-01T00:00Z&quot;,
+    &quot;end&quot;: &quot;2010-12-31T23:59:59Z&quot;
+}</code></pre>
+<p>These fields are useful for visualisation tools, when selecting the appropriate point in time for the time axis. Statistical data, can be collected, for example, at the beginning, the middle or the end of the period, or can represent the average of observations through the period. Based on this information and using the start and end fields, it is easy to get or calculate the desired point in time to be used for the time axis.</p>
+<h3 id="annotations"><a href="#annotations"><span class="header-section-number">2.3.7</span> Annotations</a></h3>
+<p><em>Array</em> <em>nullable</em>. Provides a list of annotation objects. Annotations can be attached to data sets, series and observations.</p>
+<pre><code>&quot;annotations&quot;: [
+  {
+    &quot;title&quot;: &quot;Sample annotation&quot;,
+    &quot;uri&quot;: &quot;http://sample.org/annotations/74747&quot;
+  }
+]</code></pre>
+<p>Each annotation object contains the following optional information:</p>
+<h4 id="title"><a href="#title"><span class="header-section-number">2.3.7.1</span> title</a></h4>
+<p><em>string</em> <em>nullable</em>. Provides a title for the annotation. Example:</p>
+<pre><code>&quot;title&quot;: &quot;Sample annotation&quot;</code></pre>
+<h4 id="type"><a href="#type"><span class="header-section-number">2.3.7.2</span> type</a></h4>
+<p><em>string</em> <em>nullable</em>. Type is used to distinguish between annotations designed to support various uses. The types are not enumerated, as these can be specified by the user or creator of the annotations. The definitions and use of annotation types should be documented by their creator. Example:</p>
+<pre><code>&quot;type&quot;: &quot;reference&quot;</code></pre>
+<h4 id="uri-1"><a href="#uri-1"><span class="header-section-number">2.3.7.3</span> uri</a></h4>
+<p><em>string</em> <em>nullable</em>. URI - typically a URL - which points to an external resource which may contain or supplement the annotation. If a specific behavior is desired, an annotation type should be defined which specifies the use of this field more exactly.</p>
+<pre><code>&quot;uri&quot;: &quot;http://sample.org/annotations/74747&quot;</code></pre>
+<h4 id="text"><a href="#text"><span class="header-section-number">2.3.7.4</span> text</a></h4>
+<p><em>string</em> <em>nullable</em>. Contains the text of the annotation.</p>
+<pre><code>&quot;text&quot;: &quot;Sample annotation text&quot;</code></pre>
+<h4 id="id-3"><a href="#id-3"><span class="header-section-number">2.3.7.5</span> id</a></h4>
+<p><em>string</em> <em>nullable</em>. ID provides a non-standard identification of an annotation. It can be used to disambiguate annotations. Example:</p>
+<pre><code>&quot;id&quot;: &quot;74747&quot;</code></pre>
+<h2 id="datasets-1"><a href="#datasets-1"><span class="header-section-number">2.4</span> dataSets</a></h2>
+<p>An array of data set objects. Example:</p>
+<pre><code>&quot;dataSets&quot;: [
+  {
+    &quot;action&quot;: &quot;Information&quot;,
+    &quot;series&quot;: {
+      # series object #
+    }
+  }
+]</code></pre>
+<p>There are between 2 and 3 levels in a data set object, depending on the way the data in the message is organized.</p>
+<p>A data set may contain a flat list of observations. In this scenario, we have 2 levels in the data part of the message: the data set level and the observation level.</p>
+<p>A data set may also organize observations in logical groups called series. These groups can represent time series or cross-sections. In this scenario, we have 3 levels in the data part of the message: the data set level, the series level and the observation level.</p>
+<p>Dimensions and attributes may be attached to any of these 3 levels.</p>
+<p>In case the data set is a flat list of observations, observations will be found directly under a data set object. In case the data set represents time series or cross sections, the observations will be found under the series elements.</p>
+<h3 id="action"><a href="#action"><span class="header-section-number">2.4.1</span> action</a></h3>
+<p><em>String</em> <em>nullable</em>. Action provides a list of actions, describing the intention of the data transmission from the sender's side. <code>Default value is Information</code></p>
+<ul>
+<li><p>Append - this is an incremental update for an existing data set or the provision of new data or documentation (attribute values) formerly absent. If any of the supplied data or metadata are already present, it will not replace these data.</p></li>
+<li><p>Replace - data are to be replaced, and may also include additional data to be appended.</p></li>
+<li><p>Delete - data are to be deleted.</p></li>
+<li><p>Information- data are being exchanged for informational purposes only, and not meant to update a system.</p></li>
+</ul>
+<p>Example:</p>
+<pre><code>&quot;action&quot;: &quot;Information&quot;</code></pre>
+<h3 id="reportingbegin"><a href="#reportingbegin"><span class="header-section-number">2.4.2</span> reportingBegin</a></h3>
+<p><em>String</em> <em>nullable</em>. The start of the time period covered by the message. Example:</p>
+<pre><code>&quot;reportingBegin&quot;: &quot;2012-05-04&quot;</code></pre>
+<h3 id="reportingend"><a href="#reportingend"><span class="header-section-number">2.4.3</span> reportingEnd</a></h3>
+<p><em>String</em> <em>nullable</em>. The end of the time period covered by the message. Example:</p>
+<pre><code>&quot;reportingEnd&quot;: &quot;2012-06-01&quot;</code></pre>
+<h3 id="validfrom"><a href="#validfrom"><span class="header-section-number">2.4.4</span> validFrom</a></h3>
+<p><em>String</em> <em>nullable</em>. The validFrom indicates the inclusive start time indicating the validity of the information in the data.</p>
+<pre><code>&quot;validFrom&quot;: &quot;2012-01-01T10:00:00Z&quot;</code></pre>
+<h3 id="validto"><a href="#validto"><span class="header-section-number">2.4.5</span> validTo</a></h3>
+<p><em>String</em> <em>nullable</em>. The validTo indicates the inclusive end time indicating the validity of the information in the data.</p>
+<pre><code>&quot;validTo&quot;: &quot;2013-01-01T10:00:00Z&quot;</code></pre>
+<h3 id="publicationyear"><a href="#publicationyear"><span class="header-section-number">2.4.6</span> publicationYear</a></h3>
+<p><em>String</em> <em>nullable</em>. The publicationYear holds the ISO 8601 four-digit year.</p>
+<pre><code>&quot;publicationYear&quot;: &quot;2005&quot;</code></pre>
+<h3 id="publicationperiod"><a href="#publicationperiod"><span class="header-section-number">2.4.7</span> publicationPeriod</a></h3>
+<p><em>String</em> <em>nullable</em>. The publicationPeriod specifies the period of publication of the data in terms of whatever provisioning agreements might be in force (i.e., &quot;2005-Q1&quot; if that is the time of publication for a data set published on a quarterly basis).</p>
+<pre><code>&quot;publicationPeriod&quot;: &quot;2005-Q1&quot;</code></pre>
+<h3 id="annotations-1"><a href="#annotations-1"><span class="header-section-number">2.4.8</span> annotations</a></h3>
+<p><em>Array</em> <em>nullable</em>. An optional array of annotation indices for the dataset. Indices refer back to the array of annotations in the structure field. Example:</p>
+<pre><code>&quot;annotations&quot;: [ 3, 42 ]</code></pre>
+<h3 id="attributes-1"><a href="#attributes-1"><span class="header-section-number">2.4.9</span> attributes</a></h3>
+<p><em>Array</em> <em>nullable</em>. Collection of <a href="#attributes">attributes values</a> attached to the data set level. This is typically the case when a particular attribute always has the same value for the data available in the data message. In order to avoid repetition, that value can simply be attached at the data set level. Example:</p>
+<pre><code>&quot;attributes&quot;: [ 0, null, 0 ]</code></pre>
+<h3 id="observations"><a href="#observations"><span class="header-section-number">2.4.10</span> observations</a></h3>
+<p><em>Object</em> <em>nullable</em>. Collection of <a href="#observations">observations</a> directly attached to a data set. This is the case when a data set represents a flat collection of observations. In case the observations are organised into logical groups (time series or cross-sections), use the <a href="#series">series element</a> instead. Example:</p>
+<pre><code>&quot;observations&quot;: {
+  &quot;0:1:0&quot;: [ 105.6, 0, 1],
+  &quot;0:1:1&quot;: [ 105,9 ]
+}</code></pre>
+<h3 id="series"><a href="#series"><span class="header-section-number">2.4.11</span> series</a></h3>
+<p><em>Object</em> <em>nullable</em>. A collection of series. Each series object contains the observation values and associated attributes, when the observations contained in the data set are used into logical groups (time series or cross-sections). This element must <strong>not</strong> be used in case the data set represents a flat list of observations. Example:</p>
+<pre><code>{
+  &quot;annotations&quot;: [],
+  &quot;attributes&quot;: [ 0, 1 ],
+  &quot;observations&quot;: {
+    &quot;0&quot;: [ 105.6, null, null ],
+    &quot;1&quot;: [ 105.9 ],
+    &quot;2&quot;: [ 106.9 ],
+    &quot;3&quot;: [ 107.3, 0 ]
+  }
+}</code></pre>
+<h4 id="annotations-2"><a href="#annotations-2"><span class="header-section-number">2.4.11.1</span> annotations</a></h4>
+<p><em>Array</em> <em>nullable</em>. An optional array of annotation indices for the series. Indices refer back to the array of annotations in the structure field. Example:</p>
+<pre><code>&quot;annotations&quot;: [ 3, 42 ]</code></pre>
+<h4 id="attributes-2"><a href="#attributes-2"><span class="header-section-number">2.4.11.2</span> attributes</a></h4>
+<p><em>Array</em> <em>nullable</em>. Collection of attributes values. Each value is an index to the <em>values</em> array in the respective <em>Attribute</em> object. Example:</p>
+<pre><code>&quot;attributes&quot;: [ 0, 1 ]</code></pre>
+<p>For information on how to handle the attribute values, see the section dedicated to <a href="#handling_values">handling component values</a>.</p>
+<h4 id="observations-1"><a href="#observations-1"><span class="header-section-number">2.4.11.3</span> observations</a></h4>
+<p><em>Object</em> <em>nullable</em>. An object of observation values. Each observation value is an array of one of more values.</p>
+<pre><code>&quot;observations&quot;: {
+  &quot;0&quot;: [ 105.6, null, null ],
+  &quot;1&quot;: [ 105.9 ],
+  &quot;2&quot;: [ 106.9 ],
+  &quot;3&quot;: [ 107.3, 0 ]
+}</code></pre>
+<p>The keys in the observation object are the index values of the observation level dimensions. It's one for time series and cross-sections, but there will be more than one when the data set represents a flat list of observations.</p>
+<p>The first value in the observation array is the observation value. The data type for observation value is <em>Number</em>. Data type for a reported missing observation value is a <em>null</em>.</p>
+<p>Elements after the observation value are values for the observation level attributes.</p>
+<h1 id="handling-component-values"><a href="#handling-component-values"><span class="header-section-number">3</span> Handling component values</a></h1>
+<p>Let's say that the following message needs to be processed:</p>
+<pre class="sourceCode json"><code class="sourceCode json">{
+    <span class="dt">&quot;header&quot;</span>: {
+        <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;62b5f19d-f1c9-495d-8446-a3661ed24753&quot;</span>,
+        <span class="dt">&quot;prepared&quot;</span>: <span class="st">&quot;2012-11-29T08:40:26Z&quot;</span>,
+        <span class="dt">&quot;sender&quot;</span>: {
+            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;ECB&quot;</span>,
+            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;European Central Bank&quot;</span>
+        }
+    },
+    <span class="dt">&quot;structure&quot;</span>: {
+        <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;ECB_EXR_WEB&quot;</span>,
+        <span class="dt">&quot;uri&quot;</span>: <span class="st">&quot;http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0&quot;</span>,
+        <span class="dt">&quot;dimensions&quot;</span>: {
+            <span class="dt">&quot;dataSet&quot;</span>: [
+                {
+                    <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;FREQ&quot;</span>,
+                    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Frequency&quot;</span>,
+                    <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">0</span>,
+                    <span class="dt">&quot;values&quot;</span>: [
+                        {
+                            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;D&quot;</span>,
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Daily&quot;</span>
+                        }
+                    ]
+                },
+                {
+                    <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;CURRENCY_DENOM&quot;</span>,
+                    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Currency denominator&quot;</span>,
+                    <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">2</span>,
+                    <span class="dt">&quot;values&quot;</span>: [
+                        {
+                            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;EUR&quot;</span>,
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Euro&quot;</span>
+                        }
+                    ]
+                },
+                {
+                    <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;EXR_TYPE&quot;</span>,
+                    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Exchange rate type&quot;</span>,
+                    <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">3</span>,
+                    <span class="dt">&quot;values&quot;</span>: [
+                        {
+                            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;SP00&quot;</span>,
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Spot rate&quot;</span>
+                        }
+                    ]
+                },
+                {
+                    <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;EXR_SUFFIX&quot;</span>,
+                    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Series variation - EXR context&quot;</span>,
+                    <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">4</span>,
+                    <span class="dt">&quot;values&quot;</span>: [
+                        {
+                            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;A&quot;</span>,
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Average or standardised measure for given frequency&quot;</span>
+                        }
+                    ]
+                }
+            ],
+            <span class="dt">&quot;series&quot;</span>: [
+                {
+                    <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;CURRENCY&quot;</span>,
+                    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Currency&quot;</span>,
+                    <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">1</span>,
+                    <span class="dt">&quot;values&quot;</span>: [
+                        {
+                            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;NZD&quot;</span>,
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;New Zealand dollar&quot;</span>
+                        }, {
+                            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;RUB&quot;</span>,
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Russian rouble&quot;</span>
+                        }
+                    ]
+                }
+            ],
+            <span class="dt">&quot;observation&quot;</span>: [
+                {
+                    <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;TIME_PERIOD&quot;</span>,
+                    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Time period or range&quot;</span>,
+                    <span class="dt">&quot;values&quot;</span>: [
+                        {
+                            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;2013-01-18&quot;</span>,
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;2013-01-18&quot;</span>,
+                            <span class="dt">&quot;start&quot;</span>: <span class="st">&quot;2013-01-18T00:00:00Z&quot;</span>,
+                            <span class="dt">&quot;end&quot;</span>: <span class="st">&quot;2013-01-18T23:59:59Z&quot;</span>
+                        }, {
+                            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;2013-01-21&quot;</span>,
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;2013-01-21&quot;</span>,
+                            <span class="dt">&quot;start&quot;</span>: <span class="st">&quot;2013-01-21T00:00:00Z&quot;</span>,
+                            <span class="dt">&quot;end&quot;</span>: <span class="st">&quot;2013-01-21T23:59:59Z&quot;</span>
+                        }
+                    ]
+                }
+            ]},
+        <span class="dt">&quot;attributes&quot;</span>: {
+            <span class="dt">&quot;dataSet&quot;</span>: [],
+            <span class="dt">&quot;series&quot;</span>: [
+                {
+                    <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;TITLE&quot;</span>,
+                    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Series title&quot;</span>,
+                    <span class="dt">&quot;values&quot;</span>: [
+                        {
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;New zealand dollar (NZD)&quot;</span>
+                        }, {
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Russian rouble (RUB)&quot;</span>
+                        }
+                    ]
+                }
+            ],
+            <span class="dt">&quot;observation&quot;</span>: [
+                {
+                    <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;OBS_STATUS&quot;</span>,
+                    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Observation status&quot;</span>,
+                    <span class="dt">&quot;values&quot;</span>: [
+                        {
+                            <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;A&quot;</span>,
+                            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Normal value&quot;</span>
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    <span class="dt">&quot;dataSets&quot;</span>: [
+        {
+            <span class="dt">&quot;action&quot;</span>: <span class="st">&quot;Information&quot;</span>,
+            <span class="dt">&quot;series&quot;</span>: {
+                <span class="dt">&quot;0&quot;</span>: {
+                    <span class="dt">&quot;attributes&quot;</span>: [<span class="dv">0</span>],
+                    <span class="dt">&quot;observations&quot;</span>: {
+                        <span class="dt">&quot;0&quot;</span>: [<span class="fl">1.5931</span>, <span class="dv">0</span>],
+                        <span class="dt">&quot;1&quot;</span>: [<span class="fl">1.5925</span>, <span class="dv">0</span>]
+                    }
+                },
+                <span class="dt">&quot;1&quot;</span>: {
+                    <span class="dt">&quot;attributes&quot;</span>: [<span class="dv">1</span>],
+                    <span class="dt">&quot;observations&quot;</span>: {
+                        <span class="dt">&quot;0&quot;</span>: [<span class="fl">40.3426</span>, <span class="dv">0</span>],
+                        <span class="dt">&quot;1&quot;</span>: [<span class="fl">40.3000</span>, <span class="dv">0</span>]
+                    }
+                }
+            }
+        }
+    ]
+}</code></pre>
+<p>There is one data set in the message, and it contains two series.</p>
+<pre class="sourceCode json"><code class="sourceCode json"><span class="er">&quot;0&quot;:</span> {
+    <span class="dt">&quot;attributes&quot;</span>: [<span class="dv">0</span>],
+    <span class="dt">&quot;observations&quot;</span>: {
+        <span class="dt">&quot;0&quot;</span>: [<span class="fl">1.5931</span>, <span class="dv">0</span>],
+        <span class="dt">&quot;1&quot;</span>: [<span class="fl">1.5925</span>, <span class="dv">0</span>]
+    }
+}<span class="er">,</span>
+<span class="er">&quot;1&quot;:</span> {
+    <span class="dt">&quot;attributes&quot;</span>: [<span class="dv">1</span>],
+    <span class="dt">&quot;observations&quot;</span>: {
+        <span class="dt">&quot;0&quot;</span>: [<span class="fl">40.3426</span>, <span class="dv">0</span>],
+        <span class="dt">&quot;1&quot;</span>: [<span class="fl">40.3000</span>, <span class="dv">0</span>]
+    }
+}</code></pre>
+<p>The structure.dimensions field tells us that, out of the 6 dimensions, 4 have the same value for the 2 series and are therefore attached to the data set level.</p>
+<p>We see that, for the first series, we get the value 0:</p>
+<pre><code>&quot;0&quot;: { ... }</code></pre>
+<p>From the structure information, we know that CURRENCY is the series dimension.</p>
+<pre class="sourceCode json"><code class="sourceCode json"><span class="er">&quot;series&quot;:</span> [
+    {
+        <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;CURRENCY&quot;</span>,
+        <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Currency&quot;</span>,
+        <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">1</span>,
+        <span class="dt">&quot;values&quot;</span>: [
+            {
+                <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;NZD&quot;</span>,
+                <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;New Zealand dollar&quot;</span>
+            }, {
+                <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;RUB&quot;</span>,
+                <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Russian rouble&quot;</span>
+            }
+        ]
+    }
+]</code></pre>
+<p>The value 0 identified previously is the index of the item in the collection of values for this component. In this case, the dimension value is therefore &quot;New Zealand dollar&quot;.</p>
+<p>The same logic applies when mapping attributes.</p>
+<h1 id="security-considerations"><a href="#security-considerations"><span class="header-section-number">4</span> Security Considerations</a></h1>
+<p>This document defines a response format for SDMX RESTful Web Services in JSON format and it raises no new security considerations. SDXM Web Services Guidelines includes the security considerations associated with its usage.</p>
+<h1 id="full-example-with-comments"><a href="#full-example-with-comments"><span class="header-section-number">5</span> Full Example with Comments</a></h1>
+<pre class="sourceCode json"><code class="sourceCode json">{
+  <span class="dt">&quot;header&quot;</span>: {
+
+    <span class="er">#</span> <span class="er">dynamically</span> <span class="er">generated</span> <span class="er">GUI</span>
+    <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;62b5f19d-f1c9-495d-8446-a3661ed24753&quot;</span>,
+
+    <span class="er">#</span> <span class="er">extraction</span> <span class="er">time</span> <span class="er">from</span> <span class="er">db</span> <span class="er">(=now</span> <span class="er">in</span> <span class="er">SQL</span> <span class="er">query)</span>, <span class="er">include</span> <span class="er">timezone!</span>
+    <span class="dt">&quot;prepared&quot;</span>: <span class="st">&quot;2012-11-29T08:40:26Z&quot;</span>,
+
+    <span class="er">#</span> <span class="er">optional</span> <span class="er">with</span> <span class="er">default</span> <span class="er">false</span>
+    <span class="dt">&quot;test&quot;</span>: <span class="dv">false</span>,
+
+    <span class="dt">&quot;sender&quot;</span>: {
+      <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;ECB&quot;</span>,
+      <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;European Central Bank&quot;</span>,
+      <span class="dt">&quot;contact&quot;</span>: [
+        {
+          <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Statistics hotline&quot;</span>,
+          <span class="dt">&quot;department&quot;</span>: <span class="st">&quot;Statistics Department&quot;</span>,
+          <span class="dt">&quot;role&quot;</span>: <span class="st">&quot;helpdesk&quot;</span>,
+          <span class="dt">&quot;telephone&quot;</span>: [<span class="st">&quot;+00-00-99999&quot;</span>],
+          <span class="dt">&quot;fax&quot;</span>: [<span class="st">&quot;+00-00-88888&quot;</span>],
+          <span class="dt">&quot;uri&quot;</span>: [<span class="st">&quot;http://www.xyz.org&quot;</span>],
+          <span class="dt">&quot;email&quot;</span>: [<span class="st">&quot;statistics@xyz.org&quot;</span>]
+        }
+      ]
+    },
+
+    <span class="er">#</span> <span class="er">receiver</span> <span class="er">is</span> <span class="er">optional</span>, <span class="er">info</span> <span class="er">from</span> <span class="er">user</span> <span class="er">record</span> <span class="er">if</span> <span class="er">authenticated</span>
+    <span class="dt">&quot;receiver&quot;</span>: {
+      <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;SDMX&quot;</span>,
+      <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;SDMX&quot;</span>,
+      <span class="dt">&quot;contact&quot;</span>: [
+          {
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;name&quot;</span>,
+              <span class="dt">&quot;department&quot;</span>: <span class="st">&quot;department&quot;</span>,
+              <span class="dt">&quot;role&quot;</span>: <span class="st">&quot;role&quot;</span>,
+              <span class="dt">&quot;telephone&quot;</span>: [<span class="st">&quot;telephone&quot;</span>],
+              <span class="dt">&quot;fax&quot;</span>: [<span class="st">&quot;fax&quot;</span>],
+              <span class="dt">&quot;uri&quot;</span>: [<span class="st">&quot;uri&quot;</span>],
+              <span class="dt">&quot;email&quot;</span>: [<span class="st">&quot;sdmx@xyz.org&quot;</span>]
+          }
+      ]
+    },
+
+    <span class="dt">&quot;request&quot;</span>: {
+      <span class="er">#</span> <span class="er">include</span> <span class="er">complete</span> <span class="er">URL</span> <span class="er">as</span> <span class="er">used</span> <span class="er">by</span> <span class="er">the</span> <span class="er">client</span>
+      <span class="dt">&quot;uri&quot;</span>: <span class="st">&quot;http://www.myorg.org/ws/data/ECB_ICP1/M.PT+FI.N.000000+071100.4.INX?</span>
+<span class="st">      startPeriod=2009-01&amp;dimensionAtObservation=AllDimensions&quot;</span>
+    }
+  },
+  <span class="dt">&quot;errors&quot;</span>: [
+    {
+      <span class="dt">&quot;code&quot;</span>: <span class="dv">123</span>,
+      <span class="dt">&quot;message&quot;</span>: <span class="st">&quot;Invalid number of dimensions in parameter key&quot;</span>
+    }
+  ],
+  <span class="dt">&quot;structure&quot;</span>: {
+    <span class="er">#</span> <span class="er">resolvable</span> <span class="er">uri</span> <span class="er">to</span> <span class="er">dataflow</span>
+    <span class="dt">&quot;uri&quot;</span>: <span class="st">&quot;http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0&quot;</span>,
+
+    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;dataflow name&quot;</span>,
+    <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;dataflow description&quot;</span>,
+    <span class="dt">&quot;dimensions&quot;</span>: {
+
+      <span class="er">#</span> <span class="er">dataSet</span> <span class="er">is</span> <span class="er">used</span> <span class="er">only</span> <span class="er">if</span> <span class="er">grouping</span> <span class="er">of</span> <span class="er">dimensions</span> <span class="er">with</span> <span class="er">single</span> <span class="er">values</span>
+      <span class="dt">&quot;dataSet&quot;</span>: [
+        {
+          <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;FREQ&quot;</span>,
+          <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Frequency&quot;</span>,
+          <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;Description for the dimension&quot;</span>,
+
+          <span class="er">#</span> <span class="er">0-based</span> <span class="er">position</span> <span class="er">of</span> <span class="er">dimension</span> <span class="er">in</span> <span class="er">key</span> <span class="er">in</span> <span class="er">user</span> <span class="er">request</span> <span class="er">url</span>
+          <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">0</span>,
+
+          <span class="er">#</span> <span class="er">restricted</span> <span class="er">list</span> <span class="er">of</span> <span class="er">dimension</span> <span class="er">and</span> <span class="er">attribute</span> <span class="er">roles</span> <span class="er">(time</span>, <span class="er">frequency</span>,
+          <span class="er">#</span> <span class="er">geo</span>, <span class="er">unit</span>, <span class="er">scalefactor</span>, <span class="er">referenceperiod</span>, <span class="er">...)</span>
+          <span class="dt">&quot;role&quot;</span>: <span class="st">&quot;frequency&quot;</span>,
+
+          <span class="dt">&quot;values&quot;</span>: [
+            {
+              <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;D&quot;</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Daily&quot;</span>
+            }
+          ],
+        }, {
+          <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;CURRENCY_DENOM&quot;</span>,
+          <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Currency denominator&quot;</span>,
+          <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;Description for the dimension&quot;</span>,
+          <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">3</span>,
+          <span class="dt">&quot;values&quot;</span>: [
+            {
+              <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;EUR&quot;</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Euro&quot;</span>
+            }
+          ]
+        }, {
+          <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;EXR_TYPE&quot;</span>,
+          <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Exchange rate type&quot;</span>,
+          <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;Description for the dimension&quot;</span>,
+          <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">4</span>,
+          <span class="dt">&quot;values&quot;</span>: [
+            {
+              <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;SP00&quot;</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Spot rate&quot;</span>
+            }
+          ]
+        }, {
+          <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;EXR_SUFFIX&quot;</span>,
+          <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Series variation - EXR context&quot;</span>,
+          <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;Description for the dimension&quot;</span>,
+          <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">5</span>,
+          <span class="dt">&quot;values&quot;</span>: [
+            {
+              <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;A&quot;</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Average or standardised measure for given frequency&quot;</span>
+            }
+          ]
+        }
+      ],
+
+      <span class="er">#</span> <span class="er">only</span> <span class="er">if</span> <span class="er">dimensionAtObservation</span> <span class="er">&lt;&gt;</span> <span class="er">allDimensions</span>
+      <span class="dt">&quot;series&quot;</span>: [
+        {
+          <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;CURRENCY&quot;</span>,
+          <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Currency&quot;</span>,
+          <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;Description for the dimension&quot;</span>,
+          <span class="dt">&quot;keyPosition&quot;</span>: <span class="dv">2</span>,
+          <span class="dt">&quot;role&quot;</span>: <span class="st">&quot;unit&quot;</span>,
+          <span class="dt">&quot;values&quot;</span>: [
+            {
+              <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;NZD&quot;</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;New Zealand dollar&quot;</span>
+            }, {
+              <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;RUB&quot;</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Russian rouble&quot;</span>,
+            }
+          ]
+        }
+      ],
+
+      <span class="er">#</span> <span class="er">only</span> <span class="er">for</span> <span class="er">dimensions</span> <span class="er">used</span> <span class="er">at</span> <span class="er">observation</span> <span class="er">level</span>
+      <span class="dt">&quot;observation&quot;</span>: [
+        {
+          <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;TIME_PERIOD&quot;</span>,
+          <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Time period or range&quot;</span>,
+          <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;Description for the dimension&quot;</span>,
+          <span class="dt">&quot;role&quot;</span>: <span class="st">&quot;time&quot;</span>,
+          <span class="dt">&quot;values&quot;</span>: [
+            {
+              <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;2013-01-18&quot;</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;2013-01-18&quot;</span>,
+              <span class="dt">&quot;start&quot;</span>: <span class="st">&quot;2013-01-18T00:00:00Z&quot;</span>,
+              <span class="dt">&quot;end&quot;</span>: <span class="st">&quot;2013-01-18T23:59:59Z&quot;</span>
+            },
+            {
+              <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;2013-01-21&quot;</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;2013-01-21&quot;</span>,
+              <span class="dt">&quot;start&quot;</span>: <span class="st">&quot;2013-01-21T00:00:00Z&quot;</span>,
+              <span class="dt">&quot;end&quot;</span>: <span class="st">&quot;2013-01-21T23:59:59Z&quot;</span>
+            }
+          ]
+        }
+      ]
+    },
+    <span class="dt">&quot;attributes&quot;</span>: {
+
+      <span class="er">#</span> <span class="er">only</span> <span class="er">for</span> <span class="er">attributes</span> <span class="er">returned</span> <span class="er">at</span> <span class="er">dataset</span> <span class="er">level</span>
+      <span class="dt">&quot;dataSet&quot;</span>: [],
+
+      <span class="er">#</span> <span class="er">only</span> <span class="er">for</span> <span class="er">attributes</span> <span class="er">returned</span> <span class="er">at</span> <span class="er">series</span> <span class="er">level</span>
+      <span class="dt">&quot;series&quot;</span>: [
+        {
+          <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;ID&quot;</span>,
+          <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Attribute name&quot;</span>,
+          <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;Description for the attribute&quot;</span>,
+          <span class="dt">&quot;role&quot;</span>: <span class="dv">null</span>,
+          <span class="dt">&quot;default&quot;</span>: <span class="dv">null</span>,
+
+          <span class="er">#</span> <span class="er">inclusion</span> <span class="er">of</span> <span class="er">attachment</span> <span class="er">level</span> <span class="er">and</span> <span class="er">its</span> <span class="er">format</span> <span class="er">to</span> <span class="er">be</span> <span class="er">decided</span>
+          <span class="er">#</span> <span class="er">e.g.</span> <span class="dt">&quot;attachment&quot;</span>: [ <span class="dv">true</span>, <span class="dv">true</span>, <span class="dv">true</span>, <span class="dv">true</span>, <span class="dv">true</span>, <span class="dv">true</span>, <span class="dv">false</span> ],
+
+          <span class="dt">&quot;values&quot;</span>: [
+            {
+              <span class="er">#</span> <span class="er">id</span> <span class="er">property</span> <span class="er">is</span> <span class="er">optional</span> <span class="er">to</span> <span class="er">allow</span> <span class="er">for</span> <span class="er">uncoded</span> <span class="er">attributes</span>
+              <span class="dt">&quot;id&quot;</span>: <span class="dv">null</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;New Zealand dollar (NZD)&quot;</span>
+            },
+            {
+              <span class="dt">&quot;id&quot;</span>: <span class="dv">null</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Russian rouble (RUB)&quot;</span>
+            }
+          ]
+        }
+      ],
+      <span class="dt">&quot;observation&quot;</span>: [
+        {
+          <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;OBS_STATUS&quot;</span>,
+          <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Observation status&quot;</span>,
+          <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;Description for the attribute&quot;</span>,
+          <span class="dt">&quot;role&quot;</span>: <span class="dv">null</span>,
+
+          <span class="er">#</span> <span class="er">optional</span>
+          <span class="dt">&quot;default&quot;</span>: <span class="st">&quot;A&quot;</span>,
+
+          <span class="dt">&quot;values&quot;</span>: [
+            <span class="er">#</span> <span class="er">a</span> <span class="dv">null</span> <span class="er">attribute</span> <span class="er">can</span> <span class="er">be</span> <span class="er">used</span> <span class="er">to</span> <span class="er">shorten</span> <span class="er">the</span> <span class="er">message</span> <span class="er">by</span>
+            <span class="er">#</span> <span class="er">using</span> <span class="er">O</span> <span class="er">index</span> <span class="er">later</span> <span class="er">in</span> <span class="er">message</span>
+            <span class="dv">null</span>,
+
+            {
+              <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;A&quot;</span>,
+              <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Normal value&quot;</span>,
+              <span class="dt">&quot;description&quot;</span>: <span class="st">&quot;Normal value&quot;</span>
+            }
+          ]
+        }
+      ]
+    },
+    <span class="dt">&quot;annotations&quot;</span>: [
+      {
+        <span class="dt">&quot;title&quot;</span>: <span class="st">&quot;AnnotationTitle provides a title for the annotation.&quot;</span>,
+        <span class="dt">&quot;type&quot;</span>: <span class="st">&quot;AnnotationType is used to distinguish between annotations</span>
+<span class="st">        designed to support various uses.&quot;</span>,
+        <span class="dt">&quot;uri&quot;</span>: <span class="st">&quot;http://www.myorg.org/ws/uri/for/this/annotation&quot;</span>,
+        <span class="dt">&quot;text&quot;</span>: <span class="st">&quot;AnnotationText holds a language-specific string containing</span>
+<span class="st">        the text of the annotation.&quot;</span>,
+        <span class="dt">&quot;id&quot;</span>: <span class="st">&quot;The id attribute provides a non-standard identification of an</span>
+<span class="st">        annotation. It can be used to disambiguate annotations.&quot;</span>
+      }
+    ]
+  },
+  <span class="dt">&quot;dataSets&quot;</span>: [
+    {
+      <span class="dt">&quot;action&quot;</span>: <span class="st">&quot;Information&quot;</span>,
+      <span class="dt">&quot;reportingBegin&quot;</span>: <span class="st">&quot;2012-05-04&quot;</span>,      <span class="er">#</span> <span class="er">optional</span> <span class="er">first</span> <span class="er">time</span> <span class="er">period</span> <span class="er">in</span> <span class="er">returned</span> <span class="er">message</span>
+      <span class="dt">&quot;reportingEnd&quot;</span>: <span class="st">&quot;2012-06-01&quot;</span>,        <span class="er">#</span> <span class="er">optional</span> <span class="er">last</span> <span class="er">time</span> <span class="er">period</span> <span class="er">in</span> <span class="er">returned</span> <span class="er">message</span>
+      <span class="dt">&quot;validFrom&quot;</span>: <span class="st">&quot;2012-01-01T10:00:00Z&quot;</span>, <span class="er">#</span> <span class="er">optional</span> <span class="er">only</span> <span class="er">for</span> <span class="er">version</span> <span class="er">history</span>
+      <span class="dt">&quot;validTo&quot;</span>: <span class="st">&quot;2013-01-01T10:00:00Z&quot;</span>,   <span class="er">#</span> <span class="er">optional</span> <span class="er">only</span> <span class="er">for</span> <span class="er">version</span> <span class="er">history</span>
+      <span class="dt">&quot;publicationYear&quot;</span>: <span class="st">&quot;2005&quot;</span>,           <span class="er">#</span> <span class="er">optional</span> <span class="er">only</span> <span class="er">for</span> <span class="er">publication</span> <span class="er">release</span> <span class="er">calendars</span>
+      <span class="dt">&quot;publicationPeriod&quot;</span>: <span class="st">&quot;2005-Q1&quot;</span>,      <span class="er">#</span> <span class="er">optional</span> <span class="er">only</span> <span class="er">for</span> <span class="er">publication</span> <span class="er">release</span> <span class="er">calendars</span>
+      <span class="dt">&quot;annotations&quot;</span>: [<span class="dv">0</span>],                  <span class="er">#</span> <span class="er">optional</span> <span class="er">as</span> <span class="er">per</span> <span class="er">annotations</span>
+      <span class="dt">&quot;attributes&quot;</span>: [<span class="dv">0</span>],                   <span class="er">#</span> <span class="er">optional</span> <span class="er">as</span> <span class="er">per</span> <span class="er">attributes</span> <span class="er">at</span> <span class="er">dataset</span> <span class="er">level</span>
+
+      <span class="er">#</span> <span class="er">1st</span> <span class="er">alternative</span> <span class="er">(only</span> <span class="er">if</span> <span class="er">series</span> <span class="er">level</span> <span class="er">(dimensionAtObservation</span> <span class="er">&lt;&gt;</span> <span class="er">allDimensions))</span>
+
+      <span class="dt">&quot;series&quot;</span>: {
+        <span class="dt">&quot;0&quot;</span>: {
+          <span class="dt">&quot;annotations&quot;</span>: [],
+          <span class="dt">&quot;attributes&quot;</span>: [<span class="dv">0</span>],
+          <span class="dt">&quot;observations&quot;</span>: {
+            <span class="dt">&quot;0&quot;</span>: [<span class="fl">1.5931</span>, <span class="dv">0</span>],
+            <span class="dt">&quot;1&quot;</span>: [<span class="fl">1.5925</span>, <span class="dv">0</span>]
+          }
+        },
+        <span class="dt">&quot;1&quot;</span>: {
+          <span class="dt">&quot;annotations&quot;</span>: [ <span class="dv">34</span> ],
+          <span class="dt">&quot;attributes&quot;</span>: [<span class="dv">1</span>],
+          <span class="dt">&quot;observations&quot;</span>: {
+            <span class="dt">&quot;0&quot;</span>: [<span class="fl">40.3426</span>, <span class="dv">0</span>],
+            <span class="dt">&quot;1&quot;</span>: [<span class="fl">40.3000</span>, <span class="dv">0</span>]
+          }
+        }
+      }
+    },
+    {
+      <span class="dt">&quot;action&quot;</span>: <span class="st">&quot;Information&quot;</span>,
+
+      <span class="er">#</span> <span class="er">2nd</span> <span class="er">alternative</span> <span class="er">(only</span> <span class="er">if</span> <span class="er">no</span> <span class="er">series</span> <span class="er">level</span> <span class="er">(dimensionAtObservation</span> <span class="er">==</span> <span class="er">allDimensions))</span>
+
+      <span class="dt">&quot;observations&quot;</span>: {
+          <span class="dt">&quot;0:0&quot;</span>: [<span class="fl">1.5931</span>, <span class="dv">0</span>],
+          <span class="dt">&quot;0:1&quot;</span>: [<span class="fl">1.5925</span>, <span class="dv">0</span>],
+          <span class="dt">&quot;1:0&quot;</span>: [<span class="fl">40.3426</span>, <span class="dv">0</span>],
+          <span class="dt">&quot;1:1&quot;</span>: [<span class="fl">40.3000</span>, <span class="dv">0</span>]
+      }
+    },
+
+    <span class="er">#</span> <span class="er">In</span> <span class="er">case</span> <span class="er">that</span> <span class="er">the</span> <span class="er">server</span> <span class="er">does</span> <span class="er">not</span> <span class="er">group</span> <span class="er">dimensions</span> <span class="er">with</span> <span class="er">single</span> <span class="er">values</span> <span class="er">at</span> <span class="er">dataset</span> <span class="er">level</span>
+
+    {
+      <span class="dt">&quot;action&quot;</span>: <span class="st">&quot;Information&quot;</span>,
+
+      <span class="er">#</span> <span class="er">1st</span> <span class="er">alternative</span> <span class="er">(only</span> <span class="er">if</span> <span class="er">series</span> <span class="er">level</span> <span class="er">(dimensionAtObservation</span> <span class="er">&lt;&gt;</span> <span class="er">allDimensions))</span>
+
+      <span class="dt">&quot;series&quot;</span>: {
+         <span class="dt">&quot;0:0:0:0;0&quot;</span>: {
+            <span class="dt">&quot;attributes&quot;</span>: [<span class="dv">0</span>],
+            <span class="dt">&quot;observations&quot;</span>: {
+                <span class="dt">&quot;0&quot;</span>: [<span class="fl">1.5931</span>, <span class="dv">0</span>],
+                <span class="dt">&quot;1&quot;</span>: [<span class="fl">1.5925</span>, <span class="dv">0</span>]
+            }
+         },
+         <span class="dt">&quot;0:0:0:0;1&quot;</span>: {
+            <span class="dt">&quot;attributes&quot;</span>: [<span class="dv">1</span>],
+            <span class="dt">&quot;observations&quot;</span>: {
+                <span class="dt">&quot;0&quot;</span>: [<span class="fl">40.3426</span>, <span class="dv">0</span>],
+                <span class="dt">&quot;1&quot;</span>: [<span class="fl">40.3000</span>, <span class="dv">0</span>]
+            }
+         }
+      }
+    },
+    {
+      <span class="dt">&quot;action&quot;</span>: <span class="st">&quot;Information&quot;</span>,
+
+      <span class="er">#</span> <span class="er">2nd</span> <span class="er">alternative</span> <span class="er">(only</span> <span class="er">if</span> <span class="er">no</span> <span class="er">series</span> <span class="er">level</span> <span class="er">(dimensionAtObservation</span> <span class="er">==</span> <span class="er">allDimensions))</span>
+
+      <span class="dt">&quot;observations&quot;</span>: {
+          <span class="dt">&quot;0:0:0:0:0:0&quot;</span>: [<span class="fl">1.5931</span>, <span class="dv">0</span>],
+          <span class="dt">&quot;0:0:0:0:0:1&quot;</span>: [<span class="fl">1.5925</span>, <span class="dv">0</span>],
+          <span class="dt">&quot;0:0:0:0:1:0&quot;</span>: [<span class="fl">40.3426</span>, <span class="dv">0</span>],
+          <span class="dt">&quot;0:0:0:0:1:1&quot;</span>: [<span class="fl">40.3000</span>, <span class="dv">0</span>]
+      }
+    },
+
+    <span class="er">#</span> <span class="er">In</span> <span class="er">case</span> <span class="er">the</span> <span class="er">client</span> <span class="er">is</span> <span class="er">using</span> <span class="er">the</span> <span class="er">detail</span> <span class="er">parameter</span> <span class="er">and</span> <span class="er">the</span> <span class="er">server</span> <span class="er">supports</span> <span class="er">it</span>
+
+    {
+      <span class="dt">&quot;action&quot;</span>: <span class="st">&quot;Information&quot;</span>,
+
+      <span class="er">#</span> <span class="er">Detail</span> <span class="er">parameter</span>: <span class="er">serieskeysonly.</span> <span class="er">No</span> <span class="er">observation</span> <span class="er">values</span>, <span class="er">attributes</span> <span class="er">or</span> <span class="er">annotations.</span>
+
+      <span class="dt">&quot;observations&quot;</span>: {
+          <span class="dt">&quot;0:0&quot;</span>: [],
+          <span class="dt">&quot;0:1&quot;</span>: [],
+          <span class="dt">&quot;1:0&quot;</span>: [],
+          <span class="dt">&quot;1:1&quot;</span>: []
+      <span class="er">]</span>
+    },
+    <span class="er">{</span>
+      <span class="dt">&quot;action&quot;</span>: <span class="st">&quot;Information&quot;</span>,
+
+      <span class="er">#</span> <span class="er">Detail</span> <span class="er">parameter</span>: <span class="er">dataonly.</span> <span class="er">No</span> <span class="er">attributes</span> <span class="er">or</span> <span class="er">annotations.</span>
+
+      <span class="st">&quot;observations&quot;</span><span class="er">:</span> {
+          <span class="dt">&quot;0:0&quot;</span>: [<span class="fl">1.5931</span>],
+          <span class="dt">&quot;0:1&quot;</span>: [<span class="fl">1.5925</span>],
+          <span class="dt">&quot;1:0&quot;</span>: [<span class="fl">40.3426</span>],
+          <span class="dt">&quot;1:1&quot;</span>: [<span class="fl">40.3000</span>]
+      <span class="er">]</span>
+    },
+    <span class="er">{</span>
+      <span class="dt">&quot;action&quot;</span>: <span class="st">&quot;Information&quot;</span>,
+
+      <span class="er">#</span> <span class="er">Detail</span> <span class="er">parameter</span>: <span class="er">nodata.</span> <span class="er">No</span> <span class="er">observation</span> <span class="er">values</span> <span class="er">just</span> <span class="er">attributes</span> <span class="er">and</span> <span class="er">annotations.</span>
+
+      <span class="st">&quot;observations&quot;</span><span class="er">:</span> {
+          <span class="dt">&quot;0:0&quot;</span>: [<span class="dv">0</span>],
+          <span class="dt">&quot;0:1&quot;</span>: [<span class="dv">0</span>],
+          <span class="dt">&quot;1:0&quot;</span>: [<span class="dv">0</span>],
+          <span class="dt">&quot;1:1&quot;</span>: [<span class="dv">0</span>]
+      <span class="er">]</span>
+    }
+  <span class="er">]</span>
+}</code></pre>
+<h1 id="references"><a href="#references"><span class="header-section-number">6</span> References</a></h1>
+<h2 id="normative-references"><a href="#normative-references"><span class="header-section-number">6.1</span> Normative References</a></h2>
+<p>[sdmxim21] <em>Section 2: Information Model: UML Conceptual Design</em>, SDMX Standards 2.1, SDMX, April 2011</p>
+<p>[iso8601] <em>ISO 8601:2004 Data elements and interchange formats — Information interchange — Representation of dates and times</em>, ISO, 2004</p>
+<p>[sdmxws21] <em>Section 7: Guidelines for the Use of Web Services</em>, SDMX Standards 2.1, SDMX, April 2011</p>
+<p>[json] <em>The JSON Data Interchange Format</em>, Standard ECMA-404, ECMA International, October 2013</p>
+</body>
+</html>

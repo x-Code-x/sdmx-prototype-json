@@ -1,0 +1,3 @@
+% SDMX-JSON: SYNTAX AND DOCUMENTATION
+% SDMX Working Draft, 3 January 2014
+%
