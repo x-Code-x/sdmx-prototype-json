@@ -62,12 +62,12 @@
                             "id": "2013-01-18",
                             "name": "2013-01-18",
                             "start": "2013-01-18T00:00:00.000Z",
-                            "end": "2013-01-18T23:59:59.000Z"
+                            "end": "2013-01-18T23:59:59.999Z"
                         }, {
                             "id": "2013-01-21",
                             "name": "2013-01-21",
                             "start": "2013-01-21T00:00:00.000Z",
-                            "end": "2013-01-21T23:59:59.000Z"
+                            "end": "2013-01-21T23:59:59.999Z"
                         }
                     ]
                 }
@@ -98,7 +98,7 @@
                     "name": "Series title",
                     "values": [
                         {
-                            "name": "New zealand dollar (NZD)"
+                            "name": "New Zealand dollar (NZD)"
                         }, {
                             "name": "Russian rouble (RUB)"
                         }
