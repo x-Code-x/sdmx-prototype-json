@@ -454,8 +454,8 @@ Each annotation object contains the following optional information:
 #### type
 
 *string* *nullable*. Type is used to distinguish between annotations designed to
-support various uses. The types are not enumerated, as these can be specified by
-the user or creator of the annotations. The definitions and use of annotation types
+support various uses. The types are not enumerated, and these can be freely specified by
+the creator of the annotations. The definitions and use of annotation types
 should be documented by their creator. Example:
 
     "type": "reference"
