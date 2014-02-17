@@ -40,8 +40,6 @@ nulled field and the absence of a field as the same thing.
 - Not all fields appear in all contexts. For example response with error messages
 may not contain fields for data, dimensions and attributes.
 
-
-
 # Field Guide to SDMX-JSON Objects
 
 ## Message
@@ -456,8 +454,8 @@ Each annotation object contains the following optional information:
 #### type
 
 *string* *nullable*. Type is used to distinguish between annotations designed to
-support various uses. The types are not enumerated, as these can be specified by
-the user or creator of the annotations. The definitions and use of annotation types
+support various uses. The types are not enumerated, and these can be freely specified by
+the creator of the annotations. The definitions and use of annotation types
 should be documented by their creator. Example:
 
     "type": "reference"
