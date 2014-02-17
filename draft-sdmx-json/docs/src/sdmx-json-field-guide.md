@@ -40,8 +40,6 @@ nulled field and the absence of a field as the same thing.
 - Not all fields appear in all contexts. For example response with error messages
 may not contain fields for data, dimensions and attributes.
 
-
-
 # Field Guide to SDMX-JSON Objects
 
 ## Message
