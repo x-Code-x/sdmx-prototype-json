@@ -242,8 +242,8 @@ Example:
 
 ### uri
 
-*String* *nullable*. A link to an SDMX 2.1 web service resource where additional information regarding the data flow is
-available. Example:
+*String* *nullable*. A link to an SDMX 2.1 web service resource where additional information regarding the structure is
+available (e.g.: link to the dataflow). Example:
 
     "uri": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0"
 
