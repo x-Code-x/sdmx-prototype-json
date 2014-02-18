@@ -1,4 +1,3 @@
-
 # Introduction
 
 Let's first start with a brief introduction of the SDMX information model.
@@ -126,16 +125,13 @@ this error field. Error is an array of error messages. Example:
 *number*. Provides a code number for the error message. Code numbers are defined
 in the SDMX 2.1 Web Services Guidelines. Example:
 
-    "code": 130
+    "code": 150
 
 #### message
 
 *string*. Provides the error message. Example:
 
-    "message": "Response too large due to client request"
-
-
-
+    "message": "Invalid number of dimensions in the key parameter"
 
 ## header
 
