@@ -343,8 +343,7 @@ Example:
 ##### keyPosition
 
 *Number* *nullable*. Indicates the position of the dimension in the key, starting at 0.
-This field should not be supplied for attributes. This field could be used to build
-the "key" parameter string (i.e. D.USD.EUR.SP00.A) for data queries. Example:
+This field should not be supplied for attributes and it may also be omitted for dimensions. This field could be used to build the "key" parameter string (i.e. D.USD.EUR.SP00.A) for data queries, whenever the order of the dimensions cannot easily be derived from the structural metadata information available in the data message. Example:
 
     "keyPosition": 0
 
