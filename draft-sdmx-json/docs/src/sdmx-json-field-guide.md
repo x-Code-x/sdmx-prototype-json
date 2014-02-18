@@ -292,8 +292,17 @@ observations) to which these attributes are attached. Example:
             # Component objects #
         ]
     }
+    
+### dataSet
+*Array* *nullable*. Optional array to be provided if components (dimensions or attributes) are attached to the data set level.
 
-### Component
+### series
+*Array* *nullable*. Optional array to be provided if components (dimensions or attributes) are attached to the series level.
+
+### observation
+*Array* *nullable*. Optional array to be provided if components (dimensions or attributes) are attached to the observation level.
+
+#### component
 
 A component represents a dimension or an attribute used in the message. It contains basic information about the component
 (such as its name and id) as well as the list of values used in the message for this particular component. Example:
@@ -311,27 +320,27 @@ A component represents a dimension or an attribute used in the message. It conta
 
 Each of the components may contain the following fields
 
-#### id
+##### id
 
 *String*. Identifier for the component.
 Example:
 
     "id": "FREQ"
 
-#### name
+##### name
 
 *String*. Name provides a human-readable name for the component.
 Example:
 
     "name": "Frequency"
 
-#### description
+##### description
 
 *String* *nullable*. Provides a description for the component. Example:
 
     "description": "The time interval at which observations occur over a given time period."
 
-#### keyPosition
+##### keyPosition
 
 *Number* *nullable*. Indicates the position of the dimension in the key, starting at 0.
 This field should not be supplied for attributes. This field could be used to build
@@ -339,7 +348,7 @@ the "key" parameter string (i.e. D.USD.EUR.SP00.A) for data queries. Example:
 
     "keyPosition": 0
 
-#### role
+##### role
 
 *String* *nullable*. Defines the component role(s). For normal components the value
 is null. Components can play various roles, such as, for example:
@@ -353,14 +362,14 @@ Example:
 
     "role": "time"
 
-#### default
+##### default
 
 *String* or *Number* *nullable*. Defines a default value for the component (valid for attributes only!). If
 no value is provided in the data part of the message then this value applies. Example:
 
     "default": "A"
 
-#### values
+##### values
 
 *Array*. Array of [values](#component_values) for the component. Example:
 
@@ -371,7 +380,7 @@ no value is provided in the data part of the message then this value applies. Ex
       }
     ]
 
-#### Component value
+##### Component value
 
 *Object* *nullable*. A particular value for a component in a message. Example:
 
@@ -380,26 +389,26 @@ no value is provided in the data part of the message then this value applies. Ex
         "name": "Monthly"
     }
 
-##### id
+###### id
 
 *String*. Unique identifier for a value. Example:
 
     "id": "A"
 
-##### name
+###### name
 
 *String*. Human-readable name for a value. Example:
 
     "name": "Missing value; data cannot exist"
 
-##### description
+###### description
 
 *String* *nullable*. Description provides a human-readable description of the value. The description is typically longer
 than the text provided for the name field. Example:
 
     "description": "Description for missing value."
 
-##### start and end fields
+###### start and end fields
 
 *String* *nullable*. Start and end are instances of time that define the actual
 Gregorian calendar period covered by the values for the time dimension. The algorithm
