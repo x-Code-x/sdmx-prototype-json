@@ -600,9 +600,7 @@ a data set represents a flat collection of observations. In case the observation
 
 ### series
 
-*Object* *nullable*. A collection of series. Each series object contains the observation values and associated attributes, when
-the observations contained in the data set are used into logical groups (time series or cross-sections). This element must
-**not** be used in case the data set represents a flat list of observations. Example:
+*Object* *nullable*. A collection of series. Each series object is identified by a key (a string representing the index of each dimension value, separated by a colon) and contains the observation values and associated attributes, when the observations contained in the data set are used into logical groups (time series or cross-sections). This element must **not** be used in case the data set represents a flat list of observations. Example:
 
     {
       "annotations": [],
