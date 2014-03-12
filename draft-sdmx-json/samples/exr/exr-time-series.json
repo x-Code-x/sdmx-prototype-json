@@ -14,6 +14,7 @@
                 {
                     "id": "FREQ",
                     "name": "Frequency",
+                    "role": "FREQ",
                     "keyPosition": 0,
                     "values": [
                         {
@@ -73,6 +74,7 @@
                 {
                     "id": "TIME_PERIOD",
                     "name": "Time period or range",
+                    "role": "TIME_PERIOD",
                     "values": [
                         {
                             "id": "2013-01-18",
@@ -95,6 +97,7 @@
                 {
                     "id": "TITLE",
                     "name": "Series title",
+                    "role": "TITLE",
                     "values": [
                         {
                             "name": "New Zealand dollar (NZD)"
@@ -108,6 +111,7 @@
                 {
                     "id": "OBS_STATUS",
                     "name": "Observation status",
+                    "role": "OBS_STATUS",
                     "values": [
                         {
                             "id": "A",
