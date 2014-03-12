@@ -349,17 +349,11 @@ This field should not be supplied for attributes and it may also be omitted for 
 
 ##### role
 
-*String* *nullable*. Defines the component role(s). For normal components the value
-is null. Components can play various roles, such as, for example:
-
-- **time**. Time dimension is a special dimension which designates the period in
-time in which the data identified by the full series key applies.
-- **measure**. Measure dimension is a special type of dimension which defines
-multiple measures.
+*String* *nullable*. Defines the component role(s), if any. Roles are represented by the id of a concept defined as [SDMX cross-domain concept](http://sdmx.org/?page_id=11). Several of the concepts defined as SDMX cross-domain concepts are useful for data visualisation, such as for example, the series title, the unit of measure, the number of decimals to be displayed, the reference area (e.g. when using maps), the period of time to which the measured observation refers, etc. It is recommended to identify any component that can be useful for data visualisation purposes by using the appropriate SDMX cross-domain concept as role.
 
 Example:
 
-    "role": "time"
+    "role": "TITLE"
 
 ##### default
 
