@@ -187,8 +187,8 @@ Example:
 #### contact
 
 *Array* *nullable*. Information on how the party can be contacted.
-
 Each object in the collection may contain the following field:
+
 * name - *String*. The contact's name.
 * department - *String* *nullable*. The organisational structure for the contact.
 * role - *String* *nullable*. The responsibility of the contact.
@@ -243,7 +243,7 @@ Example:
 ### uri
 
 *String* *nullable*. A link to an SDMX 2.1 web service resource where additional information regarding the structure is
-available (e.g.: link to the dataflow). Example:
+available (e.g. link to the dataflow). Example:
 
     "uri": "http://sdw-ws.ecb.europa.eu/dataflow/ECB/EXR/1.0"
 
@@ -292,14 +292,17 @@ observations) to which these attributes are attached. Example:
             # Component objects #
         ]
     }
-    
+
 ### dataSet
+
 *Array* *nullable*. Optional array to be provided if components (dimensions or attributes) are attached to the data set level.
 
 ### series
+
 *Array* *nullable*. Optional array to be provided if components (dimensions or attributes) are attached to the series level.
 
 ### observation
+
 *Array* *nullable*. Optional array to be provided if components (dimensions or attributes) are attached to the observation level.
 
 #### component
@@ -349,9 +352,7 @@ This field should not be supplied for attributes and it may also be omitted for 
 
 ##### role
 
-*String* *nullable*. Defines the component role(s), if any. Roles are represented by the id of a concept defined as [SDMX cross-domain concept](http://sdmx.org/?page_id=11). Several of the concepts defined as SDMX cross-domain concepts are useful for data visualisation, such as for example, the series title, the unit of measure, the number of decimals to be displayed, the reference area (e.g. when using maps), the period of time to which the measured observation refers, etc. It is recommended to identify any component that can be useful for data visualisation purposes by using the appropriate SDMX cross-domain concept as role.
-
-Example:
+*String* *nullable*. Defines the component role(s), if any. Roles are represented by the id of a concept defined as [SDMX cross-domain concept](http://sdmx.org/?page_id=11). Several of the concepts defined as SDMX cross-domain concepts are useful for data visualisation, such as for example, the series title, the unit of measure, the number of decimals to be displayed, the reference area (e.g. when using maps), the period of time to which the measured observation refers, etc. It is recommended to identify any component that can be useful for data visualisation purposes by using the appropriate SDMX cross-domain concept as role. Example:
 
     "role": "TITLE"
 
@@ -481,7 +482,6 @@ It can be used to disambiguate annotations. Example:
 
 
 
-
 ## dataSets
 
 An array of data set objects. Example:
@@ -522,7 +522,7 @@ these data.
 
 * Delete - data are to be deleted.
 
-* Information- data are being exchanged for informational purposes only, and not meant to update a system.
+* Information - data are being exchanged for informational purposes only, and not meant to update a system.
 
 Example:
 

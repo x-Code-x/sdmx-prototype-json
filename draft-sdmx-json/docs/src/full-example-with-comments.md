@@ -236,16 +236,33 @@
   "dataSets": [
     {
       "action": "Information",
-      "reportingBegin": "2012-05-04",      # optional first time period in returned message
-      "reportingEnd": "2012-06-01",        # optional last time period in returned message
-      "validFrom": "2012-01-01T10:00:00Z", # optional only for version history
-      "validTo": "2013-01-01T10:00:00Z",   # optional only for version history
-      "publicationYear": "2005",           # optional only for publication release calendars
-      "publicationPeriod": "2005-Q1",      # optional only for publication release calendars
-      "annotations": [0],                  # optional as per annotations
-      "attributes": [0],                   # optional as per attributes at dataset level
 
-      # 1st alternative (only if series level (dimensionAtObservation <> allDimensions))
+      # optional first time period in returned message
+      "reportingBegin": "2012-05-04",
+
+      # optional last time period in returned message
+      "reportingEnd": "2012-06-01",
+
+      # optional only for version history
+      "validFrom": "2012-01-01T10:00:00Z",
+
+      # optional only for version history
+      "validTo": "2013-01-01T10:00:00Z",
+
+      # optional only for publication release calendars
+      "publicationYear": "2005",
+
+      # optional only for publication release calendars
+      "publicationPeriod": "2005-Q1",
+
+      # optional as per annotations
+      "annotations": [0],
+
+      # optional as per attributes at dataset level
+      "attributes": [0],
+
+      # 1st alternative (only if series level
+      # (dimensionAtObservation <> allDimensions))
 
       "series": {
         "0": {
@@ -269,7 +286,8 @@
     {
       "action": "Information",
 
-      # 2nd alternative (only if no series level (dimensionAtObservation == allDimensions))
+      # 2nd alternative (only if no series level
+      #  (dimensionAtObservation == allDimensions))
 
       "observations": {
           "0:0": [1.5931, 0],
@@ -279,12 +297,14 @@
       }
     },
 
-    # In case that the server does not group dimensions with single values at dataset level
+    # In case that the server does not group dimensions
+    # with single values at dataset level
 
     {
       "action": "Information",
 
-      # 1st alternative (only if series level (dimensionAtObservation <> allDimensions))
+      # 1st alternative (only if series level
+      # (dimensionAtObservation <> allDimensions))
 
       "series": {
          "0:0:0:0;0": {
@@ -306,7 +326,8 @@
     {
       "action": "Information",
 
-      # 2nd alternative (only if no series level (dimensionAtObservation == allDimensions))
+      # 2nd alternative (only if no series level
+      # (dimensionAtObservation == allDimensions))
 
       "observations": {
           "0:0:0:0:0:0": [1.5931, 0],
@@ -316,12 +337,14 @@
       }
     },
 
-    # In case the client is using the detail parameter and the server supports it
+    # In case the client is using the detail parameter
+    # and the server supports it
 
     {
       "action": "Information",
 
-      # Detail parameter: serieskeysonly. No observation values, attributes or annotations.
+      # Detail parameter: serieskeysonly. No observation values,
+      # attributes or annotations.
 
       "observations": {
           "0:0": [],
@@ -345,7 +368,8 @@
     {
       "action": "Information",
 
-      # Detail parameter: nodata. No observation values just attributes and annotations.
+      # Detail parameter: nodata. No observation values
+      # just attributes and annotations.
 
       "observations": {
           "0:0": [0],
