@@ -1,5 +1,6 @@
 # TODO
 
+- Rename "contact" to "contacts" in the header? By convention all collections should be plural?
 - Add full set of roles to field guide and schema?
 - Rewrite dataset section and example in field guide?
 
